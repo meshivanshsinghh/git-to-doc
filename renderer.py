@@ -1,0 +1,127 @@
+from datetime import date
+from model import CommitDoc
+
+RESET  = "\033[0m"
+BOLD   = "\033[1m"
+GREEN  = "\033[32m"
+CYAN   = "\033[36m"
+YELLOW = "\033[33m"
+DIM    = "\033[2m"
+WHITE  = "\033[97m"
+
+def _c(text: str, *codes: str) -> str:
+    return "".join(codes) + text + RESET
+
+
+_SECTION = {
+    "feat":     "Added",
+    "fix":      "Fixed",
+    "docs":     "Documentation",
+    "refactor": "Changed",
+    "perf":     "Performance",
+    "test":     "Tests",
+    "chore":    "Maintenance",
+    "ci":       "CI/CD",
+    "build":    "Build",
+    "revert":   "Reverted",
+}
+
+_TYPE_EMOJI = {
+    "feat":     "✨",
+    "fix":      "🐛",
+    "docs":     "📝",
+    "refactor": "♻️",
+    "perf":     "⚡",
+    "test":     "🧪",
+    "chore":    "🔧",
+    "ci":       "🤖",
+    "build":    "📦",
+    "revert":   "⏪",
+}
+
+
+def render_commit_message(doc: CommitDoc) -> str:
+    """Returns a Conventional Commit string, e.g. feat(scope): subject"""
+    scope    = f"({doc.scope})" if doc.scope else ""
+    breaking = "!" if doc.breaking else ""
+    header   = f"{doc.type}{scope}{breaking}: {doc.subject}"
+
+    parts = [header]
+    if doc.body:
+        parts.append(f"\n{doc.body}")
+    if doc.breaking:
+        parts.append(f"\nBREAKING CHANGE: {doc.body or doc.subject}")
+    return "\n".join(parts)
+
+
+def render_changelog(doc: CommitDoc) -> str:
+    """Returns a markdown changelog snippet ready to paste into CHANGELOG.md"""
+    today   = date.today().isoformat()
+    section = "⚠️ Breaking Changes" if doc.breaking else _SECTION.get(doc.type, "Changed")
+
+    lines = [
+        f"## [Unreleased] — {today}",
+        "",
+        f"### {section}",
+        "",
+        doc.changelog_entry,
+    ]
+    if doc.body:
+        lines += ["", f"  {doc.body}"]
+    return "\n".join(lines)
+
+
+def render_full_output(doc: CommitDoc) -> str:
+    """Pretty-prints the full terminal output with colour and markdown blocks."""
+    emoji = _TYPE_EMOJI.get(doc.type, "📌")
+    bar   = _c("─" * 58, DIM)
+
+    commit_msg  = render_commit_message(doc)
+    changelog   = render_changelog(doc)
+
+    output = f"""
+{bar}
+{_c(f"  {emoji}  CONVENTIONAL COMMIT MESSAGE", BOLD, CYAN)}
+{bar}
+
+  {_c(commit_msg, BOLD, WHITE)}
+
+{bar}
+{_c("  📋  CHANGELOG ENTRY  (paste into CHANGELOG.md)", BOLD, CYAN)}
+{bar}
+
+{changelog}
+
+{bar}
+{_c("  🗣️   PLAIN ENGLISH SUMMARY", BOLD, CYAN)}
+{bar}
+
+  {_c(doc.plain_english, YELLOW)}
+
+{bar}
+"""
+    return output
+
+
+def render_markdown_file(doc: CommitDoc) -> str:
+    """Returns a clean markdown string (no ANSI) for writing to a .md file."""
+    emoji       = _TYPE_EMOJI.get(doc.type, "📌")
+    commit_msg  = render_commit_message(doc)
+    changelog   = render_changelog(doc)
+
+    return f"""# {emoji} Git-to-Doc Output
+
+## Conventional Commit Message
+
+```
+{commit_msg}
+```
+
+## Changelog Entry
+
+{changelog}
+
+## Plain English Summary
+
+{doc.plain_english}
+"""
