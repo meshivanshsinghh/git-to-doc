@@ -63,7 +63,10 @@ def _parse(raw: str, Model):
             return Model.model_validate_json(c)
         except ValidationError as e:
             last_err = e
-    raise last_err
+    
+    if last_err is not None:
+        raise last_err
+    raise ValueError("No valid candidates found for parsing.")
 
 
 # ── Commit document ───────────────────────────────────────────────────────────
