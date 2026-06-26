@@ -1,0 +1,42 @@
+diff --git a/parser.py b/parser.py
+index 3a4b1c2..9f8e4d1 100644
+--- a/parser.py
++++ b/parser.py
+@@ -10,6 +10,12 @@ def parse(data):
+     """Parse incoming JSON payload and return value."""
+-    return data['value']
++    if data is None:
++        raise ValueError("data must not be None")
++    if 'value' not in data:
++        raise KeyError("missing required key: 'value'")
++    return data['value']
+ 
++def safe_parse(data):
++    """Wrapper around parse() that returns None on failure."""
++    try:
++        return parse(data)
++    except (ValueError, KeyError) as e:
++        logger.warning(f"parse failed: {e}")
++        return None
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 0000000..a1b2c3d 100644
+--- /dev/null
++++ b/tests/test_parser.py
+@@ -0,0 +1,18 @@
++import pytest
++from parser import parse, safe_parse
++
++def test_parse_valid():
++    assert parse({'value': 42}) == 42
++
++def test_parse_none_raises():
++    with pytest.raises(ValueError):
++        parse(None)
++
++def test_parse_missing_key_raises():
++    with pytest.raises(KeyError):
++        parse({'other': 1})
++
++def test_safe_parse_returns_none_on_error():
++    assert safe_parse(None) is None
++    assert safe_parse({'bad': 'key'}) is None

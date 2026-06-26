@@ -27,8 +27,8 @@ from typing import Optional
 
 import requests
 
-from model import analyze_diff, CommitDoc
-from renderer import render_full_output, render_markdown_file
+from git_to_doc.model import analyze_diff, CommitDoc
+from git_to_doc.renderer import render_full_output, render_markdown_file
 
 # ── ANSI helpers ─────────────────────────────────────────────────────────────
 RESET = "\033[0m"; BOLD = "\033[1m"; GREEN = "\033[32m"

@@ -1,0 +1,12 @@
+pyproject.toml
+git_to_doc/__init__.py
+git_to_doc/cli.py
+git_to_doc/compare.py
+git_to_doc/model.py
+git_to_doc/renderer.py
+git_to_doc.egg-info/PKG-INFO
+git_to_doc.egg-info/SOURCES.txt
+git_to_doc.egg-info/dependency_links.txt
+git_to_doc.egg-info/entry_points.txt
+git_to_doc.egg-info/requires.txt
+git_to_doc.egg-info/top_level.txt

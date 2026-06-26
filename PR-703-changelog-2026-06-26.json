@@ -1,0 +1,9 @@
+{
+  "type": "feat",
+  "scope": "chat_sampler",
+  "subject": "implement context pruning and history management in chat sampler",
+  "body": "Adds logic to manage conversation history, including images and audio, allowing the model's cache to be pruned when exceeding a defined limit. This ensures that multi-turn conversations remain coherent while respecting memory constraints.",
+  "breaking": false,
+  "changelog_entry": "- feat(chat_sampler): Implement context pruning and robust history management for multi-turn chat sessions.",
+  "plain_english": "The system now remembers more of your conversation over time. If the chat gets too long, it intelligently forgets the oldest parts while keeping track of all media (images/audio) to maintain context."
+}

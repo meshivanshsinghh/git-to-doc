@@ -1,5 +1,5 @@
 from datetime import date
-from model import CommitDoc
+from git_to_doc.model import CommitDoc
 
 RESET  = "\033[0m"
 BOLD   = "\033[1m"
