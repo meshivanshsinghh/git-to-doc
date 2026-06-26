@@ -291,18 +291,49 @@ def cmd_install_hook(argv):
     print(_c('    Bypass anytime with `git commit -m "..."`.', DIM))
 
 
+# ── Top-level help ────────────────────────────────────────────────────────────
+def _top_help():
+    print(f"""
+{_c("  git-to-doc", BOLD, CYAN)} {_c("— Conventional Commits, changelogs & PRs from git diffs, via Gemma", DIM)}
+
+{_c("  COMMANDS", BOLD)}
+    {_c("git-to-doc <input>", BOLD)} [--output md|json|both] [--model M]
+        Generate a Conventional Commit message + changelog + plain-English summary.
+        <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
+
+    {_c("git-to-doc <input> --commit-msg", BOLD)}
+        Print ONLY the commit message (for piping / git hooks).
+
+    {_c("git-to-doc pr", BOLD)} [--base B] [--create] [--draft] [--model M]
+        Generate a pull request from the current branch. Preview by default;
+        --create pushes the branch and opens the PR via gh.
+
+    {_c("git-to-doc install-hook", BOLD)}
+        Install a git hook so `git commit` (no -m) auto-fills the message.
+
+    {_c("git-to-doc-compare <diffs...>", BOLD)} [--models ...] [--judge [MODEL]]
+        Benchmark models (timing; --judge adds rubric quality + CC pass-rate).
+
+{_c("  EXAMPLES", BOLD)}
+    git-to-doc sample.diff
+    git-to-doc https://github.com/pallets/flask/pull/5000 --output both
+    git diff --cached | git-to-doc --commit-msg -
+    git-to-doc pr --create
+
+{_c("  Run", DIM)} {_c("git-to-doc <command> --help", BOLD)} {_c("for command-specific options.", DIM)}
+""")
+
+
 # ── Main dispatcher ───────────────────────────────────────────────────────────
 def main():
     argv = sys.argv[1:]
-    if argv and argv[0] == "pr":
+    if not argv or argv[0] in ("-h", "--help", "help"):
+        _top_help()
+        return
+    if argv[0] == "pr":
         return cmd_pr(argv[1:])
-    if argv and argv[0] == "install-hook":
+    if argv[0] == "install-hook":
         return cmd_install_hook(argv[1:])
-    if not argv:
-        print(_c("  usage: git-to-doc <diff|url|folder|->  [--output] [--model] [--commit-msg]", BOLD))
-        print(_c("         git-to-doc pr [--base B] [--create] [--draft]", DIM))
-        print(_c("         git-to-doc install-hook", DIM))
-        sys.exit(1)
     return cmd_doc(argv)
 
 
