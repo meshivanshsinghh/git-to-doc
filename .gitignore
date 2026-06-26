@@ -1,9 +1,18 @@
 venv/
 .venv/
 .env
+.env.*
 *.egg-info/
+build/
+dist/
 __pycache__/
 *.pyc
 *.pyo
 .DS_Store
 test_model.py
+
+# local planning & generated outputs
+plan.md
+*-changelog-*.md
+*-changelog-*.json
+compare_results.json
