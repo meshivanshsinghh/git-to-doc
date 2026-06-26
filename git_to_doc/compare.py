@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 """
-compare.py — Benchmark git-to-doc across multiple diffs or models.
+compare.py — Benchmark git-to-doc across diffs and/or models.
+
+Without --judge: a fast timing table (how quick each model is).
+With --judge MODEL: also runs the deterministic Conventional Commit check and an
+LLM-as-judge rubric score, so you get quality + a hard CC pass-rate, not just speed.
 
 Usage:
-  python compare.py <diff1> [diff2 ...] [--models m1 m2]
-  python compare.py ./diffs/ --models gemma4 llama3
-
-Examples:
-  python compare.py sample.diff
-  python compare.py sample.diff https://github.com/pallets/flask/pull/5000
-  python compare.py ./diffs/ --models gemma4
+  git-to-doc-compare <diff1> [diff2 ...] [--models m1 m2] [--judge gpt-oss:120b]
+  git-to-doc-compare ./diffs/ --models gemma3:4b gemma3:12b --judge gpt-oss:120b
 """
 
 import sys, argparse, time, json
 from pathlib import Path
-from typing import List
 
 import requests
 
-from git_to_doc.model import analyze_diff, CommitDoc
+from git_to_doc.model import analyze_diff
+from git_to_doc.renderer import render_markdown_file
+from git_to_doc.validate import validate_commit
+from git_to_doc.evaluate import judge_response, DEFAULT_JUDGE
 
-# ── ANSI helpers ─────────────────────────────────────────────────────────────
 RESET = "\033[0m"; BOLD = "\033[1m"; GREEN = "\033[32m"
 RED = "\033[31m"; CYAN = "\033[36m"; DIM = "\033[2m"
 YELLOW = "\033[33m"; WHITE = "\033[97m"
@@ -28,7 +28,6 @@ YELLOW = "\033[33m"; WHITE = "\033[97m"
 def _c(t, *c): return "".join(c) + t + RESET
 
 
-# ── Fetch / read diff ─────────────────────────────────────────────────────────
 def load_diff(source: str) -> str:
     if source.startswith("http://") or source.startswith("https://"):
         url = source.rstrip("/")
@@ -40,122 +39,99 @@ def load_diff(source: str) -> str:
     return Path(source).read_text(encoding="utf-8")
 
 
-# ── Benchmark single diff against one model ───────────────────────────────────
-def benchmark(diff_text: str, label: str, model: str) -> dict:
+def benchmark(diff_text: str, label: str, model: str, judge: str = None) -> dict:
     t0 = time.time()
     result = analyze_diff(diff_text, model=model)
-    elapsed = time.time() - t0
-    return {
-        "label":    label,
-        "model":    model,
-        "elapsed":  round(elapsed, 2),
-        "type":     result.type,
-        "scope":    result.scope,
-        "subject":  result.subject,
-        "breaking": result.breaking,
-        "doc":      result,
+    elapsed = round(time.time() - t0, 2)
+    row = {
+        "label": label, "model": model, "elapsed": elapsed,
+        "type": result.type, "scope": result.scope, "subject": result.subject,
+        "breaking": result.breaking, "doc": result,
+        "cc_ok": not validate_commit(result),   # deterministic, zero-variance
     }
+    if judge:
+        md = render_markdown_file(result, model=model)
+        row["score"] = judge_response(md, diff_text, judge)["overall100"]
+    return row
 
 
-# ── Pretty table ──────────────────────────────────────────────────────────────
-def print_table(results: list):
+def print_table(results: list, judged: bool):
+    has_score = judged and any("score" in r for r in results)
     print()
-    print(_c("  " + "─" * 78, DIM))
-    print(_c(f"  {'SOURCE':<28} {'MODEL':<12} {'TIME':>6}  {'TYPE':<10} SUBJECT", BOLD, CYAN))
-    print(_c("  " + "─" * 78, DIM))
+    print(_c("  " + "─" * 86, DIM))
+    head = f"  {'SOURCE':<24} {'MODEL':<12} {'TIME':>6}  {'CC':>3}"
+    if has_score:
+        head += f"  {'SCORE':>6}"
+    head += "  TYPE/SUBJECT"
+    print(_c(head, BOLD, CYAN))
+    print(_c("  " + "─" * 86, DIM))
     for r in results:
-        label   = r["label"][:27]
-        model   = r["model"][:11]
         elapsed = f"{r['elapsed']}s"
-        typ     = r["type"]
-        subject = r["subject"][:38]
-        color   = GREEN if r["elapsed"] < 30 else YELLOW
-        print(f"  {label:<28} {_c(model, DIM):<12} {_c(elapsed, color):>6}  {_c(typ, BOLD):<10} {subject}")
-    print(_c("  " + "─" * 78, DIM))
+        color = GREEN if r["elapsed"] < 30 else YELLOW
+        cc = _c("✓", GREEN) if r.get("cc_ok") else _c("✗", RED)
+        line = f"  {r['label'][:23]:<24} {_c(r['model'][:11], DIM):<12} {_c(elapsed, color):>6}  {cc:>3}"
+        if has_score:
+            line += f"  {r.get('score', '—'):>6}"
+        line += f"  {_c(r['type'], BOLD)}: {r['subject'][:36]}"
+        print(line)
+    print(_c("  " + "─" * 86, DIM))
     print()
 
-    if len(results) > 1:
-        fastest = min(results, key=lambda r: r["elapsed"])
-        print(_c(f"  ⚡ Fastest: {fastest['model']} on '{fastest['label']}' "
-                 f"({fastest['elapsed']}s)", BOLD, GREEN))
-        print()
 
-
-# ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser(
-        description="Benchmark git-to-doc across multiple diffs and/or models.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
-    )
-    parser.add_argument("inputs", nargs="+",
-        help="One or more diff files, URLs, or a folder")
+        description="Benchmark git-to-doc across diffs and/or models.",
+        formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
+    parser.add_argument("inputs", nargs="+", help="diff files, URLs, or a folder")
     parser.add_argument("--models", nargs="+", default=["gemma4"],
-        help="One or more Ollama model names to compare (default: gemma4)")
-    parser.add_argument("--output", action="store_true",
-        help="Save a compare_results.json summary file")
+        help="one or more Ollama models to compare (default: gemma4)")
+    parser.add_argument("--judge", nargs="?", const=DEFAULT_JUDGE, default=None,
+        metavar="MODEL", help="also score quality with an LLM judge (default judge: %s)" % DEFAULT_JUDGE)
+    parser.add_argument("--output", action="store_true", help="save compare_results.json")
     args = parser.parse_args()
 
-    # Expand folders to .diff files
     sources = []
     for inp in args.inputs:
         p = Path(inp)
         if p.is_dir():
             found = sorted(p.glob("**/*.diff"))
             if not found:
-                print(_c(f"  ✗ No .diff files in {inp}", RED))
-                sys.exit(1)
+                print(_c(f"  ✗ No .diff files in {inp}", RED)); sys.exit(1)
             sources.extend(str(f) for f in found)
         else:
             sources.append(inp)
 
-    # ── Banner ────────────────────────────────────────────────────────────────
     print(_c("\n  🔬  git-to-doc  compare", BOLD, CYAN))
-    print(_c(f"  {len(sources)} source(s)  ×  {len(args.models)} model(s)"
-             f"  =  {len(sources) * len(args.models)} run(s)", DIM))
+    judging = f"  ·  judge: {args.judge}" if args.judge else ""
+    print(_c(f"  {len(sources)} source(s) × {len(args.models)} model(s)"
+             f"  =  {len(sources) * len(args.models)} run(s){judging}", DIM))
     print(_c("  " + "─" * 52, DIM))
 
-    # ── Run benchmarks ────────────────────────────────────────────────────────
     results = []
     for source in sources:
-        label = source.split("/")[-1][:27]
+        label = source.split("/")[-1][:23]
         try:
             print(_c(f"\n  Loading: {source}", DIM))
             diff_text = load_diff(source)
         except Exception as e:
-            print(_c(f"  ✗ Failed to load {source}: {e}", RED))
-            continue
-
+            print(_c(f"  ✗ Failed to load {source}: {e}", RED)); continue
         for model in args.models:
             print(_c(f"  ⏳ [{model}] {label}…", DIM), end="", flush=True)
             try:
-                r = benchmark(diff_text, label, model)
+                r = benchmark(diff_text, label, model, judge=args.judge)
                 results.append(r)
-                print(_c(f"  {r['elapsed']}s", GREEN))
+                extra = f"  score {r['score']}" if "score" in r else ""
+                print(_c(f"  {r['elapsed']}s{extra}", GREEN))
             except Exception as e:
                 print(_c(f"  ✗ Error: {e}", RED))
 
     if not results:
-        print(_c("\n  No results to display.", RED))
-        sys.exit(1)
+        print(_c("\n  No results to display.", RED)); sys.exit(1)
 
-    # ── Results table ─────────────────────────────────────────────────────────
-    print_table(results)
+    print_table(results, judged=bool(args.judge))
 
-    # ── Per-result detail ─────────────────────────────────────────────────────
-    for r in results:
-        doc = r["doc"]
-        print(_c(f"  [{r['model']}] {r['label']}", BOLD))
-        print(f"    Commit : {_c(doc.type + (f'({doc.scope})' if doc.scope else '') + ': ' + doc.subject, WHITE)}")
-        print(f"    Summary: {doc.plain_english[:120]}")
-        print()
-
-    # ── Save JSON summary ─────────────────────────────────────────────────────
     if args.output:
-        out = [
-            {k: v for k, v in r.items() if k != "doc"}
-            for r in results
-        ]
+        out = [{k: v for k, v in r.items() if k != "doc"} for r in results]
         Path("compare_results.json").write_text(json.dumps(out, indent=2))
         print(_c("  ✓ Saved compare_results.json", GREEN))
 

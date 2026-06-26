@@ -1,3 +1,0 @@
-[console_scripts]
-git-to-doc = git_to_doc.cli:main
-git-to-doc-compare = git_to_doc.compare:main
