@@ -1,3 +1,9 @@
 venv/
 .venv/
 .env
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+test_model.py
