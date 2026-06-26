@@ -20,7 +20,7 @@ Examples:
   python doc.py ./diffs/ --output both
 """
 
-import sys, re, json, argparse, time
+import sys, re, json, argparse, time, threading, itertools
 from pathlib import Path
 from datetime import date
 from typing import Optional
@@ -107,14 +107,30 @@ def process_diff(diff_text: str, stem: str, model: str,
     for f in stats["files"]:
         print(_c(f"    • {f}", DIM))
     print(_c(f"  +{stats['additions']} additions  -{stats['deletions']} deletions", DIM))
-    print()
-    print(_c(f"  ⏳ Sending to {model}…", DIM))
+    done = False
+    def spinner():
+        for char in itertools.cycle(['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']):
+            if done:
+                break
+            sys.stdout.write(f"\r{_c('  ' + char + f' Sending to {model}…', DIM)}")
+            sys.stdout.flush()
+            time.sleep(0.1)
 
-    t0     = time.time()
+    t0 = time.time()
+    t = threading.Thread(target=spinner)
+    t.start()
+    
     result = analyze_diff(diff_text, model=model)
+    
+    done = True
+    t.join()
+    sys.stdout.write("\r" + " " * 50 + "\r")  # clear spinner line
+    
     elapsed = time.time() - t0
     print(_c(f"  ⚡ Inference done in {elapsed:.1f}s", DIM))
-    print(render_full_output(result))
+    
+    if fmt is None:
+        print(render_full_output(result))
 
     if fmt in ("md", "both"):
         md_path = Path(f"{stem}.md")

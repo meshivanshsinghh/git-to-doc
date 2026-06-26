@@ -1,13 +1,3 @@
-Metadata-Version: 2.4
-Name: git-to-doc
-Version: 0.1.0
-Summary: Generate Conventional Commit messages & changelogs from git diffs using local Gemma
-Requires-Python: >=3.9
-Description-Content-Type: text/markdown
-Requires-Dist: ollama>=0.4
-Requires-Dist: pydantic>=2.0
-Requires-Dist: requests>=2.31
-
 # git-to-doc ⚡
 
 > Turn any git diff into a Conventional Commit message, changelog, and plain-English PR summary — powered by Gemma running locally via Ollama.
@@ -74,6 +64,8 @@ For each diff, `git-to-doc` produces:
 
   The parser now safely handles missing or null input instead of crashing.
 ```
+
+📄 **See a real rendered example →** [examples/PR-474.md](examples/PR-474.md) *(GitHub renders the callouts, collapsible sections, and code blocks natively)*
 
 ## Supported Inputs
 
