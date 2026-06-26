@@ -14,17 +14,16 @@ from git_to_doc.model import _client, _resolve_model
 DEFAULT_JUDGE = "gpt-oss:120b"
 
 RUBRIC = [
-    ("format_compliance", 0.20,
-     "Commit header matches Conventional Commits, valid type, imperative, "
-     "no trailing period, <= 72 chars. 5 = perfect, 1 = not conventional."),
-    ("type_accuracy", 0.15,
-     "type/scope correctly reflect the change. 5 = right, 1 = wrong."),
-    ("semantic_accuracy", 0.30,
+    ("conventional_commit", 0.15,
+     "Commit header matches Conventional Commits, valid type/scope, imperative mood. 5 = perfect, 1 = invalid."),
+    ("semantic_accuracy", 0.25,
      "Truthfully describes the diff, no hallucination/omission. 5 = faithful, 1 = fabricated."),
-    ("conciseness", 0.15,
-     "Terse, free of filler/preamble. 5 = clean, 1 = bloated."),
-    ("changelog_quality", 0.20,
-     "Valid markdown, user-facing, accurate. 5 = useful, 1 = missing/wrong."),
+    ("changelog_quality", 0.15,
+     "Valid markdown, user-facing, accurate changelog entry. 5 = useful, 1 = missing/wrong."),
+    ("plain_english_quality", 0.25,
+     "The 'What changed' section explains the change clearly to a human reader, and file notes accurately summarize file changes. 5 = excellent, 1 = confusing/absent."),
+    ("reviewer_utility", 0.20,
+     "The review notes highlight tricky parts, design decisions, and are highly actionable for reviewers. 5 = highly useful, 1 = generic/empty."),
 ]
 
 

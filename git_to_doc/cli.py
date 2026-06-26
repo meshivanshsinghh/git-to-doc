@@ -1,23 +1,3 @@
-#!/usr/bin/env python3
-"""
-git-to-doc — Conventional Commit messages, changelogs & PRs from git diffs.
-
-Commands:
-  git-to-doc <input> [--output md|json|both] [--model M]   generate commit + changelog
-  git-to-doc <input> --commit-msg                          print ONLY the commit message
-  git-to-doc pr [--base B] [--create] [--draft] [--model M]  generate / open a pull request
-  git-to-doc install-hook                                   auto-fill commit messages via git hook
-
-<input> is a GitHub PR URL, '-' for stdin, a local .diff/.txt file, or a folder of .diff files.
-
-Examples:
-  git-to-doc https://github.com/pallets/flask/pull/5000 --output both
-  git-to-doc sample.diff
-  git diff --cached | git-to-doc --commit-msg -
-  git-to-doc pr --create
-  git-to-doc install-hook
-"""
-
 import sys, re, json, argparse, time, os, subprocess, tempfile, shutil, threading, itertools
 from pathlib import Path
 from datetime import date
@@ -78,13 +58,14 @@ def diff_stats(text: str) -> dict:
     return {"files": files, "additions": adds, "deletions": dels}
 
 
-def auto_stem(input_str: str) -> str:
+def auto_stem(input_str: str, model: str) -> str:
     today = date.today().isoformat()
+    clean_model = model.replace(":", "-")
     if is_url(input_str):
         _, slug = normalise_url(input_str)
-        return f"{slug}-changelog-{today}"
+        return f"{slug}-changelog-{clean_model}-{today}"
     p = Path(input_str)
-    return f"{(p.name if p.is_dir() else p.stem)}-changelog-{today}"
+    return f"{(p.name if p.is_dir() else p.stem)}-changelog-{clean_model}-{today}"
 
 
 def _read_source(input_str: str) -> str:
@@ -176,8 +157,7 @@ def cmd_doc(argv):
         metavar="{md,json,both}",
         help="Save output: 'md' (default when flag used), 'json', or 'both'.")
     parser.add_argument("--model", default="gemma4", help="Ollama model name (default: gemma4)")
-    parser.add_argument("--commit-msg", action="store_true",
-        help="Print ONLY the Conventional Commit message (for git hooks / piping)")
+    parser.add_argument("--commit-msg", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
 
     if args.commit_msg:
@@ -201,12 +181,13 @@ def cmd_doc(argv):
             print(_c(f"  ⚡ Source: folder ({len(diffs)} diff files)", BOLD))
             for diff_file in diffs:
                 print(_c(f"\n  ── {diff_file.name} ──", BOLD, CYAN))
-                stem = f"{diff_file.stem}-changelog-{date.today().isoformat()}"
+                clean_model = args.model.replace(":", "-")
+                stem = f"{diff_file.stem}-changelog-{clean_model}-{date.today().isoformat()}"
                 process_diff(diff_file.read_text(encoding="utf-8"), stem, args.model, fmt, source=str(diff_file))
         else:
             label = "URL" if is_url(args.input) else ("stdin" if args.input == "-" else Path(args.input).name)
             print(_c(f"  ⚡ Source: {label}", BOLD))
-            process_diff(_read_source(args.input), auto_stem(args.input), args.model, fmt, source=args.input)
+            process_diff(_read_source(args.input), auto_stem(args.input, args.model), args.model, fmt, source=args.input)
     except requests.HTTPError as e:
         code = getattr(e.response, "status_code", "?")
         print(_c(f"\n  ✗ Could not fetch diff (HTTP {code}). Check the PR URL is public.", RED)); sys.exit(1)
@@ -215,10 +196,10 @@ def cmd_doc(argv):
     print()
 
 
-# ── pr: branch diff → PR title + body, optionally opened via gh ────────────────
+# ── pull-request: branch diff → PR title + body, optionally opened via gh ──────
 def cmd_pr(argv):
     parser = argparse.ArgumentParser(
-        prog="git-to-doc pr",
+        prog="git-to-doc pull-request",
         description="Generate (and optionally open) a pull request from the current branch.")
     parser.add_argument("--base", help="base branch (default: auto-detect main/master)")
     parser.add_argument("--model", default="gemma4", help="Ollama model name (default: gemma4)")
@@ -243,7 +224,7 @@ def cmd_pr(argv):
     if not diff_text.strip():
         print(_c(f"  ✗ No changes between {base} and {head}.", RED)); sys.exit(1)
 
-    print(_c("\n  🔀  git-to-doc pr", BOLD, CYAN) + _c(f"  {head} → {base}  ·  {args.model}", DIM))
+    print(_c("\n  🔀  git-to-doc pull-request", BOLD, CYAN) + _c(f"  {head} → {base}  ·  {args.model}", DIM))
     print(_c("  " + "─" * 52, DIM))
     done = False
     def spinner():
@@ -332,10 +313,7 @@ def _top_help():
         Generate a Conventional Commit message + changelog + plain-English summary.
         <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
 
-    {_c("git-to-doc <input> --commit-msg", BOLD)}
-        Print ONLY the commit message (for piping / git hooks).
-
-    {_c("git-to-doc pr", BOLD)} [--base B] [--create] [--draft] [--model M]
+    {_c("git-to-doc pull-request", BOLD)} [--base B] [--create] [--draft] [--model M]
         Generate a pull request from the current branch. Preview by default;
         --create pushes the branch and opens the PR via gh.
 
@@ -348,8 +326,7 @@ def _top_help():
 {_c("  EXAMPLES", BOLD)}
     git-to-doc sample.diff
     git-to-doc https://github.com/pallets/flask/pull/5000 --output both
-    git diff --cached | git-to-doc --commit-msg -
-    git-to-doc pr --create
+    git-to-doc pull-request --create
 
 {_c("  Run", DIM)} {_c("git-to-doc <command> --help", BOLD)} {_c("for command-specific options.", DIM)}
 """)
@@ -361,7 +338,7 @@ def main():
     if not argv or argv[0] in ("-h", "--help", "help"):
         _top_help()
         return
-    if argv[0] == "pr":
+    if argv[0] in ("pull-request", "pr"):
         return cmd_pr(argv[1:])
     if argv[0] == "install-hook":
         return cmd_install_hook(argv[1:])

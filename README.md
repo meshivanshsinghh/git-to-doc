@@ -24,12 +24,11 @@ Developers write terrible commit messages and skip doc updates. `git-to-doc` is 
 git-to-doc sample.diff
 git-to-doc https://github.com/pallets/flask/pull/5000 --output both
 git-to-doc ./diffs/ --output md           # batch a folder
-cat x.diff | git-to-doc --commit-msg -    # print ONLY the commit message
 
 # generate (and open) a pull request from the current branch
-git-to-doc pr                              # preview
-git-to-doc pr --create                     # push + open via gh
-git-to-doc pr --draft --base develop
+git-to-doc pull-request                              # preview
+git-to-doc pull-request --create                     # push + open via gh
+git-to-doc pull-request --draft --base develop
 
 # install a git hook so `git commit` (no -m) auto-fills the message
 git-to-doc install-hook

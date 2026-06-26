@@ -170,23 +170,41 @@ def render_markdown_file(doc: CommitDoc, model: str = "gemma4",
     section = _SECTION.get(doc.type, "Changed")
     changelog_block = f"### {section}\n{doc.changelog_entry}"
 
+    # 5. Files section — key files with notes shown prominently, rest collapsed
     files_section = ""
     if stats and stats.get("files"):
-        file_lines = []
+        noted_lines = []
+        other_lines = []
         for f in stats["files"]:
             note = doc.file_notes.get(f)
             if note:
-                file_lines.append(f"- `{f}` — {note}")
+                noted_lines.append(f"| `{f}` | {note} |")
             else:
-                file_lines.append(f"- `{f}`")
-        files_list = "\n".join(file_lines)
-        files_section = (f"<details>\n<summary>Files changed ({n_files})</summary>\n\n"
-                         f"{files_list}\n\n</details>\n\n")
+                other_lines.append(f"- `{f}`")
 
+        parts = []
+        if noted_lines:
+            parts.append("### Key files\n")
+            parts.append("| File | Change |")
+            parts.append("|------|--------|")
+            parts.extend(noted_lines)
+            parts.append("")
+
+        if other_lines:
+            other_text = "\n".join(other_lines)
+            parts.append(f"<details>\n<summary>Other files changed ({len(other_lines)})</summary>\n")
+            parts.append(other_text)
+            parts.append("\n</details>\n")
+
+        if parts:
+            files_section = "\n".join(parts) + "\n"
+
+    # 6. Review notes
     review_section = ""
     if doc.review_notes:
-        review_section = f"## Review Notes\n\n{doc.review_notes}\n\n"
+        review_section = f"## Review notes\n\n{doc.review_notes}\n\n"
 
+    # 7. Metadata (always collapsed)
     src_row = f"| Source | {source} |\n" if source else ""
     meta_section = (f"<details>\n<summary>Metadata</summary>\n\n"
                     f"| Field | Value |\n|-------|-------|\n"
@@ -208,7 +226,7 @@ def render_markdown_file(doc: CommitDoc, model: str = "gemma4",
 
 {doc.plain_english}
 
-## Commit message
+{review_section}## Commit message
 
 ```
 {commit_block}
@@ -220,5 +238,7 @@ def render_markdown_file(doc: CommitDoc, model: str = "gemma4",
 {changelog_block}
 ```
 
-{review_section}{files_section}{meta_section}"""
+## Files
+
+{files_section}{meta_section}"""
 
