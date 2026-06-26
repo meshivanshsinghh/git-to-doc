@@ -130,7 +130,7 @@ def process_diff(diff_text: str, stem: str, model: str,
     elapsed = time.time() - t0
     print(_c(f"  ⚡ Inference done in {elapsed:.1f}s", DIM))
     
-    if fmt is None:
+    if fmt == "stdout":
         print(render_full_output(result))
 
     if fmt in ("md", "both"):
@@ -153,9 +153,9 @@ def cmd_doc(argv):
         formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
     parser.add_argument("input",
         help="GitHub PR URL, '-' for stdin, a local .diff file, or a folder of .diff files")
-    parser.add_argument("--output", nargs="?", const="md", default=None,
-        metavar="{md,json,both}",
-        help="Save output: 'md' (default when flag used), 'json', or 'both'.")
+    parser.add_argument("--output", nargs="?", const="md", default="md",
+        metavar="{md,json,both,stdout}",
+        help="Save output: 'md' (default), 'json', 'both', or 'stdout' (print to terminal).")
     parser.add_argument("--model", default="gemma4", help="Ollama model name (default: gemma4)")
     parser.add_argument("--commit-msg", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
@@ -167,8 +167,8 @@ def cmd_doc(argv):
         print(render_commit_message(analyze_diff(diff_text, model=args.model)))
         return
 
-    if args.output not in {"md", "json", "both", None}:
-        print(_c(f"  ✗ --output must be md, json, or both (got '{args.output}')", RED)); sys.exit(1)
+    if args.output not in {"md", "json", "both", "stdout"}:
+        print(_c(f"  ✗ --output must be md, json, both, or stdout (got '{args.output}')", RED)); sys.exit(1)
     fmt = args.output
 
     print(_c("\n  🔍  git-to-doc", BOLD, CYAN) + _c(f"  {args.model} · {backend()}", DIM))
@@ -309,7 +309,7 @@ def _top_help():
 {_c("  git-to-doc", BOLD, CYAN)} {_c("— Conventional Commits, changelogs & PRs from git diffs, via Gemma", DIM)}
 
 {_c("  COMMANDS", BOLD)}
-    {_c("git-to-doc <input>", BOLD)} [--output md|json|both] [--model M]
+    {_c("git-to-doc <input>", BOLD)} [--output md|json|both|stdout] [--model M]
         Generate a Conventional Commit message + changelog + plain-English summary.
         <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
 
