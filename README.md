@@ -20,10 +20,11 @@ Developers write terrible commit messages and skip doc updates. `git-to-doc` is 
 ## Commands
 
 ```bash
-# diff → commit message + changelog + plain-English summary
+# diff → commit message + changelog + plain-English summary (saves to markdown by default)
 git-to-doc sample.diff
 git-to-doc https://github.com/pallets/flask/pull/5000 --output both
 git-to-doc ./diffs/ --output md           # batch a folder
+git-to-doc https://github.com/google/jax/pull/123 --output stdout # print to terminal
 
 # generate (and open) a pull request from the current branch
 git-to-doc pull-request                              # preview
