@@ -1,4 +1,4 @@
-# git-to-doc ⚡
+# git-to-doc
 
 > Turn a git diff into developer documentation with a local or cloud **Gemma** model — Conventional Commit messages, markdown changelogs, and pull requests — straight from the terminal.
 
