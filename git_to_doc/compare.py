@@ -21,11 +21,7 @@ from git_to_doc.renderer import render_markdown_file
 from git_to_doc.validate import validate_commit
 from git_to_doc.evaluate import judge_response, DEFAULT_JUDGE
 
-RESET = "\033[0m"; BOLD = "\033[1m"; GREEN = "\033[32m"
-RED = "\033[31m"; CYAN = "\033[36m"; DIM = "\033[2m"
-YELLOW = "\033[33m"; WHITE = "\033[97m"
-
-def _c(t, *c): return "".join(c) + t + RESET
+from git_to_doc.theme import c as _c, BOLD, DIM, GREEN, BRIGHT, RED, rule
 
 
 def load_diff(source: str) -> str:
@@ -63,11 +59,11 @@ def print_table(results: list, judged: bool):
     if has_score:
         head += f"  {'SCORE':>6}"
     head += "  TYPE/SUBJECT"
-    print(_c(head, BOLD, CYAN))
+    print(_c(head, BOLD, BRIGHT))
     print(_c("  " + "─" * 86, DIM))
     for r in results:
         elapsed = f"{r['elapsed']}s"
-        color = GREEN if r["elapsed"] < 30 else YELLOW
+        color = BRIGHT if r["elapsed"] < 30 else GREEN
         cc = _c("✓", GREEN) if r.get("cc_ok") else _c("✗", RED)
         line = f"  {r['label'][:23]:<24} {_c(r['model'][:11], DIM):<12} {_c(elapsed, color):>6}  {cc:>3}"
         if has_score:
@@ -101,22 +97,22 @@ def main():
         else:
             sources.append(inp)
 
-    print(_c("\n  🔬  git-to-doc  compare", BOLD, CYAN))
+    print(_c("\n  git-to-doc compare", BOLD, BRIGHT))
     judging = f"  ·  judge: {args.judge}" if args.judge else ""
     print(_c(f"  {len(sources)} source(s) × {len(args.models)} model(s)"
              f"  =  {len(sources) * len(args.models)} run(s){judging}", DIM))
-    print(_c("  " + "─" * 52, DIM))
+    print(rule())
 
     results = []
     for source in sources:
         label = source.split("/")[-1][:23]
         try:
-            print(_c(f"\n  Loading: {source}", DIM))
+            print(_c(f"\n  loading: {source}", DIM))
             diff_text = load_diff(source)
         except Exception as e:
             print(_c(f"  ✗ Failed to load {source}: {e}", RED)); continue
         for model in args.models:
-            print(_c(f"  ⏳ [{model}] {label}…", DIM), end="", flush=True)
+            print(_c(f"  [{model}] {label}…", DIM), end="", flush=True)
             try:
                 r = benchmark(diff_text, label, model, judge=args.judge)
                 results.append(r)

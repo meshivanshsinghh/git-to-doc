@@ -31,11 +31,8 @@ from git_to_doc.renderer import (
     render_commit_message, render_pr_body, render_pr_full_output,
 )
 
-# ── ANSI helpers ─────────────────────────────────────────────────────────────
-RESET = "\033[0m"; BOLD = "\033[1m"; GREEN = "\033[32m"
-RED = "\033[31m"; CYAN = "\033[36m"; DIM = "\033[2m"; YELLOW = "\033[33m"
-
-def _c(t, *c): return "".join(c) + t + RESET
+# ── Theme ────────────────────────────────────────────────────────────────────
+from git_to_doc.theme import c as _c, BOLD, DIM, GREEN, BRIGHT, RED, section, rule
 
 
 # ── URL normalisation ─────────────────────────────────────────────────────────
@@ -123,27 +120,27 @@ def _resolve_ref(name: str) -> Optional[str]:
 def process_diff(diff_text: str, stem: str, model: str,
                  fmt: Optional[str], source: str = "") -> CommitDoc:
     stats = diff_stats(diff_text)
-    print(_c(f"  Files changed : {len(stats['files'])}", DIM))
+    print(_c(f"  files changed: {len(stats['files'])}", DIM))
     for f in stats["files"]:
-        print(_c(f"    • {f}", DIM))
-    print(_c(f"  +{stats['additions']} additions  -{stats['deletions']} deletions", DIM))
+        print(_c(f"    {f}", DIM))
+    print(_c(f"  +{stats['additions']} / -{stats['deletions']}", DIM))
     print()
-    print(_c(f"  ⏳ Sending to {model}…", DIM))
+    print(_c(f"  sending to {model}…", DIM))
 
     t0 = time.time()
     result = analyze_diff(diff_text, model=model)
-    print(_c(f"  ⚡ Inference done in {time.time() - t0:.1f}s", DIM))
+    print(_c(f"  done in {time.time() - t0:.1f}s", DIM))
     print(render_full_output(result))
 
     if fmt in ("md", "both"):
         md_path = Path(f"{stem}.md")
         md_path.write_text(render_markdown_file(result, model=model, source=source, stats=stats),
                            encoding="utf-8")
-        print(_c(f"  ✓ Markdown saved → {md_path}", GREEN))
+        print(_c(f"  ✓ saved  {md_path}", GREEN))
     if fmt in ("json", "both"):
         json_path = Path(f"{stem}.json")
         json_path.write_text(result.model_dump_json(indent=2), encoding="utf-8")
-        print(_c(f"  ✓ JSON saved    → {json_path}", GREEN))
+        print(_c(f"  ✓ saved  {json_path}", GREEN))
     return result
 
 
@@ -174,21 +171,21 @@ def cmd_doc(argv):
         print(_c(f"  ✗ --output must be md, json, or both (got '{args.output}')", RED)); sys.exit(1)
     fmt = args.output
 
-    print(_c("\n  🔍  git-to-doc", BOLD, CYAN) + _c(f"  {args.model} · {backend()}", DIM))
-    print(_c("  " + "─" * 52, DIM))
+    print(_c("\n  git-to-doc", BOLD, BRIGHT) + _c(f"  ·  {args.model} · {backend()}", DIM))
+    print(rule())
     try:
         if not is_url(args.input) and args.input != "-" and Path(args.input).is_dir():
             diffs = sorted(Path(args.input).glob("**/*.diff"))
             if not diffs:
                 print(_c(f"  ✗ No .diff files found in {args.input}", RED)); sys.exit(1)
-            print(_c(f"  ⚡ Source: folder ({len(diffs)} diff files)", BOLD))
+            print(_c(f"  source: folder ({len(diffs)} diff files)", DIM))
             for diff_file in diffs:
-                print(_c(f"\n  ── {diff_file.name} ──", BOLD, CYAN))
+                print("\n" + section(diff_file.name))
                 stem = f"{diff_file.stem}-changelog-{date.today().isoformat()}"
                 process_diff(diff_file.read_text(encoding="utf-8"), stem, args.model, fmt, source=str(diff_file))
         else:
             label = "URL" if is_url(args.input) else ("stdin" if args.input == "-" else Path(args.input).name)
-            print(_c(f"  ⚡ Source: {label}", BOLD))
+            print(_c(f"  source: {label}", DIM))
             process_diff(_read_source(args.input), auto_stem(args.input), args.model, fmt, source=args.input)
     except requests.HTTPError as e:
         code = getattr(e.response, "status_code", "?")
@@ -226,16 +223,16 @@ def cmd_pr(argv):
     if not diff_text.strip():
         print(_c(f"  ✗ No changes between {base} and {head}.", RED)); sys.exit(1)
 
-    print(_c("\n  🔀  git-to-doc pr", BOLD, CYAN) + _c(f"  {head} → {base}  ·  {args.model}", DIM))
-    print(_c("  " + "─" * 52, DIM))
-    print(_c("  ⏳ Generating pull request…", DIM))
+    print(_c("\n  git-to-doc pr", BOLD, BRIGHT) + _c(f"  ·  {head} → {base} · {args.model}", DIM))
+    print(rule())
+    print(_c("  generating pull request…", DIM))
     pr = analyze_pr(diff_text, model=args.model, verbose=True)
     print(render_pr_full_output(pr))
 
     if not (args.create or args.draft):
         print(_c("  (preview only — re-run with --create to open the PR)\n", DIM)); return
 
-    print(_c(f"  ↑ pushing {head}…", DIM))
+    print(_c(f"  pushing {head}…", DIM))
     push = subprocess.run(["git", "push", "-u", "origin", head], capture_output=True, text=True)
     if push.returncode != 0:
         print(_c(f"  ✗ push failed: {push.stderr.strip()}", RED)); sys.exit(1)
@@ -247,7 +244,7 @@ def cmd_pr(argv):
            "--title", pr.title, "--body-file", body_file]
     if args.draft:
         cmd.append("--draft")
-    print(_c("  🚀 opening PR via gh…", DIM))
+    print(_c("  opening PR via gh…", DIM))
     r = subprocess.run(cmd, capture_output=True, text=True)
     os.unlink(body_file)
     if r.returncode == 0:
@@ -294,9 +291,9 @@ def cmd_install_hook(argv):
 # ── Top-level help ────────────────────────────────────────────────────────────
 def _top_help():
     print(f"""
-{_c("  git-to-doc", BOLD, CYAN)} {_c("— Conventional Commits, changelogs & PRs from git diffs, via Gemma", DIM)}
+{_c("  git-to-doc", BOLD, BRIGHT)} {_c("— Conventional Commits, changelogs & PRs from git diffs, via Gemma", DIM)}
 
-{_c("  COMMANDS", BOLD)}
+{_c("  COMMANDS", BOLD, BRIGHT)}
     {_c("git-to-doc <input>", BOLD)} [--output md|json|both] [--model M]
         Generate a Conventional Commit message + changelog + plain-English summary.
         <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
@@ -314,7 +311,7 @@ def _top_help():
     {_c("git-to-doc-compare <diffs...>", BOLD)} [--models ...] [--judge [MODEL]]
         Benchmark models (timing; --judge adds rubric quality + CC pass-rate).
 
-{_c("  EXAMPLES", BOLD)}
+{_c("  EXAMPLES", BOLD, BRIGHT)}
     git-to-doc sample.diff
     git-to-doc https://github.com/pallets/flask/pull/5000 --output both
     git diff --cached | git-to-doc --commit-msg -
