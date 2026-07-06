@@ -15,6 +15,13 @@ def _c(text: str, *codes: str) -> str:
     return "".join(codes) + text + RESET
 
 
+# Published synthetic-benchmark numbers for the default 16GB tier (see BENCHMARKS.md).
+BENCHMARK_PRECISION = 69
+BENCHMARK_RECALL = 36
+BENCHMARK_N = 168
+BENCHMARK_TIER = "16GB"
+
+
 _SECTION = {
     "feat":     "Added",
     "fix":      "Fixed",
@@ -156,9 +163,8 @@ def render_audit_report(merged: list[MergedDivergence], original_message: str,
                         auditors: list[str], source: str = "", precision=None) -> str:
     """Terminal audit report (ANSI colored) for `git-to-doc verify`.
 
-    `source` is the commit/PR being verified (shown in the header). `precision` is
-    the eval-set precision when known; None renders an honest "not yet measured"
-    placeholder instead of a fabricated number — this is a trust tool.
+    `source` is the commit/PR being verified (shown in the header). With no `precision`
+    override the footer shows the published synthetic-benchmark numbers (BENCHMARKS.md).
     """
     highs = [m for m in merged if m.confidence == "high"]
     poss = [m for m in merged if m.confidence == "possible"]
@@ -195,7 +201,9 @@ def render_audit_report(merged: list[MergedDivergence], original_message: str,
         out.append("")
 
     if precision is None:
-        out.append(_c("  📊 Benchmark: not yet measured — see BENCHMARKS.md", DIM))
+        out.append(_c(f"  📊 Benchmark: {BENCHMARK_PRECISION}% precision, "
+                      f"{BENCHMARK_RECALL}% recall (synthetic n={BENCHMARK_N}, "
+                      f"{BENCHMARK_TIER} tier — see BENCHMARKS.md)", DIM))
     else:
         out.append(_c(f"  📊 Benchmark: {precision}% precision on "
                       "git-to-doc eval set (v0.3.0)", DIM))

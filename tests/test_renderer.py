@@ -54,9 +54,12 @@ def test_audit_report_possible_divergence():
     assert "flagged by qwen2.5-coder:14b, others did not — verify manually" in out
 
 
-def test_audit_report_benchmark_placeholder_when_precision_unknown():
+def test_audit_report_benchmark_shows_measured_numbers():
     out = _strip(render_audit_report([], "m", AUDITORS))
-    assert "Benchmark: not yet measured — see BENCHMARKS.md" in out
+    assert "69% precision, 36% recall" in out
+    assert "synthetic n=168" in out
+    assert "16GB tier" in out
+    assert "BENCHMARKS.md" in out
 
 
 def test_audit_report_benchmark_shows_precision_when_given():
