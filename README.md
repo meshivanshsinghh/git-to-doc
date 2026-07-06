@@ -1,61 +1,64 @@
 # git-to-doc ⚡
 
-> **git-to-doc — the audit layer for AI-generated commits**
+> **The audit layer for AI-generated commits.**
 
-git-to-doc is evolving from a commit-message generator into an audit tool for AI-authored code. As more commits are written with AI assistance, the hard part shifts from *drafting the message* to *trusting the change*: the new `git-to-doc verify <commit-sha>` command (coming in phase 2) will audit a commit for correctness and safety, built on the same self-repair loop and deterministic validation that already guarantee spec-valid output today. The existing diff → documentation, pull-request, and hook commands remain available throughout the transition.
+AI writes your commits now — but does the message actually describe what the diff did? `git-to-doc verify` runs a commit through independent, cross-family code models and reports where the message and the diff disagree, with every claim cited to a file and line.
 
 ## Install
 
 ```bash
 pip install git-to-doc
+
+# pull the default auditor panel (two models from different families)
+ollama pull qwen2.5-coder:14b && ollama pull deepseek-coder-v2:latest
 ```
 
-## Why
+git-to-doc talks to a local [ollama](https://ollama.com) daemon by default, or to `ollama.com` when `OLLAMA_API_KEY` is set.
 
-Developers write terrible commit messages and skip doc updates. `git-to-doc` is the plumbing that fixes that: feed it a diff, get back a spec-valid commit, a changelog snippet, and a plain-English summary. It can also write your PRs and auto-fill commit messages via a git hook.
-
-## Backend (auto-detected)
-
-- **Cloud:** set `OLLAMA_API_KEY` (in a `.env` or your environment) → uses `ollama.com`.
-- **Local:** no key → uses a local `ollama` daemon (`localhost:11434`).
-
-## Commands
+## Quick start
 
 ```bash
-# diff → commit message + changelog + plain-English summary (saves to markdown by default)
-git-to-doc sample.diff
-git-to-doc https://github.com/pallets/flask/pull/5000 --output both
-git-to-doc ./diffs/ --output md           # batch a folder
-git-to-doc https://github.com/google/jax/pull/123 --output stdout # print to terminal
+# audit the latest commit against its message
+git-to-doc verify HEAD
 
-# generate (and open) a pull request from the current branch
-git-to-doc pull-request                              # preview
-git-to-doc pull-request --create                     # push + open via gh
-git-to-doc pull-request --draft --base develop
+# audit a specific commit
+git-to-doc verify a1b2c3d
 
-# install a git hook so `git commit` (no -m) auto-fills the message
-git-to-doc install-hook
-
-# benchmark models (timing; add --judge for rubric quality + CC pass-rate)
-git-to-doc-compare sample.diff --models gemma3:4b gemma3:12b --judge gpt-oss:120b
+# audit a GitHub pull request instead of a local commit
+git-to-doc verify --url https://github.com/owner/repo/pull/123
 ```
 
-## Output Example
+The report separates divergences the auditors **agree** on (`high` confidence) from the ones only a **single** auditor raised (`possible` — verify manually). Add `--json` for machine-readable output, or `--auditors m1,m2,m3` to choose your own panel.
 
-For each diff, `git-to-doc` produces a reviewer-first document:
+## How it works
 
-📄 **See a real rendered example →** [examples/PR-474.md](examples/PR-474.md) *(GitHub renders the callouts, collapsible sections, and code blocks natively)*
+- **Independent audit** — each auditor reads the diff *blind* and describes what it does on its own terms, *before* it ever sees the author's message. It can't be anchored by a misleading one.
+- **Cross-family** — the default panel is two models from different families (`qwen2.5-coder`, `deepseek-coder-v2`), so their blind spots don't overlap. A divergence they both flag is `high` confidence; one only a single model flags is `possible`.
+- **Cited claims** — every divergence must cite a specific file and line from the diff. A finding with no citation is rejected by the schema, never shown to you.
 
-## How it's built for trust
+## Also useful
 
-- **Self-repair loop** — every generated commit is checked against the Conventional Commits spec (`validate.py`); on failure the exact violations are fed back and the model regenerates. Output is guaranteed spec-valid, not hopeful.
-- **Structured output** — Pydantic schemas force valid JSON from the model.
-- **Measured, not guessed** — `git-to-doc-compare --judge` scores models with an LLM-as-judge rubric *and* a deterministic Conventional Commit pass-rate.
+git-to-doc grew out of a commit-documentation generator, and those commands are still here:
 
-## Library use
+- **`git-to-doc <diff>`** — turn a diff, a GitHub PR URL, or a folder of `.diff` files into a Conventional Commit message, a changelog snippet, and a plain-English summary.
+- **`git-to-doc pull-request`** — generate a PR title and body from your current branch, then audit that AI-generated description against the diff and append the findings *before* you post it (`--skip-audit` to opt out).
+- **`git-to-doc install-hook`** — install a `prepare-commit-msg` hook so a bare `git commit` auto-fills a Conventional Commit message from the staged diff.
+
+## Benchmarks
+
+Auditor precision/recall on the git-to-doc eval set — see [BENCHMARKS.md](BENCHMARKS.md) *(coming in a future release)*.
+
+## Learn more
+
+Landing page → https://git-to-doc.dev *(placeholder)*
+
+---
+
+### Library use
 
 ```python
-from git_to_doc import analyze_diff, render_full_output
-doc = analyze_diff(open("sample.diff").read(), model="gemma4")
-print(render_full_output(doc))
+from git_to_doc import run_audit, merge_audits
+
+reports = run_audit(diff_text, original_message)   # one AuditReport per auditor
+divergences = merge_audits(reports)                # merged high/possible findings
 ```

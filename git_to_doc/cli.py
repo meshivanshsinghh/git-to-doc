@@ -9,7 +9,7 @@ from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, backend, Gener
 from git_to_doc import auditor
 from git_to_doc.renderer import (
     render_full_output, render_markdown_file,
-    render_commit_message, render_pr_body, render_pr_full_output,
+    render_commit_message, render_pr_body, render_pr_full_output, render_audit_report,
 )
 
 # ── ANSI helpers ─────────────────────────────────────────────────────────────
@@ -211,6 +211,8 @@ def cmd_pr(argv):
     parser.add_argument("--model", default="gemma4", help="Ollama model name (default: gemma4)")
     parser.add_argument("--create", action="store_true", help="open the PR on GitHub via gh")
     parser.add_argument("--draft", action="store_true", help="open as a draft PR (implies --create)")
+    parser.add_argument("--skip-audit", action="store_true",
+        help="skip auditing the generated description against the diff")
     args = parser.parse_args(argv)
 
     if subprocess.run(["git", "rev-parse", "--git-dir"], capture_output=True).returncode != 0:
@@ -243,12 +245,28 @@ def cmd_pr(argv):
 
     t = threading.Thread(target=spinner)
     t.start()
-    pr = analyze_pr(diff_text, model=args.model, verbose=True)
-    done = True
-    t.join()
-    sys.stdout.write("\r" + " " * 50 + "\r")
-    
-    print(render_pr_full_output(pr))
+    try:
+        pr = analyze_pr(diff_text, model=args.model, verbose=True)
+    finally:
+        done = True
+        t.join()
+        sys.stdout.write("\r" + " " * 50 + "\r")
+
+    # Audit the AI-generated description against the diff before it's posted.
+    audit = None
+    if not args.skip_audit:
+        claim = f"{pr.title}\n\n{pr.summary}\n\n" + "\n".join(f"- {c}" for c in pr.changes)
+        print(_c(f"  🔎 auditing the generated description with "
+                 f"{len(auditor.DEFAULT_AUDITORS)} model(s)…", DIM))
+        try:
+            reports = auditor.run_audit(diff_text, claim)
+            audit = [m for m in auditor.merge_audits(reports) if m.confidence == "high"]
+        except Exception as e:
+            print(_c(f"  ⚠ audit skipped: {_explain_ollama_error(e, auditor.DEFAULT_AUDITORS)}",
+                     YELLOW))
+            audit = None
+
+    print(render_pr_full_output(pr, audit=audit))
 
     if not (args.create or args.draft):
         print(_c("  (preview only — re-run with --create to open the PR)\n", DIM)); return
@@ -258,7 +276,7 @@ def cmd_pr(argv):
     if push.returncode != 0:
         print(_c(f"  ✗ push failed: {push.stderr.strip()}", RED)); sys.exit(1)
 
-    body = render_pr_body(pr)
+    body = render_pr_body(pr, audit=audit)
     with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as f:
         f.write(body); body_file = f.name
     cmd = ["gh", "pr", "create", "--base", base, "--head", head,
@@ -321,24 +339,6 @@ def _explain_ollama_error(e, models) -> str:
     return f"Audit failed ({name}): {msg}"
 
 
-def _print_merged(merged, message):
-    if message:
-        print(_c("  message: ", DIM) + message.strip().splitlines()[0])
-    if not merged:
-        print(_c("\n  ✓ No divergences — the message matches the diff (per the auditors).\n",
-                 BOLD, GREEN))
-        return
-    highs = sum(1 for m in merged if m.confidence == "high")
-    print(_c(f"\n  {len(merged)} divergence(s):  ", BOLD)
-          + _c(f"{highs} high", RED) + _c("  ·  ", DIM)
-          + _c(f"{len(merged) - highs} possible", YELLOW) + "\n")
-    for m in merged:
-        tag = _c("[HIGH]    ", BOLD, RED) if m.confidence == "high" else _c("[possible]", YELLOW)
-        who = _c("(" + ", ".join(m.flagged_by) + ")", DIM)
-        print(f"  {tag} {_c(f'{m.file}:{m.line}', CYAN)}  {who}")
-        print(f"      {m.description}\n")
-
-
 def cmd_verify(argv):
     parser = argparse.ArgumentParser(
         prog="git-to-doc verify",
@@ -388,26 +388,24 @@ def cmd_verify(argv):
         print(_c(f"  ✗ No diff to audit for {source} (empty or a merge commit?).", RED)); sys.exit(1)
 
     used = auditors or auditor.DEFAULT_AUDITORS
-    print(_c("\n  🔎  git-to-doc verify", BOLD, CYAN)
-          + _c(f"  {source}  ·  {', '.join(used)}  ·  {backend()}", DIM))
-    print(_c("  " + "─" * 52, DIM))
+    # Progress + warnings go to stderr so --json keeps stdout clean/parseable.
     if not message:
-        print(_c("  ⚠ No original message found — auditing against an empty message.", YELLOW))
-    print(_c(f"  running {len(used)} auditor(s) — this can take a moment…", DIM))
+        print(_c("  ⚠ No original message found — auditing against an empty message.", YELLOW),
+              file=sys.stderr)
+    print(_c(f"  🔎 auditing {source} with {len(used)} model(s) — this can take a moment…", DIM),
+          file=sys.stderr)
 
-    # ── Run the panel, then merge ───────────────────────────────────────────────
     try:
         reports = auditor.run_audit(diff_text, message, auditors=auditors)
     except Exception as e:
-        print(_c("  ✗ " + _explain_ollama_error(e, used), RED)); sys.exit(1)
+        print(_c("  ✗ " + _explain_ollama_error(e, used), RED), file=sys.stderr); sys.exit(1)
 
     merged = auditor.merge_audits(reports)
 
-    # Pretty rendering lands in phase 4; for now, plain text (or JSON).
     if args.json:
         print(json.dumps([m.model_dump() for m in merged], indent=2))
         return
-    _print_merged(merged, message)
+    print(render_audit_report(merged, message, used, source=source))
 
 
 # ── install-hook: prepare-commit-msg auto-fill ─────────────────────────────────
@@ -459,9 +457,9 @@ def _top_help():
         Audit a commit (or GitHub PR) against its message with a panel of models,
         merging their findings into high/possible-confidence divergences.
 
-    {_c("git-to-doc pull-request", BOLD)} [--base B] [--create] [--draft] [--model M]
-        Generate a pull request from the current branch. Preview by default;
-        --create pushes the branch and opens the PR via gh.
+    {_c("git-to-doc pull-request", BOLD)} [--base B] [--create] [--draft] [--skip-audit]
+        Generate a pull request from the current branch, then audit the generated
+        description against the diff. Preview by default; --create opens it via gh.
 
     {_c("git-to-doc install-hook", BOLD)}
         Install a git hook so `git commit` (no -m) auto-fills the message.

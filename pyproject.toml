@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "git-to-doc"
 version = "0.3.0-dev"
-description = "Conventional Commit messages, changelogs & PRs from git diffs using Gemma (local or cloud)"
+description = "The audit layer for AI-generated commits. Independent, cross-family verification of what your diff actually did."
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
