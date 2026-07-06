@@ -19,22 +19,28 @@ tier and what to pull.
 | Tier | Auditors | Synthetic precision | Recall | FPR |
 |---|---|---|---|---|
 | 8 GB | `gemma2:2b` + `qwen2.5-coder:7b` | _pending_ | _pending_ | _pending_ |
-| 16 GB (default) | `qwen2.5-coder:14b` + `deepseek-coder-v2:latest` | _pending_ | _pending_ | _pending_ |
+| 16 GB (default) | `qwen2.5-coder:14b` + `deepseek-coder-v2:latest` | **69%** | 36% | 32% |
 | 32 GB | `qwen2.5-coder:32b` + `gpt-oss:120b` | _pending_ | _pending_ | _pending_ |
 
-> **Numbers pending.** These rows are placeholders until the full benchmark runs
-> complete — a tool whose whole point is trust shouldn't publish precision figures it
-> hasn't actually measured. Illustrative targets are ~68% / 82% / 88% precision across
-> the tiers; the real figures will be filled in from `benchmarks/*/results/*.json`.
+> **16 GB measured** (n=168, high-confidence, 2026-07-06); 8 GB and 32 GB still pending
+> (this hardware can't run them). These are what we actually measured, not the
+> illustrative ~68/82/88% targets — a trust tool shouldn't publish figures it hasn't run.
+> Recall is the fraction of planted omissions caught (by type: OMISSION 25%, TRUNCATION
+> 46% — a dropped body is easier to catch than a single missing sentence). FPR is the
+> fraction of *unmodified* commits flagged; it's inflated because real "original" messages
+> are themselves often incomplete, so some of those flags are genuine omissions the author
+> never wrote. Source: `benchmarks/synthetic/results/2026-07-06T05-58-31_*.json`.
 
-## A note on inter-auditor agreement
+## Does "high confidence" fire?
 
-Early signal suggests that at the strict "high confidence" bar (both auditors citing the
-same file within a few lines), agreement is **rare** — most findings land in the
-single-auditor "possible" tier. If that holds on the full run, it's an honest property we
-surface rather than hide: high-confidence findings appear when the models genuinely agree,
-and possible ones (flagged "verify manually") when they don't. The full synthetic and
-real-world runs will quantify exactly how often each tier fires.
+**Yes.** On the full synthetic run (n=168) the two auditors agreed at the strict
+high-confidence bar **58 times** (40 true positives + 18 false positives) — the early n=3
+smoke test that suggested "high never fires" did **not** hold at scale. So the two-tier
+design works: high confidence is a real, populated bucket, not a marketing fiction. It's
+also *conservative* — high-confidence recall is 36%, because the tier only asserts when
+both models independently agree; the single-auditor "possible" tier (flagged "verify
+manually") catches more but with less certainty. The real-world run will report how often
+high confidence fires on actual AI-authored commits.
 
 ## Reproduce
 

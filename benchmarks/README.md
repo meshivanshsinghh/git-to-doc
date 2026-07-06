@@ -84,12 +84,13 @@ take hours.**
 | Tier | Auditors | Synthetic precision |
 |---|---|---|
 | 8 GB | `gemma2:2b` + `qwen2.5-coder:7b` | _pending_ |
-| 16 GB (default) | `qwen2.5-coder:14b` + `deepseek-coder-v2:latest` | _pending_ |
+| 16 GB (default) | `qwen2.5-coder:14b` + `deepseek-coder-v2:latest` | **69%** (recall 36%, FPR 32%) |
 | 32 GB | `qwen2.5-coder:32b` + `gpt-oss:120b` | _pending_ |
 
-Illustrative targets pending measurement: roughly 68% / 82% / 88%. These are **not yet
-measured** — a trust tool shouldn't publish numbers it hasn't run. Fill each row in from
-`synthetic/results/*.json` after the full run, and see [../BENCHMARKS.md](../BENCHMARKS.md).
+16 GB measured on n=168 (high-confidence, 2026-07-06); high confidence **fired** (40 TP +
+18 FP). 8 GB / 32 GB still pending (needs that hardware). The illustrative ~68/82/88%
+targets were **not** used — these are measured. See [../BENCHMARKS.md](../BENCHMARKS.md)
+and `synthetic/results/*.json`.
 
 Generated datasets and result JSON are git-ignored; commit the curated results you want
 to publish.

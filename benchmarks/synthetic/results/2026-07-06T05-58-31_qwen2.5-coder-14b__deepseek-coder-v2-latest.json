@@ -1,0 +1,2647 @@
+{
+  "date": "2026-07-06",
+  "timestamp": "2026-07-06T05:58:31",
+  "auditors": [
+    "qwen2.5-coder:14b",
+    "deepseek-coder-v2:latest"
+  ],
+  "model_pair": "qwen2.5-coder-14b__deepseek-coder-v2-latest",
+  "confidence": "high",
+  "n_evaluated": 168,
+  "metrics": {
+    "precision": 0.6897,
+    "recall": 0.3604,
+    "f1": 0.4734,
+    "fpr": 0.3214,
+    "counts": {
+      "tp": 40,
+      "fn": 71,
+      "fp": 18,
+      "tn": 38,
+      "n_corrupted": 111,
+      "n_control": 56,
+      "n_errors": 1
+    },
+    "by_corruption_type": {
+      "OMISSION": {
+        "recall": 0.2545,
+        "n": 55,
+        "caught": 14
+      },
+      "TRUNCATION": {
+        "recall": 0.4643,
+        "n": 56,
+        "caught": 26
+      },
+      "CONTROL": {
+        "fpr": 0.3214,
+        "n": 56,
+        "flagged": 18
+      }
+    }
+  },
+  "per_entry": [
+    {
+      "commit_sha": "e78991410b78391bc07a4b5010b273dfec814ff6",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "e78991410b78391bc07a4b5010b273dfec814ff6",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/auth/hashers.py",
+        "line": 98,
+        "description": "(In a cryptography\ncontext this is the preferred spelling, and it is already used that way\nin Django's release notes.) This reduces ambiguity about whether\nmake_password() expects UTF-8 encoded Unicode text (\"plain-text bytes\")\nor the unencrypted material for the user's password (\"plaintext bytes\")."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "e78991410b78391bc07a4b5010b273dfec814ff6",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/auth/hashers.py",
+        "line": 98,
+        "description": "(In a cryptography\ncontext this is the preferred spelling, and it is already used that way\nin Django's release notes.) This reduces ambiguity about whether\nmake_password() expects UTF-8 encoded Unicode text (\"plain-text bytes\")\nor the unencrypted material for the user's password (\"plaintext bytes\")."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "e50e5945294f79ee9ab4ec69de24d14f9b26a7ae",
+      "repo": "psf/requests",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "pyproject.toml",
+          "line": 70,
+          "confidence": "high"
+        },
+        {
+          "file": "src/requests/compat.py",
+          "line": 47,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "e50e5945294f79ee9ab4ec69de24d14f9b26a7ae",
+      "repo": "psf/requests",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/requests/compat.py",
+        "line": 14,
+        "description": "Fix static typing of `compat.chardet`"
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "src/requests/compat.py",
+          "line": 47,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "e50e5945294f79ee9ab4ec69de24d14f9b26a7ae",
+      "repo": "psf/requests",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/requests/compat.py",
+        "line": 14,
+        "description": "Fix static typing of `compat.chardet`"
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "pyproject.toml",
+          "line": 70,
+          "confidence": "high"
+        },
+        {
+          "file": "src/requests/compat.py",
+          "line": 47,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "99672c672a1537aeb0d1fd5911ca6f04154cc091",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "99672c672a1537aeb0d1fd5911ca6f04154cc091",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/models/query.py",
+        "line": 37,
+        "description": "Changed QuerySet.select_related() \"called with no arguments\" deprecation\nwarning to be issued only when called from outside Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "99672c672a1537aeb0d1fd5911ca6f04154cc091",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/models/query.py",
+        "line": 37,
+        "description": "Changed QuerySet.select_related() \"called with no arguments\" deprecation\nwarning to be issued only when called from outside Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "93a1751f2fc0dfb81057ec3a7fb86778de1780fa",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "93a1751f2fc0dfb81057ec3a7fb86778de1780fa",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 62,
+        "description": "When doing releases, the `do_django_release.py` script included, in the\ngenerated checksum.txt file, a \"<commit hash>  <version>\" section for\nthe git tag for the release."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "scripts/do_django_release.py",
+          "line": 62,
+          "confidence": "high"
+        },
+        {
+          "file": "scripts/tests.py",
+          "line": 87,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "93a1751f2fc0dfb81057ec3a7fb86778de1780fa",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 62,
+        "description": "When doing releases, the `do_django_release.py` script included, in the\ngenerated checksum.txt file, a \"<commit hash>  <version>\" section for\nthe git tag for the release."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "scripts/do_django_release.py",
+          "line": 62,
+          "confidence": "high"
+        },
+        {
+          "file": "scripts/tests.py",
+          "line": 87,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "67c407585ccdc01b76d78e33c082f23d46346747",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "67c407585ccdc01b76d78e33c082f23d46346747",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/utils/xmlutils.py",
+        "line": 2,
+        "description": "`SimplerXMLGenerator` already rejected control characters (unsupported\nin XML 1.0) in element content, but attribute values were written\nunchecked, so unsanitized input could still produce an unparseable\nXML document."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/serializers/test_xml.py",
+          "line": 79,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/syndication_tests/tests.py",
+          "line": 526,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "67c407585ccdc01b76d78e33c082f23d46346747",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/utils/xmlutils.py",
+        "line": 2,
+        "description": "`SimplerXMLGenerator` already rejected control characters (unsupported\nin XML 1.0) in element content, but attribute values were written\nunchecked, so unsanitized input could still produce an unparseable\nXML document."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/serializers/test_xml.py",
+          "line": 79,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "b461519bf5973d7fc149560d2f99acdba71a437d",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/middleware/cache.py",
+          "line": 104,
+          "confidence": "high"
+        },
+        {
+          "file": "django/utils/cache.py",
+          "line": 50,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "b461519bf5973d7fc149560d2f99acdba71a437d",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/middleware/cache.py",
+        "line": 56,
+        "description": "`Cache-Control: private=\"Set-Cookie\"`)\nto be missed, allowing such responses to be stored in a shared cache."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "b461519bf5973d7fc149560d2f99acdba71a437d",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/middleware/cache.py",
+        "line": 56,
+        "description": "`Cache-Control: private=\"Set-Cookie\"`)\nto be missed, allowing such responses to be stored in a shared cache."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/utils/http.py",
+          "line": 209,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "09434486302078c3649e034dfa74cf3f102db20b",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "09434486302078c3649e034dfa74cf3f102db20b",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/core/mail/message.py",
+        "line": 360,
+        "description": "Bcc addresses are sent via the SMTP envelope and must never appear in\nthe message itself."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "09434486302078c3649e034dfa74cf3f102db20b",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/core/mail/message.py",
+        "line": 360,
+        "description": "Bcc addresses are sent via the SMTP envelope and must never appear in\nthe message itself."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "b5b53afa29c53a79ae92ed5298144db0cab0ea3b",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/views/decorators/csp.py",
+          "line": 9,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "b5b53afa29c53a79ae92ed5298144db0cab0ea3b",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/views/decorators/csp.py",
+        "line": 9,
+        "description": "Checking first reduces about 1 microsecond\noff each decorator application."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/views/decorators/csp.py",
+          "line": 9,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "b5b53afa29c53a79ae92ed5298144db0cab0ea3b",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/views/decorators/csp.py",
+        "line": 9,
+        "description": "Checking first reduces about 1 microsecond\noff each decorator application."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/views/decorators/csp.py",
+          "line": 9,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "c6f81b383251dc9fd0918b4ba040c993444b931e",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "c6f81b383251dc9fd0918b4ba040c993444b931e",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/backends/base/schema.py",
+        "line": 156,
+        "description": "The schema editor now records table renames while collecting SQL and\nredirects constraint-name introspection to the still-existing old table\nname, which carries the same constraints."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 156,
+          "confidence": "high"
+        },
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 2024,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "c6f81b383251dc9fd0918b4ba040c993444b931e",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/backends/base/schema.py",
+        "line": 156,
+        "description": "The schema editor now records table renames while collecting SQL and\nredirects constraint-name introspection to the still-existing old table\nname, which carries the same constraints."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 156,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "15bcbeeb95ca34385c119acea14df1f5e7274d45",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/signals/tests.py",
+          "line": 14,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/signals/tests.py",
+          "line": 30,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "15bcbeeb95ca34385c119acea14df1f5e7274d45",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/signals/tests.py",
+        "line": 1,
+        "description": "Signal.receivers prunes dead weak references lazily, so a weak receiver\ngarbage-collected elsewhere could still occupy a slot when\nBaseSignalSetup.setUp() counted receivers."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/signals/tests.py",
+          "line": 14,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/signals/tests.py",
+          "line": 30,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "15bcbeeb95ca34385c119acea14df1f5e7274d45",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/signals/tests.py",
+        "line": 1,
+        "description": "Signal.receivers prunes dead weak references lazily, so a weak receiver\ngarbage-collected elsewhere could still occupy a slot when\nBaseSignalSetup.setUp() counted receivers."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/signals/tests.py",
+          "line": 14,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/signals/tests.py",
+          "line": 30,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "9b1db9cb2c38c75b8fb0fc64ba5f73a6012e5b2d",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "9b1db9cb2c38c75b8fb0fc64ba5f73a6012e5b2d",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "docs/_ext/djangodocs.py",
+        "line": 2,
+        "description": "Changed djangodocs extension to register DjangoHTMLTranslator for any\nhtml-format builder (in the builder-inited hook), rather than a limited\nlist of builders at startup."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "docs/_theme/djangodocs/layout.html",
+          "line": 17,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "9b1db9cb2c38c75b8fb0fc64ba5f73a6012e5b2d",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "docs/_ext/djangodocs.py",
+        "line": 2,
+        "description": "Changed djangodocs extension to register DjangoHTMLTranslator for any\nhtml-format builder (in the builder-inited hook), rather than a limited\nlist of builders at startup."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "docs/_ext/djangodocs.py",
+          "line": 55,
+          "confidence": "high"
+        },
+        {
+          "file": "docs/_theme/djangodocs/layout.html",
+          "line": 17,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "526b1b414d8e215bf627b5722df12a09346dbf6b",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/middleware/http.py",
+          "line": 37,
+          "confidence": "high"
+        },
+        {
+          "file": "django/utils/cache.py",
+          "line": 108,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "526b1b414d8e215bf627b5722df12a09346dbf6b",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/middleware/http.py",
+        "line": 1,
+        "description": "Extracted the repeated `split(\",\")` + per-token `.strip()` pattern into\na `split_header_value()` generator in django/utils/http.py."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/cache/tests.py",
+          "line": 2258,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/middleware/tests.py",
+          "line": 595,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "526b1b414d8e215bf627b5722df12a09346dbf6b",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/middleware/http.py",
+        "line": 1,
+        "description": "Extracted the repeated `split(\",\")` + per-token `.strip()` pattern into\na `split_header_value()` generator in django/utils/http.py."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/utils/http.py",
+          "line": 197,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+      "repo": "pallets/click",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+      "repo": "pallets/click",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/test_defaults.py",
+        "line": 1,
+        "description": "In 8.4.0, set_parameter_source() was deferred\nuntil after type conversion and flag-group arbitration (0f71fe7, #3403), so\nget_parameter_source() returned None inside ParamType.convert() and eager\ncallbacks (#3458)."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+      "repo": "pallets/click",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/test_defaults.py",
+        "line": 1,
+        "description": "In 8.4.0, set_parameter_source() was deferred\nuntil after type conversion and flag-group arbitration (0f71fe7, #3403), so\nget_parameter_source() returned None inside ParamType.convert() and eager\ncallbacks (#3458)."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7ae70e7504b98553ab3537be84f930ea7e28c3c9",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7ae70e7504b98553ab3537be84f930ea7e28c3c9",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 13,
+        "description": "Extracted helpers (get_commit_hash, parse_major_version,\nfind_release_artifacts, create_checksum_file) and isolated all\ncode with side-effects in main() guarded by __name__ == \"__main__\",\nallowing the module to be imported without starting the release process."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7ae70e7504b98553ab3537be84f930ea7e28c3c9",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 13,
+        "description": "Extracted helpers (get_commit_hash, parse_major_version,\nfind_release_artifacts, create_checksum_file) and isolated all\ncode with side-effects in main() guarded by __name__ == \"__main__\",\nallowing the module to be imported without starting the release process."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "20960df455fffd73d556a5ed92cdf6832c23e65f",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "20960df455fffd73d556a5ed92cdf6832c23e65f",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/transaction.py",
+        "line": 1,
+        "description": "This also frees up the `savepoint` name, which would allow the context\nmanager from `django-subatomic` to be included in Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "20960df455fffd73d556a5ed92cdf6832c23e65f",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/transaction.py",
+        "line": 1,
+        "description": "This also frees up the `savepoint` name, which would allow the context\nmanager from `django-subatomic` to be included in Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "25cf1cbb1cb92c6c57b76cc43d697cfdc61f568f",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/core/mail/backends/smtp.py",
+          "line": 217,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/mail/test_backends.py",
+          "line": 1093,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "25cf1cbb1cb92c6c57b76cc43d697cfdc61f568f",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/core/mail/backends/smtp.py",
+        "line": 217,
+        "description": "The\nSMTP EmailBackend detects and prevents that (#35713)."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/core/mail/backends/smtp.py",
+          "line": 217,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "25cf1cbb1cb92c6c57b76cc43d697cfdc61f568f",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/core/mail/backends/smtp.py",
+        "line": 217,
+        "description": "The\nSMTP EmailBackend detects and prevents that (#35713)."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/core/mail/backends/smtp.py",
+          "line": 217,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/mail/test_backends.py",
+          "line": 1093,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "4ca85546a52227b9ef33d5ab328a2f00625a8483",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "4ca85546a52227b9ef33d5ab328a2f00625a8483",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/conf/__init__.py",
+        "line": 147,
+        "description": "Replaced the (currently unused) LazySettings._show_deprecation_warning()\nwith a module-level _show_settings_deprecation_warning() function."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/conf/__init__.py",
+          "line": 147,
+          "confidence": "high"
+        },
+        {
+          "file": "django/conf/__init__.py",
+          "line": 260,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "4ca85546a52227b9ef33d5ab328a2f00625a8483",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/conf/__init__.py",
+        "line": 147,
+        "description": "Replaced the (currently unused) LazySettings._show_deprecation_warning()\nwith a module-level _show_settings_deprecation_warning() function."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/conf/__init__.py",
+          "line": 147,
+          "confidence": "high"
+        },
+        {
+          "file": "django/conf/__init__.py",
+          "line": 260,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "21c51c2623a966ba1ad8fd10e36bc8bbec93b70e",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "21c51c2623a966ba1ad8fd10e36bc8bbec93b70e",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/backends/base/schema.py",
+        "line": 36,
+        "description": "Schema dependency discovery treated to_field values as raw field names, so attname aliases such as \"primary_id\" were not matched to the underlying relation field \"primary\"."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "21c51c2623a966ba1ad8fd10e36bc8bbec93b70e",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/backends/base/schema.py",
+        "line": 36,
+        "description": "Schema dependency discovery treated to_field values as raw field names, so attname aliases such as \"primary_id\" were not matched to the underlying relation field \"primary\"."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 36,
+          "confidence": "high"
+        },
+        {
+          "file": "django/db/backends/sqlite3/schema.py",
+          "line": 391,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "21dcd9a94fb3e9edeec883d12cd1dcac5e773abe",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "21dcd9a94fb3e9edeec883d12cd1dcac5e773abe",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/logging_tests/tests.py",
+        "line": 4,
+        "description": "Simplified and removed use of soon-to-be-deprecated or removed features\nfrom tests for AdminEmailHandler and BrokenLinkEmailsMiddleware."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/logging_tests/tests.py",
+          "line": 26,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "21dcd9a94fb3e9edeec883d12cd1dcac5e773abe",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/logging_tests/tests.py",
+        "line": 4,
+        "description": "Simplified and removed use of soon-to-be-deprecated or removed features\nfrom tests for AdminEmailHandler and BrokenLinkEmailsMiddleware."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/logging_tests/tests.py",
+          "line": 26,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/middleware/tests.py",
+          "line": 499,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "a276941334624994928c0547eebff4595c5e5532",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 3,
+      "flagged": [
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 47,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 1820,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 1840,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "a276941334624994928c0547eebff4595c5e5532",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/test_utils/tests.py",
+        "line": 4,
+        "description": "Added missing test to verify Django's test runner swaps in the locmem\nEmailBackend during tests."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 1840,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "a276941334624994928c0547eebff4595c5e5532",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/test_utils/tests.py",
+        "line": 4,
+        "description": "Added missing test to verify Django's test runner swaps in the locmem\nEmailBackend during tests."
+      },
+      "n_flagged": 3,
+      "flagged": [
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 47,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 1820,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/test_utils/tests.py",
+          "line": 1840,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "22ce7cf4d53cbe3d1613270088ff938907248ac2",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "22ce7cf4d53cbe3d1613270088ff938907248ac2",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/mail/test_backends.py",
+        "line": 25,
+        "description": "Renamed shared backend test case class to SharedEmailBackendTests,\n  to avoid confusion with tests for the BaseEmailBackend."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false,
+      "error": "auditor 'deepseek-coder-v2:latest' produced no schema-valid AuditReport after 3 attempts; refusing to emit a false all-clear."
+    },
+    {
+      "commit_sha": "22ce7cf4d53cbe3d1613270088ff938907248ac2",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/mail/test_backends.py",
+        "line": 25,
+        "description": "Renamed shared backend test case class to SharedEmailBackendTests,\n  to avoid confusion with tests for the BaseEmailBackend."
+      },
+      "n_flagged": 3,
+      "flagged": [
+        {
+          "file": "tests/mail/test_backends.py",
+          "line": 25,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/mail/test_backends.py",
+          "line": 37,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/mail/test_backends.py",
+          "line": 98,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "1085e5e17b7403b15c4eff397f3c98c15660f46d",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "1085e5e17b7403b15c4eff397f3c98c15660f46d",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/auth_tests/test_remote_user.py",
+        "line": 31,
+        "description": "Since that was not done, a regression made it into Django 5.2\n(50f89ae850f6b4e35819fe725a08c7e579bfd099) where `.header` no longer\ncorresponded to the request.META key under ASGI."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "1085e5e17b7403b15c4eff397f3c98c15660f46d",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/auth_tests/test_remote_user.py",
+        "line": 31,
+        "description": "Since that was not done, a regression made it into Django 5.2\n(50f89ae850f6b4e35819fe725a08c7e579bfd099) where `.header` no longer\ncorresponded to the request.META key under ASGI."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "0147222691db284f87c8c2a64ac6b1eded034c49",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/contrib/auth/middleware.py",
+          "line": 141,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/auth_tests/test_remote_user.py",
+          "line": 470,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "0147222691db284f87c8c2a64ac6b1eded034c49",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/auth/middleware.py",
+        "line": 8,
+        "description": "We need to switch on whether the request is a WSGI or ASGI request to\nknow whether to prepend `HTTP_`: we cannot assume sync exceution means\nwe are running under WSGI, as there could be other sync middleware\nforcing sync execution under ASGI."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/contrib/auth/middleware.py",
+          "line": 141,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/auth_tests/test_remote_user.py",
+          "line": 470,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "0147222691db284f87c8c2a64ac6b1eded034c49",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/auth/middleware.py",
+        "line": 8,
+        "description": "We need to switch on whether the request is a WSGI or ASGI request to\nknow whether to prepend `HTTP_`: we cannot assume sync exceution means\nwe are running under WSGI, as there could be other sync middleware\nforcing sync execution under ASGI."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/contrib/auth/middleware.py",
+          "line": 141,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/auth_tests/test_remote_user.py",
+          "line": 470,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "9f790ef1a0f356cf6342b5d57bbaeac35aed0d9f",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/backends/postgresql/tests.py",
+          "line": 325,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "9f790ef1a0f356cf6342b5d57bbaeac35aed0d9f",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/backends/postgresql/base.py",
+        "line": 216,
+        "description": "Setting \"check\" in OPTIONS[\"pool\"] previously raised TypeError because the\nPostgreSQL backend always passed check= to ConnectionPool() and unpacked\n**pool_options on top, regardless of CONN_HEALTH_CHECKS."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/backends/postgresql/tests.py",
+          "line": 325,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "9f790ef1a0f356cf6342b5d57bbaeac35aed0d9f",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/backends/postgresql/base.py",
+        "line": 216,
+        "description": "Setting \"check\" in OPTIONS[\"pool\"] previously raised TypeError because the\nPostgreSQL backend always passed check= to ConnectionPool() and unpacked\n**pool_options on top, regardless of CONN_HEALTH_CHECKS."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/db/backends/postgresql/base.py",
+          "line": 216,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/backends/postgresql/tests.py",
+          "line": 325,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "607316f9dea85ee81f8a215f5d5ae20f7f4fff71",
+      "repo": "pallets/click",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "607316f9dea85ee81f8a215f5d5ae20f7f4fff71",
+      "repo": "pallets/click",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/click/termui.py",
+        "line": 60,
+        "description": "When `show_default` is set to a string on an option with `prompt=True`,\nuse that string in the prompt instead of the actual default value,\nmatching the behavior of the help text."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "607316f9dea85ee81f8a215f5d5ae20f7f4fff71",
+      "repo": "pallets/click",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/click/termui.py",
+        "line": 60,
+        "description": "When `show_default` is set to a string on an option with `prompt=True`,\nuse that string in the prompt instead of the actual default value,\nmatching the behavior of the help text."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5b3cfce51770f46c6dc100e9be7f199a37176762",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5b3cfce51770f46c6dc100e9be7f199a37176762",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 5076,
+        "description": "Improved tests by getting rid of obj.id % 2\napproach for granting permissions per object\nfor users, since it is not the safest."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5b3cfce51770f46c6dc100e9be7f199a37176762",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 5076,
+        "description": "Improved tests by getting rid of obj.id % 2\napproach for granting permissions per object\nfor users, since it is not the safest."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/contrib/admin/options.py",
+          "line": 2029,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 5076,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "32a3b4aa695e76ced1b2829b178e630b9ac62dce",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "32a3b4aa695e76ced1b2829b178e630b9ac62dce",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/utils/deprecation.py",
+        "line": 30,
+        "description": "Implemented a new `warn_about_external_use()` helper to conditionally\nissue warnings depending on whether a deprecated feature is used from\nwithin Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "32a3b4aa695e76ced1b2829b178e630b9ac62dce",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/utils/deprecation.py",
+        "line": 30,
+        "description": "Implemented a new `warn_about_external_use()` helper to conditionally\nissue warnings depending on whether a deprecated feature is used from\nwithin Django."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "fa2a3de6ede10b005fc2c1d23f4cffb53eaec425",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/contrib/admin/options.py",
+          "line": 662,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "fa2a3de6ede10b005fc2c1d23f4cffb53eaec425",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/admin/options.py",
+        "line": 662,
+        "description": "The new ModelAdmin.delete_confirmation_max_display attribute allows\nlimiting the number of related objects shown on the delete confirmation\npage."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/contrib/admin/options.py",
+          "line": 662,
+          "confidence": "high"
+        },
+        {
+          "file": "django/contrib/admin/templatetags/admin_filters.py",
+          "line": 1,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "fa2a3de6ede10b005fc2c1d23f4cffb53eaec425",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/admin/options.py",
+        "line": 662,
+        "description": "The new ModelAdmin.delete_confirmation_max_display attribute allows\nlimiting the number of related objects shown on the delete confirmation\npage."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/contrib/admin/templates/admin/delete_confirmation.html",
+          "line": 23,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "d718ecf6d3dfc4656d262154c59672437c1ea075",
+      "repo": "pallets/flask",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "d718ecf6d3dfc4656d262154c59672437c1ea075",
+      "repo": "pallets/flask",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/flask/app.py",
+        "line": 198,
+        "description": "By default Flask will provide responses to OPTIONS requests that are\nautomatically generated."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "d718ecf6d3dfc4656d262154c59672437c1ea075",
+      "repo": "pallets/flask",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/flask/app.py",
+        "line": 198,
+        "description": "By default Flask will provide responses to OPTIONS requests that are\nautomatically generated."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "repo": "psf/requests",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "repo": "psf/requests",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/requests/exceptions.py",
+        "line": 41,
+        "description": "requests.exceptions.JSONDecodeError are not deserializable: calling\n`pickle.dumps` followed by `pickle.loads` will trigger an error."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "repo": "psf/requests",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/requests/exceptions.py",
+        "line": 41,
+        "description": "requests.exceptions.JSONDecodeError are not deserializable: calling\n`pickle.dumps` followed by `pickle.loads` will trigger an error."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "61a62be313e395ce1265132bfc99f51476fb3c95",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/db/models/query_utils.py",
+          "line": 178,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/constraints/tests.py",
+          "line": 1297,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "61a62be313e395ce1265132bfc99f51476fb3c95",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/models/query_utils.py",
+        "line": 165,
+        "description": "When we adjusted UNKNOWN handling for CheckConstraint in refs #33996 we assumed\nthat all usage of Q.check would benefit from this approach."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/constraints/tests.py",
+          "line": 1297,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "61a62be313e395ce1265132bfc99f51476fb3c95",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/models/query_utils.py",
+        "line": 165,
+        "description": "When we adjusted UNKNOWN handling for CheckConstraint in refs #33996 we assumed\nthat all usage of Q.check would benefit from this approach."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/db/models/query_utils.py",
+          "line": 178,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/constraints/tests.py",
+          "line": 1297,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "7142667340f78403cbbcaa8f33703c494282b7b7",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7142667340f78403cbbcaa8f33703c494282b7b7",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/core/serializers/pyyaml.py",
+        "line": 34,
+        "description": "The sort_keys parameter was added in PyYAML 5.1 (released March 2019)."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "7142667340f78403cbbcaa8f33703c494282b7b7",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/core/serializers/pyyaml.py",
+        "line": 34,
+        "description": "The sort_keys parameter was added in PyYAML 5.1 (released March 2019)."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "d8e987eae723fbb0ccc355d125d0e179a1bf5fd8",
+      "repo": "pallets/click",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "d8e987eae723fbb0ccc355d125d0e179a1bf5fd8",
+      "repo": "pallets/click",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/click/testing.py",
+        "line": 98,
+        "description": "The NamedTextIOWrapper is closing the buffers\nthat are owned by the StreamMixer, so\nimplement a close() method that prevents\nit from doing that."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "d8e987eae723fbb0ccc355d125d0e179a1bf5fd8",
+      "repo": "pallets/click",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/click/testing.py",
+        "line": 98,
+        "description": "The NamedTextIOWrapper is closing the buffers\nthat are owned by the StreamMixer, so\nimplement a close() method that prevents\nit from doing that."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "09f27cc373eb1e6e5e8b286204809a79b61d55c3",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "09f27cc373eb1e6e5e8b286204809a79b61d55c3",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/utils/http.py",
+        "line": 342,
+        "description": "Added a fast-path to parse_header_parameters\nBenchmark results (50,000 iterations):"
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "09f27cc373eb1e6e5e8b286204809a79b61d55c3",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/utils/http.py",
+        "line": 342,
+        "description": "Added a fast-path to parse_header_parameters\nBenchmark results (50,000 iterations):"
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "280256499c5b2d636949f3c8cb52159a8e4c26bb",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/admin_views/admin.py",
+          "line": 369,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 4742,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "280256499c5b2d636949f3c8cb52159a8e4c26bb",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 4742,
+        "description": "As originally written, this test interfered with\nadmin_views.tests.SeleniumTests.test_inline_uuid_pk_add_with_popup."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/admin_views/admin.py",
+          "line": 369,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 4742,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "280256499c5b2d636949f3c8cb52159a8e4c26bb",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 4742,
+        "description": "As originally written, this test interfered with\nadmin_views.tests.SeleniumTests.test_inline_uuid_pk_add_with_popup."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/admin_views/admin.py",
+          "line": 1373,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 4742,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "91de59c6c8abc8251e7af551cd4546cc964288af",
+      "repo": "pallets/click",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "src/click/core.py",
+          "line": 2781,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "91de59c6c8abc8251e7af551cd4546cc964288af",
+      "repo": "pallets/click",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/test_options.py",
+        "line": 15,
+        "description": "added required test in test_options, removed seperate test files."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "91de59c6c8abc8251e7af551cd4546cc964288af",
+      "repo": "pallets/click",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/test_options.py",
+        "line": 15,
+        "description": "added required test in test_options, removed seperate test files."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "953c238058c0ce387a1a41cb491bfc1875d73ad0",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/http/request.py",
+          "line": 401,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "953c238058c0ce387a1a41cb491bfc1875d73ad0",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/http/request.py",
+        "line": 1,
+        "description": "The `body` property in `HttpRequest` checks DATA_UPLOAD_MAX_MEMORY_SIZE\nagainst the declared `Content-Length` header before reading."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "953c238058c0ce387a1a41cb491bfc1875d73ad0",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/http/request.py",
+        "line": 1,
+        "description": "The `body` property in `HttpRequest` checks DATA_UPLOAD_MAX_MEMORY_SIZE\nagainst the declared `Content-Length` header before reading."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/http/request.py",
+          "line": 401,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "ef8b25dcc06d158683a5623ce406d561638f4073",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ef8b25dcc06d158683a5623ce406d561638f4073",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/contenttypes/admin.py",
+        "line": 127,
+        "description": "Edit permissions were still checked as part of ordinary form validation,\nbut because GenericInlineModelAdmin overrides get_formset(), it lacked\nInlineModelAdmin's dynamic DeleteProtectedModelForm.has_changed() logic\nfor checking permissions server-side, leaving the add case unaddressed."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ef8b25dcc06d158683a5623ce406d561638f4073",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/contenttypes/admin.py",
+        "line": 127,
+        "description": "Edit permissions were still checked as part of ordinary form validation,\nbut because GenericInlineModelAdmin overrides get_formset(), it lacked\nInlineModelAdmin's dynamic DeleteProtectedModelForm.has_changed() logic\nfor checking permissions server-side, leaving the add case unaddressed."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "6c9ef6282e65a79daba4dc2146e8b825b4ddadb9",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "6c9ef6282e65a79daba4dc2146e8b825b4ddadb9",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/test/testcases.py",
+        "line": 1783,
+        "description": "terminate() shouldn't assume the main server was started."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "6c9ef6282e65a79daba4dc2146e8b825b4ddadb9",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/test/testcases.py",
+        "line": 1783,
+        "description": "terminate() shouldn't assume the main server was started."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/test/testcases.py",
+          "line": 1783,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "8b7ea2bcdd7297941ca6beb72d93b9568e187349",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/forms_tests/field_tests/test_multiplechoicefield.py",
+          "line": 93,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "8b7ea2bcdd7297941ca6beb72d93b9568e187349",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/forms/fields.py",
+        "line": 40,
+        "description": "Used Django's OrderedSet datastructure instead of set() in MultipleChoiceField.validate()\nto prevent submission ordering from being discarded during validation."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/forms/fields.py",
+          "line": 965,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/forms_tests/field_tests/test_multiplechoicefield.py",
+          "line": 93,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "8b7ea2bcdd7297941ca6beb72d93b9568e187349",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/forms/fields.py",
+        "line": 40,
+        "description": "Used Django's OrderedSet datastructure instead of set() in MultipleChoiceField.validate()\nto prevent submission ordering from being discarded during validation."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "django/forms/fields.py",
+          "line": 965,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/forms_tests/field_tests/test_multiplechoicefield.py",
+          "line": 93,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "f05fac88c4699c6d04a8f1ac3328cf6c7bd39228",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "f05fac88c4699c6d04a8f1ac3328cf6c7bd39228",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/db/models/sql/compiler.py",
+        "line": 439,
+        "description": "The `SQLCompiler.quote_name_unless_alias` method is kept for now as an alias\nfor the newly introduced `.quote_name` method but will be duly deprecated in\na follow up commit."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/db/models/sql/compiler.py",
+          "line": 547,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "f05fac88c4699c6d04a8f1ac3328cf6c7bd39228",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/db/models/sql/compiler.py",
+        "line": 439,
+        "description": "The `SQLCompiler.quote_name_unless_alias` method is kept for now as an alias\nfor the newly introduced `.quote_name` method but will be duly deprecated in\na follow up commit."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "4b2b4bf0ac2707dc9c4d51cabfa72168eaea95fe",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/admin_changelist/tests.py",
+          "line": 1768,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "4b2b4bf0ac2707dc9c4d51cabfa72168eaea95fe",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/admin/utils.py",
+        "line": 294,
+        "description": "Modified lookup_field() in django/contrib/admin/utils.py to retrieve the\nfinal field from the path when traversing relations using LOOKUP_SEP (__),\nallowing display_for_field() to properly handle BooleanFields."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "4b2b4bf0ac2707dc9c4d51cabfa72168eaea95fe",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/admin/utils.py",
+        "line": 294,
+        "description": "Modified lookup_field() in django/contrib/admin/utils.py to retrieve the\nfinal field from the path when traversing relations using LOOKUP_SEP (__),\nallowing display_for_field() to properly handle BooleanFields."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/contrib/admin/utils.py",
+          "line": 294,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "ba4751e0ca558dd8f0d9e6153bec4280289ca2f4",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ba4751e0ca558dd8f0d9e6153bec4280289ca2f4",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/dispatch/dispatcher.py",
+        "line": 154,
+        "description": "Replaced weak receiver registration in Signal.connect() to pass\n_flag_dead_receivers directly as the callback for weakref.ref() and\nweakref.WeakMethod() instead of creating weakref.finalize() objects."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ba4751e0ca558dd8f0d9e6153bec4280289ca2f4",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/dispatch/dispatcher.py",
+        "line": 154,
+        "description": "Replaced weak receiver registration in Signal.connect() to pass\n_flag_dead_receivers directly as the callback for weakref.ref() and\nweakref.WeakMethod() instead of creating weakref.finalize() objects."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "3abf89887993140d28676f26420ee0d46a617f51",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "scripts/confirm_release.sh",
+          "line": 1,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "3abf89887993140d28676f26420ee0d46a617f51",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 206,
+        "description": "Docs and script\ndo_django_release.py were updated."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "scripts/confirm_release.sh",
+          "line": 1,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "3abf89887993140d28676f26420ee0d46a617f51",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "scripts/do_django_release.py",
+        "line": 206,
+        "description": "Docs and script\ndo_django_release.py were updated."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "scripts/confirm_release.sh",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "scripts/verify_release.sh",
+          "line": 1,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "18d29196c508b249ef1111f1f29c9133e0a8b097",
+      "repo": "pallets/click",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "18d29196c508b249ef1111f1f29c9133e0a8b097",
+      "repo": "pallets/click",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "src/click/core.py",
+        "line": 2338,
+        "description": "In order to ensure that user-defined `type_cast_value` hooks are never\ncalled with a value of `UNSET`, it is necessary to intercept `UNSET`\nvalues and, in the particular cases in which `UNSET` needs special\nhandling, preempt any call to `type_cast_value()`."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "18d29196c508b249ef1111f1f29c9133e0a8b097",
+      "repo": "pallets/click",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "src/click/core.py",
+        "line": 2338,
+        "description": "In order to ensure that user-defined `type_cast_value` hooks are never\ncalled with a value of `UNSET`, it is necessary to intercept `UNSET`\nvalues and, in the particular cases in which `UNSET` needs special\nhandling, preempt any call to `type_cast_value()`."
+      },
+      "n_flagged": 3,
+      "flagged": [
+        {
+          "file": "src/click/core.py",
+          "line": 2338,
+          "confidence": "high"
+        },
+        {
+          "file": "src/click/core.py",
+          "line": 2421,
+          "confidence": "high"
+        },
+        {
+          "file": "src/click/core.py",
+          "line": 3256,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "9adc205b6d0269a81ce93a7e6d6b0f375f6bd526",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "9adc205b6d0269a81ce93a7e6d6b0f375f6bd526",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/humanize/templatetags/humanize.py",
+        "line": 32,
+        "description": "Some languages use a different ordinal suffix for the number 1 than\nfor other values ending in 1 (e.g."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "9adc205b6d0269a81ce93a7e6d6b0f375f6bd526",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/humanize/templatetags/humanize.py",
+        "line": 32,
+        "description": "Some languages use a different ordinal suffix for the number 1 than\nfor other values ending in 1 (e.g."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "019e44f67a8dace67b786e2818938c8691132988",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "019e44f67a8dace67b786e2818938c8691132988",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/utils/_os.py",
+        "line": 1,
+        "description": "This fix introduces `safe_makedirs()` in the `os` utils as a safer\nalternative to `os.makedirs()` that avoids umask-related race conditions\nin multi-threaded environments."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "019e44f67a8dace67b786e2818938c8691132988",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/utils/_os.py",
+        "line": 1,
+        "description": "This fix introduces `safe_makedirs()` in the `os` utils as a safer\nalternative to `os.makedirs()` that avoids umask-related race conditions\nin multi-threaded environments."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "951ffb3832cd83ba672c1e3deae2bda128eb9cca",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "951ffb3832cd83ba672c1e3deae2bda128eb9cca",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/forms/fields.py",
+        "line": 12,
+        "description": "The\nusage of `urlsplit()` in `URLField.to_python()` was replaced with\n`str.partition(\":\")` for URL scheme detection."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "951ffb3832cd83ba672c1e3deae2bda128eb9cca",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/forms/fields.py",
+        "line": 12,
+        "description": "The\nusage of `urlsplit()` in `URLField.to_python()` was replaced with\n`str.partition(\":\")` for URL scheme detection."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "django/forms/fields.py",
+          "line": 780,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "2d2447e210cf0b9e8c7484bfc6f158de9b24c171",
+      "repo": "psf/requests",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "2d2447e210cf0b9e8c7484bfc6f158de9b24c171",
+      "repo": "psf/requests",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "requests/utils.py",
+        "line": 124,
+        "description": "Catch AttributeError in utils.super_len"
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "2d2447e210cf0b9e8c7484bfc6f158de9b24c171",
+      "repo": "psf/requests",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "requests/utils.py",
+        "line": 124,
+        "description": "Catch AttributeError in utils.super_len"
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "71d1e92e11093feb9a337f6d77078c5e75cbb92f",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "71d1e92e11093feb9a337f6d77078c5e75cbb92f",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/admin_scripts/tests.py",
+        "line": 134,
+        "description": "This change resolved the issue by setting\nthe \"PYTHON_COLORS\" environment variable to \"0\" for those specific tests,\nwhich takes precendence over the presence of \"FORCE_COLOR\"."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/test_runner/test_debug_sql.py",
+          "line": 184,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/test_utils/test_simpletestcase.py",
+          "line": 19,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "71d1e92e11093feb9a337f6d77078c5e75cbb92f",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/admin_scripts/tests.py",
+        "line": 134,
+        "description": "This change resolved the issue by setting\nthe \"PYTHON_COLORS\" environment variable to \"0\" for those specific tests,\nwhich takes precendence over the presence of \"FORCE_COLOR\"."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "2de474dffca008038a7f9fe10289f390c5f4f15b",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "2de474dffca008038a7f9fe10289f390c5f4f15b",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/template/smartif.py",
+        "line": 114,
+        "description": "Users can access `smartif.op` and `smartif.key` public attrs, which is clearly not intenteded\n2."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "2de474dffca008038a7f9fe10289f390c5f4f15b",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/template/smartif.py",
+        "line": 114,
+        "description": "Users can access `smartif.op` and `smartif.key` public attrs, which is clearly not intenteded\n2."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "f45bfa5e2801545c1c8787f59bee3867c9928871",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "f45bfa5e2801545c1c8787f59bee3867c9928871",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/contenttypes/models.py",
+        "line": 156,
+        "description": "Updated ContentType.app_labeled_name to include the app_label in its string representation."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "f45bfa5e2801545c1c8787f59bee3867c9928871",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/contenttypes/models.py",
+        "line": 156,
+        "description": "Updated ContentType.app_labeled_name to include the app_label in its string representation."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "b227e3cb82c8d42ea27790d615ecafe12528d3bc",
+      "repo": "psf/requests",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "b227e3cb82c8d42ea27790d615ecafe12528d3bc",
+      "repo": "psf/requests",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/testserver/server.py",
+        "line": 78,
+        "description": "Fix the listen() invocation for the test server not to pass a backlog\nvalue of zero."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "b227e3cb82c8d42ea27790d615ecafe12528d3bc",
+      "repo": "psf/requests",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/testserver/server.py",
+        "line": 78,
+        "description": "Fix the listen() invocation for the test server not to pass a backlog\nvalue of zero."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "tests/testserver/server.py",
+          "line": 78,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    },
+    {
+      "commit_sha": "e253eba5ed8922affe50089548a15fbda298fefd",
+      "repo": "psf/requests",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "requirements-dev.txt",
+          "line": 8,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "e253eba5ed8922affe50089548a15fbda298fefd",
+      "repo": "psf/requests",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/conftest.py",
+        "line": 1,
+        "description": "pytest-httpbin<1.0 ships with a server certificate with a commonName but\nno subjectAltName."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "requirements-dev.txt",
+          "line": 8,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "e253eba5ed8922affe50089548a15fbda298fefd",
+      "repo": "psf/requests",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/conftest.py",
+        "line": 1,
+        "description": "pytest-httpbin<1.0 ships with a server certificate with a commonName but\nno subjectAltName."
+      },
+      "n_flagged": 1,
+      "flagged": [
+        {
+          "file": "requirements-dev.txt",
+          "line": 8,
+          "confidence": "high"
+        }
+      ],
+      "caught": false
+    },
+    {
+      "commit_sha": "ec2ccff9a512adc715c5fc620bbe80790857b147",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ec2ccff9a512adc715c5fc620bbe80790857b147",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "django/contrib/gis/geos/coordseq.py",
+        "line": 20,
+        "description": "Instead of the parent geometry providing the z dimension we can reply on GEOSCoordSeq functions directly."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "ec2ccff9a512adc715c5fc620bbe80790857b147",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "django/contrib/gis/geos/coordseq.py",
+        "line": 20,
+        "description": "Instead of the parent geometry providing the z dimension we can reply on GEOSCoordSeq functions directly."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5798f4bb1750f68d3bfbaa75020db7fa02b4db15",
+      "repo": "django/django",
+      "corruption_type": "CONTROL",
+      "expected": null,
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5798f4bb1750f68d3bfbaa75020db7fa02b4db15",
+      "repo": "django/django",
+      "corruption_type": "OMISSION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 6101,
+        "description": "This calls the scrollIntoView function explicitly, which fixes\nsome selenium tests when not running in headless mode."
+      },
+      "n_flagged": 0,
+      "flagged": [],
+      "caught": false
+    },
+    {
+      "commit_sha": "5798f4bb1750f68d3bfbaa75020db7fa02b4db15",
+      "repo": "django/django",
+      "corruption_type": "TRUNCATION",
+      "expected": {
+        "file": "tests/admin_views/tests.py",
+        "line": 6101,
+        "description": "This calls the scrollIntoView function explicitly, which fixes\nsome selenium tests when not running in headless mode."
+      },
+      "n_flagged": 2,
+      "flagged": [
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 6103,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/admin_views/tests.py",
+          "line": 6180,
+          "confidence": "high"
+        }
+      ],
+      "caught": true
+    }
+  ]
+}
