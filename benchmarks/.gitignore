@@ -1,0 +1,3 @@
+# Generated benchmark artifacts (regenerable; diffs make the dataset large)
+synthetic/data/*.jsonl
+synthetic/results/*.json
