@@ -5,7 +5,7 @@ from typing import Optional
 
 import requests
 
-from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, backend
+from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, backend, GenerationError
 from git_to_doc import auditor
 from git_to_doc.renderer import (
     render_full_output, render_markdown_file,
@@ -121,12 +121,12 @@ def process_diff(diff_text: str, stem: str, model: str,
     t0 = time.time()
     t = threading.Thread(target=spinner)
     t.start()
-    
-    result = analyze_diff(diff_text, model=model)
-    
-    done = True
-    t.join()
-    sys.stdout.write("\r" + " " * 50 + "\r")  # clear spinner line
+    try:
+        result = analyze_diff(diff_text, model=model)
+    finally:
+        done = True
+        t.join()
+        sys.stdout.write("\r" + " " * 50 + "\r")  # clear spinner line
     
     elapsed = time.time() - t0
     print(_c(f"  ⚡ Inference done in {elapsed:.1f}s", DIM))
@@ -165,7 +165,10 @@ def cmd_doc(argv):
         diff_text = _read_source(args.input)
         if not diff_text.strip():
             return
-        print(render_commit_message(analyze_diff(diff_text, model=args.model)))
+        try:
+            print(render_commit_message(analyze_diff(diff_text, model=args.model)))
+        except GenerationError as e:
+            print(f"git-to-doc: {e}", file=sys.stderr); sys.exit(1)
         return
 
     if args.output not in {"md", "json", "both", "stdout"}:
@@ -194,6 +197,8 @@ def cmd_doc(argv):
         print(_c(f"\n  ✗ Could not fetch diff (HTTP {code}). Check the PR URL is public.", RED)); sys.exit(1)
     except requests.RequestException as e:
         print(_c(f"\n  ✗ Network error fetching diff: {e}", RED)); sys.exit(1)
+    except GenerationError as e:
+        print(_c(f"\n  ✗ {e}", RED)); sys.exit(1)
     print()
 
 

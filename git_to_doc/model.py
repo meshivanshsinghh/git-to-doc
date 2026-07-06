@@ -84,6 +84,15 @@ def _parse(raw: str, Model):
     raise ValueError("No valid candidates found for parsing.")
 
 
+class GenerationError(ValueError):
+    """Raised when a model can't produce spec-valid output within the retry budget.
+
+    Subclasses ValueError so existing `except ValueError` / test expectations still
+    catch it. We raise this instead of returning a plausible-but-fake stub — a silent
+    fallback in a trust tool is a trust hole.
+    """
+
+
 # ── Commit document ───────────────────────────────────────────────────────────
 class CommitDoc(BaseModel):
     type: Literal["feat","fix","docs","refactor","perf","test","chore","ci","build","revert"]
@@ -135,11 +144,13 @@ def analyze_diff(diff_text: str, model: str = "gemma4", max_retries: int = 3,
     ]
     schema = CommitDoc.model_json_schema()
 
+    last_reason = "no output produced"
     for attempt in range(max_retries):
         try:
             raw = _chat(model, messages, schema)
             doc = _parse(raw, CommitDoc)
         except ValidationError as e:
+            last_reason = f"invalid JSON for the schema: {e}"
             messages.append({"role": "user", "content":
                 f"That was not valid JSON for the schema: {e}. "
                 "Output ONLY a corrected JSON object."})
@@ -150,22 +161,19 @@ def analyze_diff(diff_text: str, model: str = "gemma4", max_retries: int = 3,
         problems = validate_commit(doc)
         if not problems:
             return doc
+        last_reason = "; ".join(problems)
         if verbose:
-            print(f"  ↻ repair {attempt+1}: " + "; ".join(problems))
+            print(f"  ↻ repair {attempt+1}: " + last_reason)
         messages.append({"role": "assistant", "content": raw})
         messages.append({"role": "user", "content":
             "Your commit violates the Conventional Commits spec:\n- "
             + "\n- ".join(problems) + "\nReturn a corrected JSON object only."})
 
-    # Fallback — never crash during a demo.
-    return CommitDoc(
-        type="chore", scope=None, subject="update codebase", body=None,
-        breaking=False, changelog_entry="- chore: miscellaneous codebase updates",
-        plain_english="General codebase updates were made.",
-        human_title="Maintenance: Codebase Update",
-        review_notes="This is a general maintenance update. No specific review areas identified.",
-        file_notes={}
-    )
+    # No spec-valid output within the retry budget. Raise rather than return a fake
+    # stub — a silent fallback in a trust tool is a trust hole.
+    raise GenerationError(
+        f"model '{model}' failed to produce a spec-valid commit after {max_retries} "
+        f"attempts (last issue: {last_reason}).")
 
 
 # ── Pull request document ─────────────────────────────────────────────────────
@@ -330,6 +338,6 @@ def audit_diff(diff_text: str, model: str, original_message: str,
         report.auditor_model = model   # trust our own record, not the model's claim
         return report
 
-    raise ValueError(
+    raise GenerationError(
         f"auditor '{model}' produced no schema-valid AuditReport after {max_retries} "
         "attempts; refusing to emit a false all-clear.") from last_err
