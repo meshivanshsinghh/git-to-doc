@@ -23,6 +23,11 @@ else:
 # Cloud uses size tags (gemma4:31b); local relies on whatever you've pulled.
 _CLOUD_ALIASES = {"gemma4": "gemma4:31b", "gemma3": "gemma3:12b", "gemma2": "gemma3:4b"}
 
+# ollama defaults local models to a small context window (~2048 tokens), which
+# overflows on real diffs (a 12k-char diff + the two-pass audit conversation).
+# Request a roomier window so audits don't 400; the models support far more.
+_NUM_CTX = 8192
+
 
 def backend() -> str:
     return "cloud (ollama.com)" if USE_CLOUD else "local (localhost:11434)"
@@ -41,7 +46,7 @@ def _chat(model: str, messages: list, schema: dict) -> str:
         model=_resolve_model(model),
         messages=messages,
         format=schema,
-        options={"temperature": 0},
+        options={"temperature": 0, "num_ctx": _NUM_CTX},
     )
     return resp["message"]["content"]
 
@@ -51,7 +56,7 @@ def _chat_text(model: str, messages: list) -> str:
     resp = _client.chat(
         model=_resolve_model(model),
         messages=messages,
-        options={"temperature": 0},
+        options={"temperature": 0, "num_ctx": _NUM_CTX},
     )
     return resp["message"]["content"]
 

@@ -6,6 +6,7 @@ from typing import Optional
 import requests
 
 from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, backend
+from git_to_doc import auditor
 from git_to_doc.renderer import (
     render_full_output, render_markdown_file,
     render_commit_message, render_pr_body, render_pr_full_output,
@@ -268,14 +269,140 @@ def cmd_pr(argv):
         print(_c(f"  ✗ gh failed: {r.stderr.strip()}", RED)); sys.exit(1)
 
 
-# ── verify: audit an AI-generated commit (phase 2) ─────────────────────────────
+# ── verify: audit a commit (or PR) against its message ─────────────────────────
+def _resolve_pr(url):
+    """Return (diff_text, message) for a GitHub PR URL.
+
+    The diff comes from the .diff endpoint; the message we audit against is the
+    PR's title + body from the public API (best-effort — empty if unreachable).
+    """
+    diff_text = fetch_diff(url)
+    message = ""
+    m = _GH_PR.match(url.rstrip("/"))
+    if m:
+        repo, num = m.group(1), m.group(2)
+        try:
+            r = requests.get(
+                f"https://api.github.com/repos/{repo}/pulls/{num}",
+                timeout=30,
+                headers={"User-Agent": "git-to-doc/1.0",
+                         "Accept": "application/vnd.github+json"})
+            if r.ok:
+                j = r.json()
+                message = f"{j.get('title') or ''}\n\n{j.get('body') or ''}".strip()
+        except requests.RequestException:
+            pass
+    return diff_text, message
+
+
+def _explain_ollama_error(e, models) -> str:
+    """Map a run_audit exception to an actionable, human-readable hint."""
+    name = type(e).__name__
+    msg = str(e).strip()
+    low = msg.lower()
+    if name in ("ConnectError", "ConnectionError", "ConnectTimeout") or any(
+            k in low for k in ("connection refused", "failed to establish",
+                               "max retries", "cannot connect", "connect")):
+        return ("Can't reach the ollama daemon — is it running?\n"
+                "       start it:  ollama serve\n"
+                "       install:   https://ollama.com/download")
+    if getattr(e, "status_code", None) == 404 or any(
+            k in low for k in ("not found", "try pulling", "no such model")):
+        pulls = "\n".join(f"         ollama pull {m}" for m in models)
+        return "A required model isn't installed locally. Pull it:\n" + pulls
+    if "context length" in low or "longer than the context" in low:
+        return ("The diff is too large for a model's context window. Try a model "
+                "with a longer context, or audit a smaller commit.")
+    return f"Audit failed ({name}): {msg}"
+
+
+def _print_merged(merged, message):
+    if message:
+        print(_c("  message: ", DIM) + message.strip().splitlines()[0])
+    if not merged:
+        print(_c("\n  ✓ No divergences — the message matches the diff (per the auditors).\n",
+                 BOLD, GREEN))
+        return
+    highs = sum(1 for m in merged if m.confidence == "high")
+    print(_c(f"\n  {len(merged)} divergence(s):  ", BOLD)
+          + _c(f"{highs} high", RED) + _c("  ·  ", DIM)
+          + _c(f"{len(merged) - highs} possible", YELLOW) + "\n")
+    for m in merged:
+        tag = _c("[HIGH]    ", BOLD, RED) if m.confidence == "high" else _c("[possible]", YELLOW)
+        who = _c("(" + ", ".join(m.flagged_by) + ")", DIM)
+        print(f"  {tag} {_c(f'{m.file}:{m.line}', CYAN)}  {who}")
+        print(f"      {m.description}\n")
+
+
 def cmd_verify(argv):
     parser = argparse.ArgumentParser(
         prog="git-to-doc verify",
-        description="Audit an AI-generated commit for correctness and safety.")
-    parser.add_argument("commit", metavar="commit-sha", help="the commit SHA to audit")
-    parser.parse_args(argv)
-    print("verify not implemented yet — coming in phase 2")
+        description="Audit a commit (or GitHub PR) against its message with a panel of models.")
+    parser.add_argument("commit", nargs="?", default="HEAD", metavar="commit-sha",
+        help="commit to audit (default: HEAD); ignored when --url is given")
+    parser.add_argument("--auditors", metavar="m1,m2",
+        help="comma-separated models to use instead of the default pair")
+    parser.add_argument("--url", metavar="PR_URL",
+        help="audit a GitHub PR URL instead of a local commit")
+    parser.add_argument("--json", action="store_true",
+        help="print merged divergences as JSON instead of pretty text")
+    args = parser.parse_args(argv)
+
+    auditors = None
+    if args.auditors:
+        auditors = [m.strip() for m in args.auditors.split(",") if m.strip()]
+        if not auditors:
+            print(_c("  ✗ --auditors was empty", RED)); sys.exit(1)
+
+    # ── Resolve (diff, original message, source label) ──────────────────────────
+    if args.url:
+        try:
+            diff_text, message = _resolve_pr(args.url)
+        except requests.HTTPError as e:
+            code = getattr(e.response, "status_code", "?")
+            print(_c(f"  ✗ Could not fetch PR diff (HTTP {code}). Is the URL public?", RED)); sys.exit(1)
+        except requests.RequestException as e:
+            print(_c(f"  ✗ Network error fetching PR: {e}", RED)); sys.exit(1)
+        source = args.url
+    else:
+        if subprocess.run(["git", "rev-parse", "--git-dir"], capture_output=True).returncode != 0:
+            print(_c("  ✗ Not inside a git repository. cd into your repo, or pass --url.", RED)); sys.exit(1)
+        sha = args.commit
+        if not _ref_exists(sha):
+            print(_c(f"  ✗ Commit '{sha}' not found in this repository.", RED)); sys.exit(1)
+        # --format= strips the commit header so the message doesn't leak into the
+        # diff — the auditor's first pass must stay blind to it.
+        shown = _git("show", sha, "--format=", "--no-color", check=False)
+        if shown.returncode != 0:
+            print(_c(f"  ✗ Could not read commit '{sha}': {shown.stderr.strip()}", RED)); sys.exit(1)
+        diff_text = shown.stdout
+        message = _git("log", "-1", "--format=%B", sha, check=False).stdout.strip()
+        source = _git("rev-parse", "--short", sha, check=False).stdout.strip() or sha
+
+    if not diff_text.strip():
+        print(_c(f"  ✗ No diff to audit for {source} (empty or a merge commit?).", RED)); sys.exit(1)
+
+    used = auditors or auditor.DEFAULT_AUDITORS
+    print(_c("\n  🔎  git-to-doc verify", BOLD, CYAN)
+          + _c(f"  {source}  ·  {', '.join(used)}  ·  {backend()}", DIM))
+    print(_c("  " + "─" * 52, DIM))
+    if not message:
+        print(_c("  ⚠ No original message found — auditing against an empty message.", YELLOW))
+    print(_c(f"  running {len(used)} auditor(s) — this can take a moment…", DIM))
+
+    # ── Run the panel, then merge ───────────────────────────────────────────────
+    try:
+        reports = auditor.run_audit(diff_text, message, auditors=auditors)
+    except Exception as e:
+        print(_c("  ✗ " + _explain_ollama_error(e, used), RED)); sys.exit(1)
+
+    merged = auditor.merge_audits(reports)
+
+    # Pretty rendering lands in phase 4; for now, plain text (or JSON).
+    if args.json:
+        print(json.dumps([m.model_dump() for m in merged], indent=2))
+        return
+    _print_merged(merged, message)
 
 
 # ── install-hook: prepare-commit-msg auto-fill ─────────────────────────────────
@@ -323,8 +450,9 @@ def _top_help():
         Generate a Conventional Commit message + changelog + plain-English summary.
         <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
 
-    {_c("git-to-doc verify <commit-sha>", BOLD)}
-        Audit an AI-generated commit for correctness and safety. (coming in phase 2)
+    {_c("git-to-doc verify <commit-sha>", BOLD)} [--url PR] [--auditors m1,m2] [--json]
+        Audit a commit (or GitHub PR) against its message with a panel of models,
+        merging their findings into high/possible-confidence divergences.
 
     {_c("git-to-doc pull-request", BOLD)} [--base B] [--create] [--draft] [--model M]
         Generate a pull request from the current branch. Preview by default;
