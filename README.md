@@ -1,6 +1,8 @@
 # git-to-doc ⚡
 
-> Turn a git diff into developer documentation with a local or cloud **Gemma** model — Conventional Commit messages, markdown changelogs, and pull requests — straight from the terminal.
+> **git-to-doc — the audit layer for AI-generated commits**
+
+git-to-doc is evolving from a commit-message generator into an audit tool for AI-authored code. As more commits are written with AI assistance, the hard part shifts from *drafting the message* to *trusting the change*: the new `git-to-doc verify <commit-sha>` command (coming in phase 2) will audit a commit for correctness and safety, built on the same self-repair loop and deterministic validation that already guarantee spec-valid output today. The existing diff → documentation, pull-request, and hook commands remain available throughout the transition.
 
 ## Install
 

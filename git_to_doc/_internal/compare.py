@@ -19,7 +19,7 @@ import requests
 from git_to_doc.model import analyze_diff
 from git_to_doc.renderer import render_markdown_file
 from git_to_doc.validate import validate_commit
-from git_to_doc.evaluate import judge_response, DEFAULT_JUDGE
+from git_to_doc._internal.evaluate import judge_response, DEFAULT_JUDGE
 
 RESET = "\033[0m"; BOLD = "\033[1m"; GREEN = "\033[32m"
 RED = "\033[31m"; CYAN = "\033[36m"; DIM = "\033[2m"

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "git-to-doc"
-version = "0.2.3"
+version = "0.3.0-dev"
 description = "Conventional Commit messages, changelogs & PRs from git diffs using Gemma (local or cloud)"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -17,7 +17,6 @@ dependencies = [
 
 [project.scripts]
 git-to-doc = "git_to_doc.cli:main"
-git-to-doc-compare = "git_to_doc.compare:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

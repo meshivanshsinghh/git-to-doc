@@ -268,6 +268,16 @@ def cmd_pr(argv):
         print(_c(f"  ✗ gh failed: {r.stderr.strip()}", RED)); sys.exit(1)
 
 
+# ── verify: audit an AI-generated commit (phase 2) ─────────────────────────────
+def cmd_verify(argv):
+    parser = argparse.ArgumentParser(
+        prog="git-to-doc verify",
+        description="Audit an AI-generated commit for correctness and safety.")
+    parser.add_argument("commit", metavar="commit-sha", help="the commit SHA to audit")
+    parser.parse_args(argv)
+    print("verify not implemented yet — coming in phase 2")
+
+
 # ── install-hook: prepare-commit-msg auto-fill ─────────────────────────────────
 _HOOK_TEMPLATE = """#!/bin/sh
 # git-to-doc prepare-commit-msg hook — auto-fills the message from the staged diff.
@@ -313,15 +323,15 @@ def _top_help():
         Generate a Conventional Commit message + changelog + plain-English summary.
         <input> = a GitHub PR URL, '-' for stdin, a .diff/.txt file, or a folder of .diff files.
 
+    {_c("git-to-doc verify <commit-sha>", BOLD)}
+        Audit an AI-generated commit for correctness and safety. (coming in phase 2)
+
     {_c("git-to-doc pull-request", BOLD)} [--base B] [--create] [--draft] [--model M]
         Generate a pull request from the current branch. Preview by default;
         --create pushes the branch and opens the PR via gh.
 
     {_c("git-to-doc install-hook", BOLD)}
         Install a git hook so `git commit` (no -m) auto-fills the message.
-
-    {_c("git-to-doc-compare <diffs...>", BOLD)} [--models ...] [--judge [MODEL]]
-        Benchmark models (timing; --judge adds rubric quality + CC pass-rate).
 
 {_c("  EXAMPLES", BOLD)}
     git-to-doc sample.diff
@@ -338,6 +348,8 @@ def main():
     if not argv or argv[0] in ("-h", "--help", "help"):
         _top_help()
         return
+    if argv[0] == "verify":
+        return cmd_verify(argv[1:])
     if argv[0] in ("pull-request", "pr"):
         return cmd_pr(argv[1:])
     if argv[0] == "install-hook":

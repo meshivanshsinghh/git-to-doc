@@ -10,4 +10,4 @@ __all__ = [
     "render_full_output", "render_markdown_file",
     "render_commit_message", "render_pr_body", "render_pr_full_output",
 ]
-__version__ = "0.2.0"
+__version__ = "0.3.0-dev"
