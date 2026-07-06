@@ -39,8 +39,37 @@ smoke test that suggested "high never fires" did **not** hold at scale. So the t
 design works: high confidence is a real, populated bucket, not a marketing fiction. It's
 also *conservative* — high-confidence recall is 36%, because the tier only asserts when
 both models independently agree; the single-auditor "possible" tier (flagged "verify
-manually") catches more but with less certainty. The real-world run will report how often
-high confidence fires on actual AI-authored commits.
+manually") catches more but with less certainty. That was synthetic, though, where the
+planted omission is easy for both models to agree on — on **real** AI-authored commits
+(below) agreement drops to ~11%, so high confidence stays a deliberately narrow, high-trust
+signal and most real divergences surface as "possible."
+
+## Real-world results
+
+95 AI-authored commits (Copilot / Claude / Cursor / Jules — no qualifying Devin commits
+were found in the harvest), audited by the 16 GB pair. No ground truth here, so these are
+population statistics, not precision/recall.
+
+| Metric | Value |
+|---|---|
+| Divergence rate — commits with ≥1 high-confidence divergence | **29%** |
+| Inter-auditor agreement — share of all flags that are high-confidence | **11%** |
+| Divergences per commit (mean, incl. single-auditor "possible") | 5.0 |
+
+By tool (small samples — directional only):
+
+| Tool | n | Divergence rate | Agreement |
+|---|---|---|---|
+| Cursor | 31 | 45% | 15% |
+| Copilot | 25 | 20% | 11% |
+| Claude | 36 | 19% | 6% |
+| Jules | 3 | 67% | 14% |
+
+The headline: on real commits the two models **agree only ~11% of the time**, so most flags
+land in the single-auditor "possible" tier — high confidence is a narrow, deliberate signal
+rather than the common case. Even so, **~29%** of these AI commits carried a high-confidence
+divergence between message and diff. Source:
+`benchmarks/real_world/results/2026-07-06T11-06-45_*.json`.
 
 ## Reproduce
 

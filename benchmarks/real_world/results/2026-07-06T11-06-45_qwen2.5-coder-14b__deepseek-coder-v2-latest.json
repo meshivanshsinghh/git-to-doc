@@ -1,0 +1,3371 @@
+{
+  "date": "2026-07-06",
+  "timestamp": "2026-07-06T11:06:45",
+  "auditors": [
+    "qwen2.5-coder:14b",
+    "deepseek-coder-v2:latest"
+  ],
+  "model_pair": "qwen2.5-coder-14b__deepseek-coder-v2-latest",
+  "n_evaluated": 95,
+  "metrics": {
+    "overall": {
+      "n": 95,
+      "n_errors": 0,
+      "divergence_rate": 0.2947,
+      "inter_auditor_agreement": 0.1053,
+      "divergences_per_commit": {
+        "mean": 5.0,
+        "distribution": {
+          "0": 3,
+          "1": 4,
+          "2": 19,
+          "3": 10,
+          "4": 17,
+          "5": 10,
+          "6": 8,
+          "7": 5,
+          "8": 6,
+          "9": 2,
+          "10": 2,
+          "11": 4,
+          "12": 1,
+          "13": 1,
+          "14": 2,
+          "19": 1
+        }
+      },
+      "totals": {
+        "divergences": 475,
+        "high": 50
+      }
+    },
+    "by_tool": {
+      "claude": {
+        "n": 36,
+        "n_errors": 0,
+        "divergence_rate": 0.1944,
+        "inter_auditor_agreement": 0.0575,
+        "divergences_per_commit": {
+          "mean": 4.833,
+          "distribution": {
+            "0": 1,
+            "1": 2,
+            "2": 9,
+            "3": 6,
+            "4": 4,
+            "5": 4,
+            "6": 2,
+            "7": 2,
+            "8": 2,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "19": 1
+          }
+        },
+        "totals": {
+          "divergences": 174,
+          "high": 10
+        }
+      },
+      "copilot": {
+        "n": 25,
+        "n_errors": 0,
+        "divergence_rate": 0.2,
+        "inter_auditor_agreement": 0.1058,
+        "divergences_per_commit": {
+          "mean": 4.16,
+          "distribution": {
+            "0": 2,
+            "1": 1,
+            "2": 7,
+            "3": 3,
+            "4": 3,
+            "5": 4,
+            "7": 1,
+            "8": 2,
+            "11": 1,
+            "14": 1
+          }
+        },
+        "totals": {
+          "divergences": 104,
+          "high": 11
+        }
+      },
+      "cursor": {
+        "n": 31,
+        "n_errors": 0,
+        "divergence_rate": 0.4516,
+        "inter_auditor_agreement": 0.1475,
+        "divergences_per_commit": {
+          "mean": 5.903,
+          "distribution": {
+            "1": 1,
+            "2": 2,
+            "3": 1,
+            "4": 9,
+            "5": 2,
+            "6": 6,
+            "7": 2,
+            "8": 1,
+            "9": 2,
+            "10": 2,
+            "11": 3
+          }
+        },
+        "totals": {
+          "divergences": 183,
+          "high": 27
+        }
+      },
+      "jules": {
+        "n": 3,
+        "n_errors": 0,
+        "divergence_rate": 0.6667,
+        "inter_auditor_agreement": 0.1429,
+        "divergences_per_commit": {
+          "mean": 4.667,
+          "distribution": {
+            "2": 1,
+            "4": 1,
+            "8": 1
+          }
+        },
+        "totals": {
+          "divergences": 14,
+          "high": 2
+        }
+      }
+    }
+  },
+  "per_entry": [
+    {
+      "commit_sha": "212c76ca29c9e00b5b247d19f46751a7bf1d05eb",
+      "repo": "SkBlaz/py3plex",
+      "ai_tool": "copilot",
+      "n_divergences": 8,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "AGENTS.md",
+          "line": 8,
+          "confidence": "possible"
+        },
+        {
+          "file": "CITATION.cff",
+          "line": 22,
+          "confidence": "possible"
+        },
+        {
+          "file": "book/conf.py",
+          "line": 17,
+          "confidence": "possible"
+        },
+        {
+          "file": "book/front_matter.rst",
+          "line": 62,
+          "confidence": "possible"
+        },
+        {
+          "file": "py3plex/__init__.py",
+          "line": 51,
+          "confidence": "possible"
+        },
+        {
+          "file": "py3plex_mcp/__init__.py",
+          "line": 10,
+          "confidence": "possible"
+        },
+        {
+          "file": "pyproject.toml",
+          "line": 4,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/test_version_consistency.py",
+          "line": 93,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "809ea3abb95270f43ea64b7e5ed3a8345b7b5bfc",
+      "repo": "b-editor/beutl",
+      "ai_tool": "copilot",
+      "n_divergences": 14,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/Beutl.Controls/Styling/FileInputArea.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/NavigationView.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/Player.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/AlignmentXEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/BooleanEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/ColorComponentsEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/ColorEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/CornerRadiusEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/FontFamilyEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/FontSizeEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/FontWeightEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/HorizontalAlignmentEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/ThicknessEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/Beutl.Controls/Styling/PropertyEditors/VerticalAlignmentEditor.axaml",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "89a4e02d331a87a9a81954d73907d4cab7203378",
+      "repo": "dotnet/maui",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": ".github/skills/dependency-flow/SKILL.md",
+          "line": 405,
+          "confidence": "possible"
+        },
+        {
+          "file": ".github/skills/dependency-flow/scripts/Get-PreviewReleaseReadiness.ps1",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "74af558650e9ebf682beaab956f5034b40473828",
+      "repo": "github/gh-aw-firewall",
+      "ai_tool": "copilot",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "providers/gemini.js, providers/vertex.js",
+          "line": 27,
+          "confidence": "possible"
+        },
+        {
+          "file": "providers/google-adapter.js",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "server.auth-matrix.test.js",
+          "line": 526,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "06e5c772de0b99d42fff5c003e7c5758ce9cab86",
+      "repo": "github/gh-aw-firewall",
+      "ai_tool": "copilot",
+      "n_divergences": 5,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "containers/api-proxy/model-api-mapping.json",
+          "line": 5,
+          "confidence": "possible"
+        },
+        {
+          "file": "containers/api-proxy/model-api-mapping.json",
+          "line": 58,
+          "confidence": "possible"
+        },
+        {
+          "file": "containers/api-proxy/model-api-mapping.json",
+          "line": 71,
+          "confidence": "possible"
+        },
+        {
+          "file": "containers/api-proxy/model-api-mapping.test.js",
+          "line": 113,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/model-api-mapping.json",
+          "line": 5,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "060c03f503e19ef67b06a5f3bad323a6352c8eb0",
+      "repo": "jamesmontemagno/tiny-clips",
+      "ai_tool": "copilot",
+      "n_divergences": 5,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 65,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/VideoRecordingService.cs",
+          "line": 98,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/VideoRecordingService.cs",
+          "line": 868,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/VideoRecordingService.cs",
+          "line": 879,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/VideoRecordingService.cs",
+          "line": 891,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "10e3423e70ab82147dfc47a18c0a2e286bda0bc4",
+      "repo": "jamesmontemagno/tiny-clips",
+      "ai_tool": "copilot",
+      "n_divergences": 11,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "windows/src/TinyClips.Core/Capture/VideoRecordingService.cs",
+          "line": 883,
+          "confidence": "high"
+        },
+        {
+          "file": "mac/TinyClips/Views/CountdownWindow.swift",
+          "line": 52,
+          "confidence": "possible"
+        },
+        {
+          "file": "mac/TinyClips/Views/StopRecordingPanel.swift",
+          "line": 4,
+          "confidence": "possible"
+        },
+        {
+          "file": "mac/TinyClips/Views/StopRecordingPanel.swift",
+          "line": 43,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.App/CountdownWindow.xaml.cs",
+          "line": 25,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.App/CountdownWindow.xaml.cs",
+          "line": 72,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 29,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 186,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 203,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 217,
+          "confidence": "possible"
+        },
+        {
+          "file": "windows/src/TinyClips.Core/Capture/GifRecordingService.cs",
+          "line": 276,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "557a0cadabbdaf2538b9e5574c0d173401e58e48",
+      "repo": "Z3Prover/z3",
+      "ai_tool": "copilot",
+      "n_divergences": 8,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 81,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 178,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 187,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 232,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 260,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 301,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 369,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/opt_solver.h",
+          "line": 422,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "fdc32d0e60a625ea8c7b3fd12880a0eb7acf6a00",
+      "repo": "Z3Prover/z3",
+      "ai_tool": "copilot",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/opt/opt_solver.cpp",
+          "line": 320,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/optsmt.cpp",
+          "line": 234,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/opt/optsmt.cpp",
+          "line": 250,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "89e85853217dd9b663a8183959973168a6b0bd18",
+      "repo": "samber/ro",
+      "ai_tool": "copilot",
+      "n_divergences": 7,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": ".github/workflows/doc.yml",
+          "line": 5,
+          "confidence": "high"
+        },
+        {
+          "file": "CLAUDE.md",
+          "line": 100,
+          "confidence": "high"
+        },
+        {
+          "file": "docs/CLAUDE.md",
+          "line": 269,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/CLAUDE.md",
+          "line": 362,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/docs/contributing.md",
+          "line": 170,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/docs/contributing.md",
+          "line": 365,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/docs/hacking.md",
+          "line": 312,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "b915f8d2d94fd33898ae4f51ee308f65529ed0a3",
+      "repo": "microsoft/apm",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "tests/unit/test_install_command.py",
+          "line": 474,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/test_install_command.py",
+          "line": 1186,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "14eb4958f70864140af89251f66ae2d4ca5188cd",
+      "repo": "microsoft/apm",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/apm_cli/install/validation.py",
+          "line": 58,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/install/test_validation_rate_limit.py",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "b5834e82976b83c8b29def6b6d892e19dce55521",
+      "repo": "jdubois/boot-ui",
+      "ai_tool": "copilot",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "bootui-quarkus-sample-app/e2e/playwright.config.js",
+          "line": 4,
+          "confidence": "possible"
+        },
+        {
+          "file": "bootui-quarkus-sample-app/src/main/resources/application.properties",
+          "line": 7,
+          "confidence": "possible"
+        },
+        {
+          "file": "bootui-spring-webflux-sample-app/e2e/playwright.webflux.config.js",
+          "line": 5,
+          "confidence": "possible"
+        },
+        {
+          "file": "bootui-spring-webflux-sample-app/src/main/resources/application.properties",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "9a088805d70ca9d0a7fcecf2b653cccc3ebda03c",
+      "repo": "bytedance/deer-flow",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "backend/packages/harness/deerflow/skills/installer.py",
+          "line": 193,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/tests/test_skills_installer.py",
+          "line": 286,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "a59f9d42e892e4279054258a906065207b29d05c",
+      "repo": "bytedance/deer-flow",
+      "ai_tool": "copilot",
+      "n_divergences": 5,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "docker/provisioner/app.py",
+          "line": 62,
+          "confidence": "possible"
+        },
+        {
+          "file": "docker/provisioner/app.py",
+          "line": 320,
+          "confidence": "possible"
+        },
+        {
+          "file": "docker/provisioner/app.py",
+          "line": 331,
+          "confidence": "possible"
+        },
+        {
+          "file": "docker/provisioner/app.py",
+          "line": 337,
+          "confidence": "possible"
+        },
+        {
+          "file": "docker/provisioner/app.py",
+          "line": 387,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "84bbdf6e00e744665aaa53ea24f5caf864182f5f",
+      "repo": "bytedance/deer-flow",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "backend/packages/harness/deerflow/runtime/runs/worker.py",
+          "line": 340,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/tests/test_worker_langfuse_metadata.py",
+          "line": 134,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "0ace5ba526dd074d915e8871b864db728076a67e",
+      "repo": "github/gh-aw",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": ".github/workflows/daily-community-attribution.lock.yml",
+          "line": 546,
+          "confidence": "high"
+        },
+        {
+          "file": ".github/workflows/daily-community-attribution.lock.yml",
+          "line": 654,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "5803a9c4b556026db2d3cb9a269b3766eb80a54d",
+      "repo": "github/gh-aw",
+      "ai_tool": "copilot",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": ".github/workflows/pr-sous-chef.lock.yml",
+          "line": 628,
+          "confidence": "possible"
+        },
+        {
+          "file": ".github/workflows/pr-sous-chef.md",
+          "line": 284,
+          "confidence": "possible"
+        },
+        {
+          "file": ".github/workflows/pr-sous-chef.md",
+          "line": 392,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "c85eb6ea90ae95126c740ffa39adf33dad57d29f",
+      "repo": "mavlink/qgroundcontrol",
+      "ai_tool": "copilot",
+      "n_divergences": 5,
+      "n_high": 4,
+      "flagged": [
+        {
+          "file": "cmake/GStreamer/Install.cmake",
+          "line": 476,
+          "confidence": "high"
+        },
+        {
+          "file": "cmake/GStreamer/PluginPolicy.cmake",
+          "line": 16,
+          "confidence": "high"
+        },
+        {
+          "file": "cmake/GStreamer/platform/Android.cmake",
+          "line": 127,
+          "confidence": "high"
+        },
+        {
+          "file": "src/VideoManager/VideoReceiver/GStreamer/GStreamer.cc",
+          "line": 113,
+          "confidence": "high"
+        },
+        {
+          "file": "cmake/GStreamer/tests/test_plugin_policy.cmake",
+          "line": 72,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "19e0b42f808b72f5d680a8558774f5df47393cb1",
+      "repo": "richlander/dotnet-inspect",
+      "ai_tool": "copilot",
+      "n_divergences": 0,
+      "n_high": 0,
+      "flagged": []
+    },
+    {
+      "commit_sha": "94c852ac4a460292173f18c77e40b5f50bd8bddd",
+      "repo": "bytedance/deer-flow",
+      "ai_tool": "copilot",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "backend/packages/harness/deerflow/mcp/tools.py",
+          "line": 652,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/tests/test_mcp_session_pool.py",
+          "line": 1625,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "9a59738491e4fd285e00c725348c2697469fdd06",
+      "repo": "mampfes/hacs_waste_collection_schedule",
+      "ai_tool": "copilot",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "custom_components/waste_collection_schedule/waste_collection_schedule/source/awista_kommunal_de.py",
+          "line": 25,
+          "confidence": "possible"
+        },
+        {
+          "file": "custom_components/waste_collection_schedule/waste_collection_schedule/source/awista_kommunal_de.py",
+          "line": 102,
+          "confidence": "possible"
+        },
+        {
+          "file": "custom_components/waste_collection_schedule/waste_collection_schedule/source/awista_kommunal_de.py",
+          "line": 140,
+          "confidence": "possible"
+        },
+        {
+          "file": "doc/source/awista_kommunal_de.md",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "fc5797e47af8523edb22a0407081328e8335ca5b",
+      "repo": "epam/dm.ai",
+      "ai_tool": "copilot",
+      "n_divergences": 0,
+      "n_high": 0,
+      "flagged": []
+    },
+    {
+      "commit_sha": "2bf495e20d0579ef4c96e73a0206b373eb0768eb",
+      "repo": "dfinity/oisy-wallet",
+      "ai_tool": "copilot",
+      "n_divergences": 1,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/frontend/src/lib/components/notes/ShareNoteContent.svelte",
+          "line": 161,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "a2da549198d485280ad4f850d8edc2ae90ec20b6",
+      "repo": "katahiromz/RisohEditor",
+      "ai_tool": "copilot",
+      "n_divergences": 4,
+      "n_high": 3,
+      "flagged": [
+        {
+          "file": "src/Common.hpp",
+          "line": 114,
+          "confidence": "high"
+        },
+        {
+          "file": "src/MIDListDlg.hpp",
+          "line": 630,
+          "confidence": "high"
+        },
+        {
+          "file": "src/MModifyResIDDlg.hpp",
+          "line": 30,
+          "confidence": "high"
+        },
+        {
+          "file": "src/MAddResIDDlg.hpp",
+          "line": 78,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "b64ea41c84369943f1183a105bf2309626f1c9e4",
+      "repo": "onetimesecret/onetimesecret",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/shared/components/navigation/DomainContextSwitcher.vue",
+          "line": 398,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/shared/composables/useScopeSwitcherVisibility.ts",
+          "line": 76,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "79b59fac79e50ccaa52fe123d9f1e9a4d12e8f32",
+      "repo": "SapiensAnatis/Dawnshard",
+      "ai_tool": "claude",
+      "n_divergences": 5,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "DragaliaAPI/DragaliaAPI/Features/Login/SavefileUpdate/V28Update.cs",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "DragaliaAPI/DragaliaAPI.Integration.Test/Features/Reward/RewardServiceTest.cs",
+          "line": 99,
+          "confidence": "possible"
+        },
+        {
+          "file": "DragaliaAPI/DragaliaAPI.Integration.Test/Features/SavefileUpdate/ISavefileUpdateTest.cs",
+          "line": 17,
+          "confidence": "possible"
+        },
+        {
+          "file": "DragaliaAPI/DragaliaAPI.Integration.Test/Features/SavefileUpdate/V28UpdateTest.cs",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "DragaliaAPI/DragaliaAPI/Features/Shared/Reward/Handlers/DragonHandler.cs",
+          "line": 47,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f4480bfeedba2fc2e2e97e283ff396a72af5ea60",
+      "repo": "nodetool-ai/nodetool",
+      "ai_tool": "claude",
+      "n_divergences": 7,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/agents/src/tools/email-tools.ts",
+          "line": 50,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/node-sdk/src/base-node.ts",
+          "line": 314,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/node-sdk/src/registry.ts",
+          "line": 224,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/runtime/src/providers/openai-provider.ts",
+          "line": 883,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/websocket/src/server.ts",
+          "line": 645,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/websocket/src/unified-websocket-runner.ts",
+          "line": 3650,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/src/lib/tools/frontendTools.ts",
+          "line": 17,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "80422e896548606f1b2d0fe1e60967143db62494",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 1,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/mcp/tools/sources.py",
+          "line": 387,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "0f1bb6e08e322070a3ea7598a17a22552852d823",
+      "repo": "freelensapp/freelens-fluxcd-extension",
+      "ai_tool": "claude",
+      "n_divergences": 8,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1.tsx",
+          "line": 185,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/source/git-repository-details-v1.tsx",
+          "line": 62,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/source/helm-chart-details-v1.tsx",
+          "line": 34,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/k8s/fluxcd/image/imagepolicy-v1.ts",
+          "line": 32,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/k8s/fluxcd/kustomize/kustomization-v1.ts",
+          "line": 9,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/k8s/fluxcd/notification/receiver-v1.ts",
+          "line": 24,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/k8s/fluxcd/source/gitrepository-v1.ts",
+          "line": 29,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/k8s/fluxcd/source/helmchart-v1.ts",
+          "line": 16,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "974f3c99075f9e0d95d992b2d681c60c2521436c",
+      "repo": "freelensapp/freelens-fluxcd-extension",
+      "ai_tool": "claude",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 6,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 19,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 61,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 170,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "775913e2a95c0bf81c11e5311b7d8b5ee335d894",
+      "repo": "AlphaGPU/leetgpu-challenges",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "challenges/medium/106_token_embedding_layer/challenge.html",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "challenges/medium/106_token_embedding_layer/challenge.py",
+          "line": 1,
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "commit_sha": "0e2fcd6408cb801452169971e31f04f843073895",
+      "repo": "freelabz/secator",
+      "ai_tool": "claude",
+      "n_divergences": 6,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "secator/loader.py",
+          "line": 8,
+          "confidence": "possible"
+        },
+        {
+          "file": "secator/loader.py",
+          "line": 76,
+          "confidence": "possible"
+        },
+        {
+          "file": "secator/loader.py",
+          "line": 137,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/test_loader.py",
+          "line": 417,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/test_loader.py",
+          "line": 422,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/test_loader.py",
+          "line": 439,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "299b5684b0cfbefcd83b27afccdb843577a229f9",
+      "repo": "roboflow/rf-detr",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/rfdetr/datasets/yolo.py",
+          "line": 590,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/rfdetr/datasets/yolo.py",
+          "line": 594,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/datasets/test_yolo.py",
+          "line": 158,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "bd0f44fcfdfccdace9dc0c19ca0160e5d9f62958",
+      "repo": "roboflow/supervision",
+      "ai_tool": "claude",
+      "n_divergences": 7,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "docs/how_to/benchmark_a_model.md",
+          "line": 42,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/annotators/core.py",
+          "line": 3032,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/dataset/core.py",
+          "line": 387,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/dataset/formats/pascal_voc.py",
+          "line": 28,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/dataset/formats/pascal_voc.py",
+          "line": 173,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/dataset/formats/pascal_voc.py",
+          "line": 224,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/dataset/formats/pascal_voc.py",
+          "line": 366,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "c2d1a70d47a5b85b80681fe7ed95492de0703743",
+      "repo": "rerun-io/rerun",
+      "ai_tool": "claude",
+      "n_divergences": 13,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/bar_chart_view.rs",
+          "line": 37,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/dataframe_view.rs",
+          "line": 38,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/graph_view.rs",
+          "line": 54,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/map_view.rs",
+          "line": 37,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/spatial2d_view.rs",
+          "line": 46,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/spatial3d_view.rs",
+          "line": 49,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/state_timeline_view.rs",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/tensor_view.rs",
+          "line": 40,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/text_document_view.rs",
+          "line": 34,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/text_log_view.rs",
+          "line": 40,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_sdk_types/src/blueprint/views/time_series_view.rs",
+          "line": 49,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_types_core/src/lib.rs",
+          "line": 57,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/store/re_types_core/src/loggable.rs",
+          "line": 188,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "afcf13a6f53a1a70df7d36dd34ffd9341c52bde7",
+      "repo": "roboflow/supervision",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/supervision/annotators/core.py",
+          "line": 3180,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/annotators/test_core.py",
+          "line": 1461,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "5d748a26ccf47c12fe614b69047f9425aab07bce",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/mcp/__main__.py",
+          "line": 254,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/mcp/_oauth.py",
+          "line": 130,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "c080e2c3b8d1eef3931d953b969f7b19cd661bfd",
+      "repo": "langgenius/dify",
+      "ai_tool": "claude",
+      "n_divergences": 19,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "web/i18n/ar-TN/device-flow.json",
+          "line": 36,
+          "confidence": "high"
+        },
+        {
+          "file": "web/i18n/de-DE/device-flow.json",
+          "line": 36,
+          "confidence": "high"
+        },
+        {
+          "file": "web/i18n/es-ES/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/fa-IR/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/fr-FR/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/hi-IN/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/id-ID/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/it-IT/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/ja-JP/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/ko-KR/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/nl-NL/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/pl-PL/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/pt-BR/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/ro-RO/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/ru-RU/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/sl-SI/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/tr-TR/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/zh-CN/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        },
+        {
+          "file": "web/i18n/zh-TW/device-flow.json",
+          "line": 36,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "070872173ff4023d532eb049a842edc21cf8a245",
+      "repo": "edison7009/Coffee-CLI",
+      "ai_tool": "claude",
+      "n_divergences": 0,
+      "n_high": 0,
+      "flagged": []
+    },
+    {
+      "commit_sha": "e1f847cb413b9f8589b15ed53c3d6d64d948b5c4",
+      "repo": "freelensapp/freelens",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/core/src/renderer/components/custom-resource-definitions/definitions.injectable.ts",
+          "line": 7,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/renderer/components/custom-resource-definitions/definitions.injectable.ts",
+          "line": 24,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "aebbd9ea135908caf6568cafafbbc72c5c9d81f6",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/mcp/tools/_studio_items.py",
+          "line": 138,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/mcp/tools/_studio_items.py",
+          "line": 182,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "a1092e30ab6880a6337ec7d3e98a1d3c01d47b8a",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/_settings.py",
+          "line": 203,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/_settings.py",
+          "line": 236,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/_types/common.py",
+          "line": 126,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "2ff2a6e60e7381b834628bdf23a01b52699ea367",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/mcp/tools/sources.py",
+          "line": 123,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/mcp/tools/sources.py",
+          "line": 320,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/mcp/tools/sources.py",
+          "line": 357,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "6483038a10c96f93759e608d3bb060f72a1c75a3",
+      "repo": "Hmbown/CodeWhale",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "crates/tui/src/task_manager.rs",
+          "line": 852,
+          "confidence": "possible"
+        },
+        {
+          "file": "crates/tui/src/tui/subagent_routing.rs",
+          "line": 426,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "8adbab1fc5f88767abfc5f284abdbefedaa3c50f",
+      "repo": "Borda/pyDeprecate",
+      "ai_tool": "claude",
+      "n_divergences": 12,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "docs/guide/advanced.md",
+          "line": 178,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/guide/advanced.md",
+          "line": 204,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/guide/advanced.md",
+          "line": 227,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms-full.txt",
+          "line": 14,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms-full.txt",
+          "line": 105,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms-full.txt",
+          "line": 120,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms-full.txt",
+          "line": 134,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms.txt",
+          "line": 140,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/llms.txt",
+          "line": 241,
+          "confidence": "possible"
+        },
+        {
+          "file": "guide/advanced.md",
+          "line": 14,
+          "confidence": "possible"
+        },
+        {
+          "file": "llms-full.txt",
+          "line": 14,
+          "confidence": "possible"
+        },
+        {
+          "file": "llms.txt",
+          "line": 14,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f730698b350537327d9fb914914d6138cf9be9e8",
+      "repo": "freelensapp/freelens-fluxcd-extension",
+      "ai_tool": "claude",
+      "n_divergences": 14,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "package.json",
+          "line": 67,
+          "confidence": "possible"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 23,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2.tsx",
+          "line": 86,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2beta1.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2beta1.tsx",
+          "line": 86,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2beta2.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/helm/helm-release-details-v2beta2.tsx",
+          "line": 86,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1.tsx",
+          "line": 87,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1beta1.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1beta1.tsx",
+          "line": 87,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1beta2.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/renderer/components/details/kustomize/kustomization-details-v1beta2.tsx",
+          "line": 87,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "15dbbb5cb15d14e16a11032e8c3b62f4236ae736",
+      "repo": "roboflow/supervision",
+      "ai_tool": "claude",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/supervision/annotators/core.py",
+          "line": 2010,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/annotators/core.py",
+          "line": 2373,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/annotators/core.py",
+          "line": 3023,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/supervision/utils/video.py",
+          "line": 2997,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "75b89f59be28b76be7a126754933d896218a7305",
+      "repo": "shakacode/react_on_rails",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/react-on-rails-pro-node-renderer/src/tsconfig.json",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/react-on-rails-pro-node-renderer/src/worker.ts",
+          "line": 335,
+          "confidence": "possible"
+        },
+        {
+          "file": "tsconfig.json",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "293e56c506983c379dcf1b538fc7e33d4e60b358",
+      "repo": "metasfresh/metasfresh",
+      "ai_tool": "claude",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "backend/de.metas.adempiere.adempiere/migration/src/main/sql/postgresql/system/10-de.metas.adempiere/5811300_sys_gh30568_ReceiptSchedule_ChangeDatePromised_ParamsValidationError_Message_Update.sql",
+          "line": 4,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/de.metas.fresh/de.metas.fresh.base/src/main/sql/postgresql/system/70-de.metas.fresh/5811220_sys_gh30568_M_ReceiptSchedule_ChangeDatePromised_OverrideAndPOReference_Process_Update.sql",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/de.metas.fresh/de.metas.fresh.base/src/main/sql/postgresql/system/70-de.metas.fresh/5811280_sys_gh30568_Material_Receipt_Candidates_Purchase_Window_Update.sql",
+          "line": 4,
+          "confidence": "possible"
+        },
+        {
+          "file": "backend/de.metas.fresh/de.metas.fresh.base/src/main/sql/postgresql/system/70-de.metas.fresh/5811280_sys_gh30568_Material_Receipt_Candidates_Purchase_Window_Update.sql",
+          "line": 49,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "0fb50371f6fd7304f1e9cf7656cfd3afac2fb455",
+      "repo": "2FastLabs/agent-squad",
+      "ai_tool": "claude",
+      "n_divergences": 8,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "swift/Sources/AgentSquad/Core/JSONValue.swift",
+          "line": 118,
+          "confidence": "high"
+        },
+        {
+          "file": "docs/src/content/docs/swift/voice/built-in/openai-grounded-voice.md",
+          "line": 29,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/src/content/docs/swift/voice/built-in/openai-grounded-voice.md",
+          "line": 57,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/src/content/docs/swift/voice/built-in/openai-voice.md",
+          "line": 26,
+          "confidence": "possible"
+        },
+        {
+          "file": "swift/SKILL.md",
+          "line": 77,
+          "confidence": "possible"
+        },
+        {
+          "file": "swift/Sources/AgentSquad/Runtimes/Realtime/OpenAIGroundedVoiceAssistant.swift",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "swift/Sources/AgentSquad/Runtimes/Realtime/OpenAIGroundedVoiceAssistant.swift",
+          "line": 71,
+          "confidence": "possible"
+        },
+        {
+          "file": "swift/Sources/AgentSquad/Runtimes/Realtime/OpenAIGroundedVoiceAssistant.swift",
+          "line": 108,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "1a2983817cdd6fa430f00ae18b97dfef568ceea4",
+      "repo": "2FastLabs/agent-squad",
+      "ai_tool": "claude",
+      "n_divergences": 1,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "docs/src/content/docs/swift/tracing/built-in/otlp-exporter.md",
+          "line": 123,
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f3a420743dc882e34f5de4f1b4f94a6f73ba14ee",
+      "repo": "xingkongliang/skills-manager",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src-tauri/src/core/sync_metadata.rs",
+          "line": 184,
+          "confidence": "possible"
+        },
+        {
+          "file": "src-tauri/src/core/sync_metadata.rs",
+          "line": 190,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f0b89bc0f5bcc453ba2531611d0d70232614fdd6",
+      "repo": "medplum/medplum",
+      "ai_tool": "claude",
+      "n_divergences": 6,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "packages/definitions/src/fhir/r4/profiles-types.json",
+          "line": 22029,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/fhirtypes/dist/Meta.d.ts",
+          "line": 106,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/docs/docs/fhir-datastore/deleting-data.md",
+          "line": 20,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/server/src/data-warehouse/warehouse-sql.test.ts",
+          "line": 39,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/server/src/fhir/repo.test.ts",
+          "line": 593,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/server/src/fhir/repo.test.ts",
+          "line": 972,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f5e3a4c6d75c68ca7684f06f24abeb2bd9d6016f",
+      "repo": "marin-community/marin",
+      "ai_tool": "claude",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "lib/levanter/src/levanter/store/cache.py",
+          "line": 9,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/test_consolidate_metadata.py",
+          "line": 1378,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "791c3b9c1d68c5962faa22e57f66f346fe673b46",
+      "repo": "freelensapp/freelens",
+      "ai_tool": "claude",
+      "n_divergences": 5,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "packages/core/src/common/fs/read-yaml-file.injectable.ts",
+          "line": 19,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/core/package.json",
+          "line": 198,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/common/kube-helpers.ts",
+          "line": 53,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/common/kube-helpers.ts",
+          "line": 152,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/renderer/components/monaco-editor/monaco-validators.ts",
+          "line": 4,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "baa2e57fd64ec6e5bf1126b51d2f7684998361e5",
+      "repo": "roboflow/rf-detr",
+      "ai_tool": "claude",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/rfdetr/config.py",
+          "line": 642,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/rfdetr/detr.py",
+          "line": 203,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/rfdetr/detr.py",
+          "line": 2115,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/rfdetr/training/callbacks/best_model.py",
+          "line": 552,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "dfa9a2f02dcd72daccf49f10abeb52b03de0bf1e",
+      "repo": "Metaculus/metaculus",
+      "ai_tool": "claude",
+      "n_divergences": 5,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "front_end/messages/en.json",
+          "line": 495,
+          "confidence": "possible"
+        },
+        {
+          "file": "front_end/src/components/post_subscribe/subscribe_button/utils.ts",
+          "line": 25,
+          "confidence": "possible"
+        },
+        {
+          "file": "front_end/src/components/post_subscribe/subscription_types_customisation/subscription_specific_time.tsx",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "front_end/src/components/post_subscribe/subscription_types_customisation/subscription_specific_time.tsx",
+          "line": 39,
+          "confidence": "possible"
+        },
+        {
+          "file": "front_end/src/components/post_subscribe/subscription_types_customisation/subscription_specific_time.tsx",
+          "line": 64,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "28c2859e7ba6cf19344ed9017ff3e22a6de75005",
+      "repo": "freelensapp/freelens",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/core/src/main/catalog-sources/kubeconfig-sync/watch-file-changes.injectable.ts",
+          "line": 57,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/main/catalog-sources/kubeconfig-sync/watch-file-changes.injectable.ts",
+          "line": 86,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/core/src/main/catalog-sources/kubeconfig-sync/watch-file-changes.test.ts",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "819a21ba0b78e79359cc698b2747b5139e7c0988",
+      "repo": "teng-lin/notebooklm-py",
+      "ai_tool": "claude",
+      "n_divergences": 5,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/notebooklm/_client_assembly.py",
+          "line": 170,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/client.py",
+          "line": 298,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/client.py",
+          "line": 740,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/client.py",
+          "line": 749,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/notebooklm/mcp/tools/meta.py",
+          "line": 47,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "64f7061fcbfbc5f000b7f9945d239a0d7a7fd1a6",
+      "repo": "Metaculus/metaculus",
+      "ai_tool": "claude",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "front_end/src/app/(main)/accounts/profile/[id]/layout.tsx",
+          "line": 25,
+          "confidence": "possible"
+        },
+        {
+          "file": "front_end/src/services/api/profile/profile.shared.ts",
+          "line": 25,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/unit/test_users/test_views.py",
+          "line": 241,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "4d49d85cf35e817f3893454bd46dd5c3096f7f38",
+      "repo": "foxglove/mcap",
+      "ai_tool": "cursor",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "rust/cli/src/cli.rs",
+          "line": 120,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/commands.rs",
+          "line": 84,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "d8601c52590db3bf23ce2b9f804d8004969179ed",
+      "repo": "foxglove/mcap",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "rust/cli/src/cli.rs",
+          "line": 126,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/commands.rs",
+          "line": 256,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/commands/compress.rs",
+          "line": 9,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/commands/decompress.rs",
+          "line": 9,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/main.rs",
+          "line": 495,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/rewrite/engine.rs",
+          "line": 205,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "a5f878efa8e8616cb5d00988c65f900ebdc6d456",
+      "repo": "modevol-com/gqloom",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/drizzle/src/factory/input.ts",
+          "line": 368,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/drizzle/src/factory/input.ts",
+          "line": 394,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/drizzle/test/input-factory.spec.ts",
+          "line": 233,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/drizzle/test/input-factory.spec.ts",
+          "line": 248,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "33f8824e21b385056c47122e6a99d3206b2b60be",
+      "repo": "omnigent-ai/omnigent",
+      "ai_tool": "cursor",
+      "n_divergences": 9,
+      "n_high": 3,
+      "flagged": [
+        {
+          "file": "tests/harness_bench/bench.py",
+          "line": 176,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/harness_bench/manifest.py",
+          "line": 152,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/harness_bench/native_tui_driver.py",
+          "line": 33,
+          "confidence": "high"
+        },
+        {
+          "file": "tests/harness_bench/bench.py",
+          "line": 8,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/harness_bench/bench.py",
+          "line": 180,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/harness_bench/bench.py",
+          "line": 192,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/harness_bench/manifest.py",
+          "line": 164,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/harness_bench/manifest.py",
+          "line": 170,
+          "confidence": "possible"
+        },
+        {
+          "file": "tests/harness_bench/native_tui_driver.py",
+          "line": 114,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f414dcff6bdb68bc38ab072bff8a6744da694b42",
+      "repo": "atrislabs/atris",
+      "ai_tool": "cursor",
+      "n_divergences": 5,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "commands/scout.js",
+          "line": 64,
+          "confidence": "high"
+        },
+        {
+          "file": "commands/scout.js",
+          "line": 6,
+          "confidence": "possible"
+        },
+        {
+          "file": "commands/scout.js",
+          "line": 22,
+          "confidence": "possible"
+        },
+        {
+          "file": "commands/scout.js",
+          "line": 27,
+          "confidence": "possible"
+        },
+        {
+          "file": "commands/scout.js",
+          "line": 31,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "ed504e2d7bef6ed3947412156a5f83b0f76770e1",
+      "repo": "johnlindquist/mdflow",
+      "ai_tool": "cursor",
+      "n_divergences": 1,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "CHANGELOG.md",
+          "line": 2,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f7ebb68181cdfb79f560fefc156323b5de066814",
+      "repo": "johnlindquist/mdflow",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/adhoc-command.ts",
+          "line": 12,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/adhoc-command.ts",
+          "line": 26,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/cli-runner.ts",
+          "line": 696,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/cli-runner.ts",
+          "line": 982,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "b337d1d3dd6c1185855092d91f7e8a4db5bd1fa6",
+      "repo": "foxglove/mcap",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "rust/cli/benches/commands.rs",
+          "line": 243,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/cli.rs",
+          "line": 310,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/cli/src/commands/filter.rs",
+          "line": 16,
+          "confidence": "possible"
+        },
+        {
+          "file": "rust/mcap/tests/data/generate.sh",
+          "line": 8,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "2e475b4220647a346b20c0f4e3b7d61f7088335f",
+      "repo": "getnao/nao",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "apps/frontend/src/components/chat-input-suggestions.tsx",
+          "line": 20,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/frontend/src/components/chat-input-suggestions.tsx",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/frontend/src/components/chat-input-suggestions.tsx",
+          "line": 38,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/frontend/src/components/chat-input.tsx",
+          "line": 310,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "792a20dbe475084540d7451054a72632baded88f",
+      "repo": "getnao/nao",
+      "ai_tool": "cursor",
+      "n_divergences": 9,
+      "n_high": 3,
+      "flagged": [
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 99,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 190,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/frontend/src/routes/_sidebar-layout.settings.recommendations.tsx",
+          "line": 86,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 3,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 107,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 113,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 123,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/backend/src/queries/context-recommendation.queries.ts",
+          "line": 200,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/backend/src/trpc/context-recommendation.routes.ts",
+          "line": 47,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "7019c1d86de26e20ca13ac76a69d53ea2c1d058d",
+      "repo": "kentcdodds/kody",
+      "ai_tool": "cursor",
+      "n_divergences": 2,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/worker/src/mcp/tools/search.node.test.ts",
+          "line": 64,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/worker/src/mcp/tools/search.node.test.ts",
+          "line": 339,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "da35e9062dedf522c1834e178af662ad6c44b084",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "apps/api/src/app/environments-v2/e2e/api-key-environment-diff-scope.e2e.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environments-v2/e2e/api-key-environment-diff-scope.e2e.ts",
+          "line": 104,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environments-v2/services/environment-validation.service.ts",
+          "line": 43,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/workflows-v2/e2e/api-key-workflow-environment-scope.e2e.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/workflows-v2/e2e/api-key-workflow-environment-scope.e2e.ts",
+          "line": 130,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/workflows-v2/workflow.controller.ts",
+          "line": 200,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "473be55907c324035e30354281457c47c7066ab9",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 5,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "apps/api/migrations/infobip-sms-base-url/deactivate-misconfigured-infobip-sms-integrations.migration.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "libs/application-generic/src/utils/infobip-sms-credentials.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/migrations/infobip-sms-base-url/deactivate-misconfigured-infobip-sms-integrations.migration.spec.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/factories/sms/handlers/infobip.handler.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/sms/infobip/infobip.provider.ts",
+          "line": 14,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "697835409ddb48109dc951baaf2820ac37ce4b88",
+      "repo": "ryokun6/ryos",
+      "ai_tool": "cursor",
+      "n_divergences": 3,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/components/dialogs/FutureSettingsDialog.tsx",
+          "line": 133,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/dialogs/TelegramLinkDialog.tsx",
+          "line": 186,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/ui/os-field-styles.ts",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "1d286d6a7759f55725e8a13b68f5703454eb13f2",
+      "repo": "mweinbach/agent-coworker",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "test/server/runtime/sessionRegistry.warmResources.test.ts",
+          "line": 61,
+          "confidence": "possible"
+        },
+        {
+          "file": "test/server/runtime/sessionRegistry.warmResources.test.ts",
+          "line": 70,
+          "confidence": "possible"
+        },
+        {
+          "file": "test/server/runtime/sessionRegistry.warmResources.test.ts",
+          "line": 84,
+          "confidence": "possible"
+        },
+        {
+          "file": "test/server/runtime/sessionRegistry.warmResources.test.ts",
+          "line": 98,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "19815cb1a14264770ef1b78f758984b89f98eef0",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 11,
+      "n_high": 3,
+      "flagged": [
+        {
+          "file": "apps/api/src/app/integrations/usecases/create-integration/create-integration.usecase.ts",
+          "line": 164,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/integrations/usecases/update-integration/update-integration.usecase.ts",
+          "line": 142,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/integrations/utils/validate-outbound-integration-credentials.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "libs/application-generic/src/factories/mail/handlers/nodemailer.handler.ts",
+          "line": 2,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/factories/mail/handlers/nodemailer.handler.ts",
+          "line": 10,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/factories/sms/handlers/sinch.handler.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/factories/sms/handlers/sinch.handler.ts",
+          "line": 13,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/email/nodemailer/nodemailer.provider.ts",
+          "line": 70,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/email/nodemailer/nodemailer.provider.ts",
+          "line": 90,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/email/nodemailer/nodemailer.provider.ts",
+          "line": 129,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/email/nodemailer/nodemailer.provider.ts",
+          "line": 140,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "cacea7657046d668cb9c25bd9ec150a5b94dd317",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "packages/agent-toolkit/src/utils/safe-json-schema-to-zod.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/agent-toolkit/package.json",
+          "line": 123,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/agent-toolkit/src/tools/workflows-as-tools.ts",
+          "line": 17,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/agent-toolkit/src/tools/workflows-as-tools.ts",
+          "line": 74,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "b1257c53934f371619c3287219e1fd625a376fe6",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "libs/application-generic/src/services/verify-payload.service.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "libs/application-generic/src/services/verify-payload.service.spec.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/services/verify-payload.service.ts",
+          "line": 107,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/application-generic/src/services/verify-payload.service.ts",
+          "line": 142,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "700f7f56f33ef6d4dd4ed60b8860655585b18256",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 10,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "libs/application-generic/package.json",
+          "line": 144,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/maily-core/package.json",
+          "line": 199,
+          "confidence": "possible"
+        },
+        {
+          "file": "libs/maily-render/package.json",
+          "line": 56,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/add-inbox/package.json",
+          "line": 58,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/chat-adapter/package.json",
+          "line": 62,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/framework/package.json",
+          "line": 296,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/novu/package.json",
+          "line": 66,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/package.json",
+          "line": 97,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/shared/package.json",
+          "line": 73,
+          "confidence": "possible"
+        },
+        {
+          "file": "playground/nestjs/package.json",
+          "line": 42,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "a7bc82ba823b19785196bd15d75a450f0147990f",
+      "repo": "Simpleyyt/ai-manus",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "frontend/src/pages/ClawPage.vue",
+          "line": 563,
+          "confidence": "high"
+        },
+        {
+          "file": "frontend/src/pages/HomePage.vue",
+          "line": 117,
+          "confidence": "high"
+        },
+        {
+          "file": "frontend/src/components/toolViews/BrowserToolView.vue",
+          "line": 38,
+          "confidence": "possible"
+        },
+        {
+          "file": "frontend/src/components/toolViews/FileToolView.vue",
+          "line": 114,
+          "confidence": "possible"
+        },
+        {
+          "file": "frontend/src/components/toolViews/ShellToolView.vue",
+          "line": 84,
+          "confidence": "possible"
+        },
+        {
+          "file": "frontend/src/main.ts",
+          "line": 19,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "6f7f24093515e7eeebb4608b7b715569c1f7a9d8",
+      "repo": "latitude-dev/latitude-llm",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.test.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.ts",
+          "line": 35,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.ts",
+          "line": 32,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.ts",
+          "line": 76,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/workers/src/workers/agent-dispatch.ts",
+          "line": 140,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "8215e35a56ad7f0c4ea4d1766d69f19e964241a8",
+      "repo": "latitude-dev/latitude-llm",
+      "ai_tool": "cursor",
+      "n_divergences": 7,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.ts",
+          "line": 79,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.ts",
+          "line": 363,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/domain/spans/src/ports/span-repository.ts",
+          "line": 77,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.test.ts",
+          "line": 158,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.ts",
+          "line": 64,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.ts",
+          "line": 430,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/platform/db-clickhouse/src/repositories/span-repository.ts",
+          "line": 480,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "48084bdebf68a9823ac10e97a21b8779ac89c033",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 7,
+      "n_high": 2,
+      "flagged": [
+        {
+          "file": "apps/api/src/app/environment-variables/usecases/update-environment-variable/update-environment-variable.command.ts",
+          "line": 27,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/usecases/update-environment-variable/update-environment-variable.usecase.ts",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/e2e/api-key-environment-scope.e2e.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/e2e/api-key-environment-scope.e2e.ts",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/environment-variables.controller.ts",
+          "line": 18,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/usecases/create-environment-variable/create-environment-variable.command.ts",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/environment-variables/usecases/create-environment-variable/create-environment-variable.usecase.ts",
+          "line": 32,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "f285ee8696096d645c43e7ba9638aea04bfdcd25",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "packages/providers/src/lib/push/pusher-beams/pusher-beams.provider.spec.ts",
+          "line": 142,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/lib/push/pusher-beams/pusher-beams.provider.ts",
+          "line": 18,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/utils/safe-pusher-beams-url.spec.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/providers/src/utils/safe-pusher-beams-url.ts",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "ea5cedee5bc9e08bfaac00cce1ae0469c8db4e8e",
+      "repo": "ryokun6/ryos",
+      "ai_tool": "cursor",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/components/assistant/AssistantOverlay.tsx",
+          "line": 405,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/assistantSpeech.ts",
+          "line": 38,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/assistantSpeech.ts",
+          "line": 158,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/useAssistantSpeech.ts",
+          "line": 1,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "ebb45df894d0f47bc7b5f4bc81a2777a4e8d2261",
+      "repo": "ryokun6/ryos",
+      "ai_tool": "cursor",
+      "n_divergences": 10,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/lib/locales/de/translation.json",
+          "line": 1700,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/en/translation.json",
+          "line": 3486,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/es/translation.json",
+          "line": 1702,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/fr/translation.json",
+          "line": 1702,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/it/translation.json",
+          "line": 1702,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/ja/translation.json",
+          "line": 1700,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/ko/translation.json",
+          "line": 1700,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/pt/translation.json",
+          "line": 1702,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/lib/locales/ru/translation.json",
+          "line": 1707,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/shared/assistantCustomization.ts",
+          "line": 11,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "8772f84467804ad33d1bc7fda50f921c8c2b8b04",
+      "repo": "zmian/xcore",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": ".github/workflows/ci.yml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": ".github/workflows/documentation.yml",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": ".gitignore",
+          "line": 15,
+          "confidence": "possible"
+        },
+        {
+          "file": ".swiftformat",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "Makefile",
+          "line": 76,
+          "confidence": "possible"
+        },
+        {
+          "file": "Tests/XcoreTests/Clients/AppPhaseOperationTests.swift",
+          "line": 35,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "02b506de6975ca7eed4056fa91c263e1f1e21c72",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 6,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 2611,
+          "confidence": "high"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 152,
+          "confidence": "possible"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 798,
+          "confidence": "possible"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 1941,
+          "confidence": "possible"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 1945,
+          "confidence": "possible"
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 3418,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "00f1787904dd3cb073f77cbf3b29d61bc05d75d3",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 8,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "packages/js/src/ui/helpers/formatToRelativeTime.test.ts",
+          "line": 18,
+          "confidence": "high"
+        },
+        {
+          "file": "packages/js/src/ui/context/LocalizationContext.tsx",
+          "line": 5,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/formatSnoozedUntil.ts",
+          "line": 56,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/formatToRelativeTime.ts",
+          "line": 17,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/formatToRelativeTime.ts",
+          "line": 52,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/index.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/normalizeIntlLocale.ts",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "packages/js/src/ui/helpers/normalizeIntlLocale.ts",
+          "line": 6,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "40bb139d0191bb5ae102bffb27e73cf916b5b187",
+      "repo": "novuhq/novu",
+      "ai_tool": "cursor",
+      "n_divergences": 11,
+      "n_high": 3,
+      "flagged": [
+        {
+          "file": "apps/api/src/app/inbox/e2e/snooze-unsnooze-notification.e2e.ts",
+          "line": 203,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/snooze-notification/snooze-notification.usecase.ts",
+          "line": 43,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/snooze-notification/snooze-notification.usecase.ts",
+          "line": 146,
+          "confidence": "high"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/snooze-notification/snooze-notification.spec.ts",
+          "line": 49,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/snooze-notification/snooze-notification.spec.ts",
+          "line": 120,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/unsnooze-notification/unsnooze-notification.spec.ts",
+          "line": 5,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/unsnooze-notification/unsnooze-notification.spec.ts",
+          "line": 77,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/unsnooze-notification/unsnooze-notification.usecase.ts",
+          "line": 6,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/unsnooze-notification/unsnooze-notification.usecase.ts",
+          "line": 19,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/unsnooze-notification/unsnooze-notification.usecase.ts",
+          "line": 146,
+          "confidence": "possible"
+        },
+        {
+          "file": "apps/api/src/app/inbox/usecases/update-notification-action/update-notification-action.usecase.ts",
+          "line": 66,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "e8243c5b431fa88ef9304eb89b3a1c5754d81c42",
+      "repo": "ryokun6/ryos",
+      "ai_tool": "cursor",
+      "n_divergences": 11,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "src/apps/books/components/BooksReaderPane.tsx",
+          "line": 2545,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/apps/books/components/BooksReaderPane.tsx",
+          "line": 2557,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/AssistantOverlay.tsx",
+          "line": 451,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/AssistantOverlay.tsx",
+          "line": 1326,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/AssistantOverlay.tsx",
+          "line": 1347,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/AssistantOverlay.tsx",
+          "line": 1407,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/assistantBubblePlacement.ts",
+          "line": 24,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/assistantBubblePlacement.ts",
+          "line": 53,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/assistant/assistantBubblePlacement.ts",
+          "line": 1326,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/components/dialogs/BootScreen.tsx",
+          "line": 87,
+          "confidence": "possible"
+        },
+        {
+          "file": "src/hooks/useChatSynth.ts",
+          "line": 393,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "52139a0040cf0aa5d1fd9fe98f0f3f92c40b6444",
+      "repo": "triqbit/mt5-ai-xauusd-trader",
+      "ai_tool": "jules",
+      "n_divergences": 4,
+      "n_high": 0,
+      "flagged": [
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 10,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 20,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 34,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "2627b418503088e96ab652bb4bb3a53d396e62f2",
+      "repo": "triqbit/mt5-ai-xauusd-trader",
+      "ai_tool": "jules",
+      "n_divergences": 2,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "docs/status/PROCESS_INTEGRITY_LOG.md",
+          "line": 2347,
+          "confidence": "high"
+        },
+        {
+          "file": "docs/status/PROCESS_INTEGRITY_LOG.md",
+          "line": 2416,
+          "confidence": "possible"
+        }
+      ]
+    },
+    {
+      "commit_sha": "12824db3db017e33fb2237b79d2679e0948bfdc9",
+      "repo": "triqbit/mt5-ai-xauusd-trader",
+      "ai_tool": "jules",
+      "n_divergences": 8,
+      "n_high": 1,
+      "flagged": [
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 1,
+          "confidence": "high"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 14,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 27,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/MERGE_READY_CHECKLIST.md",
+          "line": 40,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/PROCESS_INTEGRITY_LOG.md",
+          "line": 2320,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/PROJECT_HEALTH.md",
+          "line": 31,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/PR_TRIAGE_DAILY.md",
+          "line": 1,
+          "confidence": "possible"
+        },
+        {
+          "file": "docs/status/PR_TRIAGE_DAILY.md",
+          "line": 29,
+          "confidence": "possible"
+        }
+      ]
+    }
+  ]
+}
