@@ -1,3 +1,7 @@
-# Generated benchmark artifacts (regenerable; diffs make the dataset large)
+# Generated benchmark artifacts (regenerable; diffs make datasets large)
 synthetic/data/*.jsonl
 synthetic/results/*.json
+synthetic/results/*.log
+synthetic/results/*.pid
+real_world/data/*.jsonl
+real_world/results/*.json

@@ -11,12 +11,35 @@ from pydantic import BaseModel
 
 from git_to_doc.model import audit_diff, AuditReport
 
-# Default panel: two strong code models from independent families.
-DEFAULT_AUDITORS = ["qwen2.5-coder:14b", "deepseek-coder-v2:latest"]
+# Auditor panels by host RAM — each a pair of strong code models from *different*
+# families so their blind spots don't overlap. The 16GB tier is the default.
+# (deepseek-coder-v2:latest is the 16b model, same weights as the :16b tag; we use
+#  :latest to match what ollama pulls by default and the earlier default choice.)
+AUDITOR_TIERS = {
+    "8gb":  ["gemma2:2b", "qwen2.5-coder:7b"],
+    "16gb": ["qwen2.5-coder:14b", "deepseek-coder-v2:latest"],
+    "32gb": ["qwen2.5-coder:32b", "gpt-oss:120b"],
+}
+
+DEFAULT_AUDITORS = AUDITOR_TIERS["16gb"]
 
 # How close two line citations must be to count as the same finding.
 LINE_TOLERANCE = 3
 _SEVERITY_RANK = {"low": 1, "medium": 2, "high": 3}
+
+
+def recommend_auditors() -> list[str]:
+    """Detect available RAM via psutil and recommend an appropriate auditor tier."""
+    try:
+        import psutil
+        gb = psutil.virtual_memory().total / (1024 ** 3)
+    except Exception:
+        return AUDITOR_TIERS["16gb"]   # safe default when RAM can't be detected
+    if gb < 12:
+        return AUDITOR_TIERS["8gb"]
+    if gb < 24:
+        return AUDITOR_TIERS["16gb"]
+    return AUDITOR_TIERS["32gb"]
 
 
 def run_audit(diff_text, original_message, auditors=None) -> list[AuditReport]:

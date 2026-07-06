@@ -3,7 +3,10 @@ from git_to_doc.model import (
     analyze_diff, analyze_pr, audit_diff,
     CommitDoc, PRDoc, AuditReport, Divergence, backend, GenerationError,
 )
-from git_to_doc.auditor import run_audit, merge_audits, DEFAULT_AUDITORS, MergedDivergence
+from git_to_doc.auditor import (
+    run_audit, merge_audits, recommend_auditors,
+    DEFAULT_AUDITORS, AUDITOR_TIERS, MergedDivergence,
+)
 from git_to_doc.renderer import (
     render_full_output, render_markdown_file,
     render_commit_message, render_pr_body, render_pr_full_output,
@@ -11,8 +14,8 @@ from git_to_doc.renderer import (
 
 __all__ = [
     "analyze_diff", "analyze_pr", "audit_diff", "run_audit", "merge_audits",
-    "DEFAULT_AUDITORS", "CommitDoc", "PRDoc", "AuditReport", "Divergence",
-    "MergedDivergence", "backend", "GenerationError",
+    "recommend_auditors", "DEFAULT_AUDITORS", "AUDITOR_TIERS", "CommitDoc", "PRDoc",
+    "AuditReport", "Divergence", "MergedDivergence", "backend", "GenerationError",
     "render_full_output", "render_markdown_file",
     "render_commit_message", "render_pr_body", "render_pr_full_output",
 ]

@@ -408,6 +408,45 @@ def cmd_verify(argv):
     print(render_audit_report(merged, message, used, source=source))
 
 
+# ── doctor: hardware + model readiness ─────────────────────────────────────────
+def cmd_doctor(argv):
+    argparse.ArgumentParser(
+        prog="git-to-doc doctor",
+        description="Report RAM, installed models, and the recommended auditor pair."
+    ).parse_args(argv)
+
+    print(_c("\n  🩺  git-to-doc doctor", BOLD, CYAN))
+    print(_c("  " + "─" * 52, DIM))
+
+    try:
+        import psutil
+        gb = psutil.virtual_memory().total / (1024 ** 3)
+        print(f"  RAM         : {_c(f'{gb:.0f} GB', BOLD)}")
+    except Exception:
+        print(f"  RAM         : {_c('unknown (pip install psutil)', YELLOW)}")
+
+    rec = auditor.recommend_auditors()
+    tier = next((t for t, models in auditor.AUDITOR_TIERS.items() if models == rec), "?")
+    print(f"  Recommended : {_c(', '.join(rec), BOLD)}  {_c(f'({tier} tier)', DIM)}")
+
+    r = subprocess.run(["ollama", "list"], capture_output=True, text=True)
+    if r.returncode != 0:
+        print(_c("  Ollama      : ✗ can't reach ollama — is it installed and running?", RED))
+        print(_c("                start it with `ollama serve`\n", DIM))
+        return
+    installed = {line.split()[0] for line in r.stdout.splitlines()[1:] if line.strip()}
+    print(f"  Installed   : {_c(', '.join(sorted(installed)) or '(none)', DIM)}")
+
+    missing = [m for m in rec if m not in installed]
+    if missing:
+        print(_c(f"\n  Pull {len(missing)} model(s) to use the recommended pair:", YELLOW))
+        for m in missing:
+            print(_c(f"      ollama pull {m}", YELLOW))
+    else:
+        print(_c("\n  ✓ Recommended auditors are installed — you're ready to verify.", BOLD, GREEN))
+    print()
+
+
 # ── install-hook: prepare-commit-msg auto-fill ─────────────────────────────────
 _HOOK_TEMPLATE = """#!/bin/sh
 # git-to-doc prepare-commit-msg hook — auto-fills the message from the staged diff.
@@ -461,6 +500,9 @@ def _top_help():
         Generate a pull request from the current branch, then audit the generated
         description against the diff. Preview by default; --create opens it via gh.
 
+    {_c("git-to-doc doctor", BOLD)}
+        Report RAM, installed Ollama models, and the recommended auditor pair.
+
     {_c("git-to-doc install-hook", BOLD)}
         Install a git hook so `git commit` (no -m) auto-fills the message.
 
@@ -481,6 +523,8 @@ def main():
         return
     if argv[0] == "verify":
         return cmd_verify(argv[1:])
+    if argv[0] == "doctor":
+        return cmd_doctor(argv[1:])
     if argv[0] in ("pull-request", "pr"):
         return cmd_pr(argv[1:])
     if argv[0] == "install-hook":
