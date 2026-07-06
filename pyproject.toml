@@ -18,6 +18,9 @@ dependencies = [
 [project.scripts]
 git-to-doc = "git_to_doc.cli:main"
 
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["git_to_doc*"]

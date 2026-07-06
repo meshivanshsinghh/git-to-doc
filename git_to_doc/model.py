@@ -1,6 +1,6 @@
 import os
 import re
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from typing import Literal, Optional
 
 from dotenv import load_dotenv
@@ -41,6 +41,16 @@ def _chat(model: str, messages: list, schema: dict) -> str:
         model=_resolve_model(model),
         messages=messages,
         format=schema,
+        options={"temperature": 0},
+    )
+    return resp["message"]["content"]
+
+
+def _chat_text(model: str, messages: list) -> str:
+    """Free-form (unstructured) chat — used for the auditor's independent pass."""
+    resp = _client.chat(
+        model=_resolve_model(model),
+        messages=messages,
         options={"temperature": 0},
     )
     return resp["message"]["content"]
@@ -216,3 +226,105 @@ def analyze_pr(diff_text: str, model: str = "gemma4", max_retries: int = 3,
         test_plan="Run the existing test suite and verify the app starts.",
         breaking=False,
     )
+
+
+# ── Audit report ────────────────────────────────────────────────────────────────
+class Divergence(BaseModel):
+    description: str                       # what was omitted or misrepresented
+    file: str = Field(..., min_length=1)   # REQUIRED — file path from the diff
+    line: int = Field(..., gt=0)           # REQUIRED — line number in the diff
+    severity: Literal["low", "medium", "high"]
+
+
+class AuditReport(BaseModel):
+    independent_description: str   # what the auditor thinks the diff does
+    divergences: list[Divergence]
+    auditor_model: str             # which model produced this report
+
+
+AUDITOR_SYSTEM_PROMPT = """
+You are an independent code auditor. You are given a git diff and, in a second step,
+the commit message its author wrote. Your job is to judge — on your own terms —
+whether that message honestly and completely describes what the diff actually does.
+
+Principles you must follow:
+- Read the diff INDEPENDENTLY. Form your own understanding of what the code now does
+  differently. Do NOT defer to, or let yourself be anchored by, the author's message;
+  it may be incomplete, misleading, or simply wrong.
+- Every claim you make about a change MUST cite a specific file path and a line number
+  taken from the diff. A claim with no concrete file + line citation is worthless and
+  will be rejected.
+- Focus on BEHAVIORAL changes — what the code now does differently at runtime: control
+  flow, return values, side effects, error handling, public APIs, persisted data.
+  Ignore purely stylistic or cosmetic changes (formatting, comments, pure renames).
+- A "divergence" is something material in the diff that the author's message omits or
+  misrepresents. If the message already accurately describes everything material in the
+  diff, return an EMPTY divergences list. Never invent divergences to appear thorough.
+
+Output format (second step only): raw JSON matching the schema. No ```json fences, no
+commentary.
+"""
+
+
+def audit_diff(diff_text: str, model: str, original_message: str,
+               max_retries: int = 3, verbose: bool = False) -> AuditReport:
+    """Audit a diff against its commit message with a two-pass, blind-first method.
+
+    Pass 1 asks the model to describe what the diff does on its own, WITHOUT ever
+    seeing the author's message, so it can't be anchored by it. Pass 2 reveals the
+    message and asks for an AuditReport of the divergences. Every divergence must cite
+    a file + line — enforced by the schema, so a missing citation raises
+    ValidationError and drives the self-repair loop, exactly like `analyze_diff`.
+
+    On persistent failure we raise rather than return an empty report: a false
+    all-clear is the one outcome an audit tool must never emit.
+    """
+    if len(diff_text) > 12000:
+        diff_text = diff_text[:12000] + "\n... [truncated]"
+
+    # ── Pass 1 — independent description, author's message deliberately withheld ──
+    messages = [
+        {"role": "system", "content": AUDITOR_SYSTEM_PROMPT},
+        {"role": "user", "content":
+            "Here is a git diff. Independently describe what it does — the material "
+            "behavioral changes only — citing a file path and line number from the "
+            f"diff for each change.\n\nGIT DIFF:\n{diff_text}"},
+    ]
+    independent = _chat_text(model, messages)
+    messages.append({"role": "assistant", "content": independent})
+
+    # ── Pass 2 — reveal the author's message and compare → AuditReport ────────────
+    messages.append({"role": "user", "content":
+        "Only now consider the message the author wrote for this diff:\n\n"
+        f'"""\n{original_message}\n"""\n\n'
+        "Compare it against your OWN understanding above. List divergences — material "
+        "behavioral changes in the diff that this message omits or misrepresents. For "
+        "each divergence, cite the file path and line number from the diff and set "
+        "severity to low, medium, or high. If the message already covers everything "
+        "material, return an empty divergences list.\n\n"
+        "Set independent_description to your description above and auditor_model to "
+        f'"{model}". Output ONLY the JSON object.'})
+
+    schema = AuditReport.model_json_schema()
+
+    last_err = None
+    for attempt in range(max_retries):
+        raw = _chat(model, messages, schema)
+        try:
+            report = _parse(raw, AuditReport)
+        except ValidationError as e:
+            last_err = e
+            if verbose:
+                print(f"  ↻ audit repair {attempt+1}: uncited or invalid output")
+            messages.append({"role": "assistant", "content": raw})
+            messages.append({"role": "user", "content":
+                f"That was not valid for the schema: {e}. Every divergence MUST include "
+                "a non-empty `file` path and a positive integer `line` number taken "
+                "from the diff. Output ONLY a corrected JSON object."})
+            continue
+        report.auditor_model = model   # trust our own record, not the model's claim
+        return report
+
+    raise ValueError(
+        f"auditor '{model}' produced no schema-valid AuditReport after {max_retries} "
+        "attempts; refusing to emit a false all-clear.") from last_err
