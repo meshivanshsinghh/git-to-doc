@@ -6,6 +6,8 @@
 [![Python](https://img.shields.io/pypi/pyversions/git-to-doc)](https://pypi.org/project/git-to-doc/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
+> 🏆 Built at the **GDG Cloud Boston × Northeastern University** hackathon (Powered by Gemma), where it won **1st place**. Full write-up: **[shivanshsingh.in/git-to-doc](http://shivanshsingh.in/git-to-doc)**.
+
 ## The problem
 
 A lot of commits are written by AI now, and so are their commit messages. The trouble
@@ -65,9 +67,12 @@ ollama pull qwen2.5-coder:14b && ollama pull deepseek-coder-v2:latest
 ```
 
 git-to-doc runs against a local [ollama](https://ollama.com) daemon by default, or
-`ollama.com` if you set `OLLAMA_API_KEY`. Not sure what your machine can run? Run
-`git-to-doc doctor` and it reports your RAM, the recommended model pair, and anything
-still left to pull.
+`ollama.com` if you set `OLLAMA_API_KEY`.
+
+Those two models are only the default. Anything you can `ollama pull` works (Gemma
+included); pick a different pair for a single run with `--auditors model-a,model-b`. Not
+sure what your machine can handle? Run `git-to-doc doctor` and it reports your RAM,
+recommends a pair (it knows 8, 16, and 32 GB tiers), and lists anything still to pull.
 
 ## Usage
 
