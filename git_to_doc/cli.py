@@ -4,6 +4,7 @@ from datetime import date
 from typing import Optional
 
 import requests
+from ollama import ResponseError
 
 from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, backend, GenerationError
 from git_to_doc import auditor
@@ -199,6 +200,8 @@ def cmd_doc(argv):
         print(_c(f"\n  ✗ Network error fetching diff: {e}", RED)); sys.exit(1)
     except GenerationError as e:
         print(_c(f"\n  ✗ {e}", RED)); sys.exit(1)
+    except ResponseError as e:
+        print(_c("  ✗ " + _explain_ollama_error(e, [args.model]), RED), file=sys.stderr); sys.exit(1)
     print()
 
 
