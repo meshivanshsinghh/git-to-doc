@@ -38,7 +38,7 @@ def test_audit_report_high_divergence():
                   ["qwen2.5-coder:14b", "deepseek-coder-v2:latest"],
                   "login now returns a token, not a bool")]
     out = _strip(render_audit_report(merged, "fix: tidy login", AUDITORS, source="abc123f"))
-    assert "1 DIVERGENCE — all auditors agree" in out
+    assert "1 DIVERGENCE (all auditors agree)" in out
     assert "login now returns a token, not a bool" in out
     assert "app/auth.py:13" in out
     assert "✅" not in out                    # high present → no all-clear line
@@ -48,10 +48,10 @@ def test_audit_report_possible_divergence():
     merged = [_md("x.py", 5, "possible", ["qwen2.5-coder:14b"], "adds a side effect")]
     out = _strip(render_audit_report(merged, "msg", AUDITORS))
     assert "✅ Original message matches the diff" in out   # no highs → all-clear line
-    assert "1 POSSIBLE divergence — only one auditor flagged" in out
+    assert "1 POSSIBLE divergence (only one auditor flagged)" in out
     assert "adds a side effect" in out
     assert "x.py:5" in out
-    assert "flagged by qwen2.5-coder:14b, others did not — verify manually" in out
+    assert "flagged by qwen2.5-coder:14b, others did not; verify manually" in out
 
 
 def test_audit_report_benchmark_shows_measured_numbers():

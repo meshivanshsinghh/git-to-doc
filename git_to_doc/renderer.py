@@ -181,7 +181,7 @@ def render_audit_report(merged: list[MergedDivergence], original_message: str,
 
     if highs:
         noun = "DIVERGENCE" if len(highs) == 1 else "DIVERGENCES"
-        out.append(_c(f"  ⚠️  {len(highs)} {noun} — all auditors agree", BOLD, RED))
+        out.append(_c(f"  ⚠️  {len(highs)} {noun} (all auditors agree)", BOLD, RED))
         for m in highs:
             out.append(f"   • {m.description}")
             out.append(_c(f"     {m.file}:{m.line}", CYAN))
@@ -192,18 +192,18 @@ def render_audit_report(merged: list[MergedDivergence], original_message: str,
 
     if poss:
         noun = "divergence" if len(poss) == 1 else "divergences"
-        out.append(_c(f"  ⚡ {len(poss)} POSSIBLE {noun} — only one auditor flagged", BOLD, YELLOW))
+        out.append(_c(f"  ⚡ {len(poss)} POSSIBLE {noun} (only one auditor flagged)", BOLD, YELLOW))
         for m in poss:
             out.append(f"   • {m.description}")
             out.append(_c(f"     {m.file}:{m.line}", CYAN))
             out.append(_c(f"     (flagged by {', '.join(m.flagged_by)}, "
-                          "others did not — verify manually)", DIM))
+                          "others did not; verify manually)", DIM))
         out.append("")
 
     if precision is None:
         out.append(_c(f"  📊 Benchmark: {BENCHMARK_PRECISION}% precision, "
                       f"{BENCHMARK_RECALL}% recall (synthetic n={BENCHMARK_N}, "
-                      f"{BENCHMARK_TIER} tier — see BENCHMARKS.md)", DIM))
+                      f"{BENCHMARK_TIER} tier, see BENCHMARKS.md)", DIM))
     else:
         out.append(_c(f"  📊 Benchmark: {precision}% precision on "
                       "git-to-doc eval set (v0.3.0)", DIM))
