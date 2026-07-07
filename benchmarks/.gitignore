@@ -5,3 +5,5 @@ synthetic/results/*.log
 synthetic/results/*.pid
 real_world/data/*.jsonl
 real_world/results/*.json
+real_world/results/*.log
+real_world/results/*.pid
