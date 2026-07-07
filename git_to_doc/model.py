@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from dotenv import load_dotenv
 from ollama import Client
 
-from git_to_doc.validate import validate_commit, validate_pr
+from git_to_doc.validate import validate_commit, validate_pr, build_header, MAX_HEADER_LEN
 
 load_dotenv()  # picks up OLLAMA_API_KEY from a local .env if present
 
@@ -127,6 +127,22 @@ Output format: raw JSON only. No ```json fences. No commentary.
 """
 
 
+def _fit_header(doc):
+    """Trim an over-long subject so the Conventional Commit header fits within
+    MAX_HEADER_LEN. Header length is a formatting convention, not a correctness or
+    trust issue, so we normalize it here rather than fail the whole generation over a
+    few characters. Every other spec check still fails loud in validate_commit.
+    """
+    subject = (doc.subject or "").strip()
+    budget = MAX_HEADER_LEN - (len(build_header(doc)) - len(doc.subject or ""))
+    if budget > 0 and len(subject) > budget:
+        cut = subject[:budget].rstrip()
+        if " " in cut:                       # prefer a word boundary
+            cut = cut[:cut.rfind(" ")].rstrip()
+        doc.subject = cut or subject[:budget].rstrip()
+    return doc
+
+
 def analyze_diff(diff_text: str, model: str = "gemma4", max_retries: int = 3,
                  verbose: bool = False) -> CommitDoc:
     """Generate a CommitDoc, then self-repair until it passes the spec.
@@ -158,6 +174,7 @@ def analyze_diff(diff_text: str, model: str = "gemma4", max_retries: int = 3,
                 print(f"  ↻ repair {attempt+1}: invalid JSON")
             continue
 
+        doc = _fit_header(doc)
         problems = validate_commit(doc)
         if not problems:
             return doc

@@ -7,7 +7,8 @@ import json
 
 import pytest
 
-from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, PRDoc, GenerationError
+from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, PRDoc, GenerationError, _fit_header
+from git_to_doc.validate import build_header
 
 
 class FakeClient:
@@ -87,3 +88,33 @@ def test_analyze_pr_returns_on_valid_output(monkeypatch):
     assert isinstance(pr, PRDoc)
     assert pr.title == "feat(auth): add oauth login"
     assert fake.calls == 1
+
+
+# ── _fit_header: normalize over-long headers instead of failing (not a stub) ─────
+def test_fit_header_trims_overlong_subject():
+    doc = CommitDoc(
+        type="refactor", scope="peft",
+        subject="rework the lora adapter to support configurable rank and alpha scaling",
+        body=None, breaking=False, changelog_entry="- rework lora",
+        plain_english="x", human_title="x", review_notes="x", file_notes={})
+    assert len(build_header(doc)) > 72          # starts too long
+    _fit_header(doc)
+    assert len(build_header(doc)) <= 72         # now fits the spec
+    assert doc.subject and not doc.subject.endswith(" ")
+
+
+def test_analyze_diff_trims_long_header_instead_of_failing(monkeypatch):
+    # Otherwise-valid commit whose header exceeds 72 chars: accepted with a trimmed
+    # subject on the first pass, NOT raised as a GenerationError.
+    payload = json.dumps({
+        "type": "refactor", "scope": "peft",
+        "subject": "rework the lora adapter to support configurable rank and alpha scaling now",
+        "body": None, "breaking": False, "changelog_entry": "- rework lora adapter",
+        "plain_english": "Reworks the LoRA adapter.", "human_title": "Rework LoRA adapter",
+        "review_notes": "Check rank/alpha handling.", "file_notes": {}})
+    fake = FakeClient([payload])
+    monkeypatch.setattr("git_to_doc.model._client", fake)
+    doc = analyze_diff("some diff", model="whatever")
+    assert isinstance(doc, CommitDoc)
+    assert len(build_header(doc)) <= 72
+    assert fake.calls == 1        # trimmed and accepted, no wasted retries
