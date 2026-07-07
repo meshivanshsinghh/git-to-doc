@@ -213,11 +213,13 @@ def analyze_pr(diff_text: str, model: str = "gemma4", max_retries: int = 3,
     ]
     schema = PRDoc.model_json_schema()
 
+    last_reason = "no output produced"
     for attempt in range(max_retries):
         try:
             raw = _chat(model, messages, schema)
             doc = _parse(raw, PRDoc)
         except ValidationError as e:
+            last_reason = f"invalid JSON for the schema: {e}"
             messages.append({"role": "user", "content":
                 f"Invalid JSON for the schema: {e}. Output ONLY corrected JSON."})
             continue
@@ -225,20 +227,19 @@ def analyze_pr(diff_text: str, model: str = "gemma4", max_retries: int = 3,
         problems = validate_pr(doc)
         if not problems:
             return doc
+        last_reason = "; ".join(problems)
         if verbose:
-            print(f"  ↻ repair {attempt+1}: " + "; ".join(problems))
+            print(f"  ↻ repair {attempt+1}: " + last_reason)
         messages.append({"role": "assistant", "content": raw})
         messages.append({"role": "user", "content":
             "Your PR has these problems:\n- " + "\n- ".join(problems)
             + "\nReturn a corrected JSON object only."})
 
-    return PRDoc(
-        title="chore: update branch",
-        summary="This pull request bundles changes on the current branch.",
-        changes=["Various updates across the codebase."],
-        test_plan="Run the existing test suite and verify the app starts.",
-        breaking=False,
-    )
+    # No spec-valid output within the retry budget. Raise rather than return a fake
+    # stub — a silent fallback in a trust tool is a trust hole.
+    raise GenerationError(
+        f"model '{model}' failed to produce a spec-valid PR after {max_retries} "
+        f"attempts (last issue: {last_reason}).")
 
 
 # ── Audit report ────────────────────────────────────────────────────────────────

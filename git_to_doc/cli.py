@@ -245,12 +245,17 @@ def cmd_pr(argv):
 
     t = threading.Thread(target=spinner)
     t.start()
+    err = None
     try:
         pr = analyze_pr(diff_text, model=args.model, verbose=True)
+    except GenerationError as e:
+        err = e
     finally:
         done = True
         t.join()
         sys.stdout.write("\r" + " " * 50 + "\r")
+    if err:
+        print(_c(f"  ✗ {err}", RED)); sys.exit(1)
 
     # Audit the AI-generated description against the diff before it's posted.
     audit = None

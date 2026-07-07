@@ -7,7 +7,7 @@ import json
 
 import pytest
 
-from git_to_doc.model import analyze_diff, CommitDoc, GenerationError
+from git_to_doc.model import analyze_diff, analyze_pr, CommitDoc, PRDoc, GenerationError
 
 
 class FakeClient:
@@ -63,3 +63,27 @@ def test_analyze_diff_returns_on_valid_output(monkeypatch):
     assert doc.type == "feat"
     assert doc.subject == "add oauth login"
     assert fake.calls == 1   # no wasted retries on valid output
+
+
+# ── analyze_pr: same fail-loud contract (no stub PR on exhaustion) ──────────────
+VALID_PR_JSON = json.dumps({
+    "title": "feat(auth): add oauth login", "summary": "Adds OAuth login.",
+    "changes": ["add oauth login flow"], "test_plan": "run the suite", "breaking": False,
+})
+
+
+def test_analyze_pr_raises_on_exhaustion_no_stub(monkeypatch):
+    fake = FakeClient(["not valid json at all"] * 3)
+    monkeypatch.setattr("git_to_doc.model._client", fake)
+    with pytest.raises(GenerationError):
+        analyze_pr("some diff", model="whatever", max_retries=3)
+    assert fake.calls == 3
+
+
+def test_analyze_pr_returns_on_valid_output(monkeypatch):
+    fake = FakeClient([VALID_PR_JSON])
+    monkeypatch.setattr("git_to_doc.model._client", fake)
+    pr = analyze_pr("some diff", model="whatever")
+    assert isinstance(pr, PRDoc)
+    assert pr.title == "feat(auth): add oauth login"
+    assert fake.calls == 1
