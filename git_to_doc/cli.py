@@ -157,7 +157,7 @@ def cmd_doc(argv):
     parser.add_argument("--output", nargs="?", const="md", default="md",
         metavar="{md,json,both,stdout}",
         help="Save output: 'md' (default), 'json', 'both', or 'stdout' (print to terminal).")
-    parser.add_argument("--model", default="gemma4", help="Ollama model name (default: gemma4)")
+    parser.add_argument("--model", default="qwen2.5-coder:14b", help="Ollama model name (default: qwen2.5-coder:14b)")
     parser.add_argument("--commit-msg", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
 
