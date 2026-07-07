@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import sys, re, json, argparse, time, os, subprocess, tempfile, shutil, threading, itertools
 from pathlib import Path
 from datetime import date
